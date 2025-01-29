@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Map In iFrame</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            transition: 0.3s;
+        }
+
+        html,
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            height: 100vh;
+            width: 100%;
+            margin: 0%;
+            padding: 0%;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        h1 {
+            margin: 5px 0 40px 0;
+            font-size: 26px;
+            background: linear-gradient(45deg, #000, #000, mediumslateblue, mediumslateblue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 10s ease-in-out infinite;
+            background-size: 200% 200%;
+            background-position: 100% 0;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0 0;
+            }
+
+            50% {
+                background-position: 100% 0;
+            }
+
+            100% {
+                background-position: 0 0;
+            }
+        }
+
+        .page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 24px;
+            width: 840.8px;
+            height: fit-content;
+            padding: 20px;
+            margin-top: 10vh;
+            box-sizing: border-box;
+            border-radius: 20px;
+            background: #fff;
+            border-top: 1px solid rgba(124, 104, 238, 0.377);
+            border-left: 1px solid rgba(124, 104, 238, 0.377);
+            box-shadow: 4px 4px 10px rgba(124, 104, 238, 0.285);
+        }
+
+        .map-box {
+            width: 100%;
+            height: 100%;
+        }
+
+        .i-div {
+            max-width: 800px;
+            height: 600px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            outline: 1px solid rgba(124, 104, 238, 0.626);
+            box-shadow: 3px 3px 5px rgba(124, 104, 238, 0.2);
+        }
+
+        footer {
+            font-size: 14px;
+            color: #333;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            color: mediumslateblue;
+            text-decoration: none;
+        }
+
+        .social {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div class="map-box">
+            <h1>Google Map</h1>
+
+            <div class="i-div">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d290.0173512719339!2d-72.54457474036404!3d-13.164535262248718!2m3!1f339.1735537190078!2f19.049925340634005!3f0!3m2!1i1024!2i768!4f35!3m3!1m2!1s0x916d9a5f89555555%3A0x3a10370ea4a01a27!2sHistoric%20Sanctuary%20of%20Machu%20Picchu!5e1!3m2!1sen!2sin!4v1738172656247!5m2!1sen!2sin"
+                    id="idIframe" frameborder="0" height="100%" width="100%" scrolling="no" style="border:0;"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+        <footer>
+            <p>Created by <a target="_blank"
+                    href="https://drive.google.com/file/d/1uu5crqTDzOiWwbaevrHqCNdRF0Zy742a/view?usp=sharing">Tathagata
+                    Mishra</a></p>
+
+            <div class="social">
+                <a target="_blank" href="https://github.com/tathagatamishra" class="fa fa-github"></a>
+                <a target="_blank" href="https://www.linkedin.com/in/tathagatamishra/" class="fa fa-linkedin"></a>
+            </div>
+        </footer>
+    </div>
+
+    <script type="text/javascript">
+
+    </script>
+</body>
+
+</html>
