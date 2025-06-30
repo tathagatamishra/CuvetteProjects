@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Table</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            transition: 0.3s;
+        }
+
+        html,
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            margin: 0%;
+            padding: 0%;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        h1 {
+            margin: 5px 0 100px 0;
+            font-size: 26px;
+            background: linear-gradient(45deg, rgb(81, 68, 156), #000, mediumslateblue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 10s ease-in-out infinite;
+            background-size: 200% 200%;
+            background-position: 100% 0;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0 0;
+            }
+
+            50% {
+                background-position: 100% 0;
+            }
+
+            100% {
+                background-position: 0 0;
+            }
+        }
+
+        .page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            max-width: 420px;
+            max-height: 720px;
+            max-height: fit-content;
+            width: 90%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 20px;
+            background: #fff;
+            border-top: 1px solid rgba(124, 104, 238, 0.377);
+            border-left: 1px solid rgba(124, 104, 238, 0.377);
+            box-shadow: 4px 4px 10px rgba(124, 104, 238, 0.285);
+        }
+
+        .boring-table-box {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 100px;
+
+            table {
+                width: fit-content;
+                align-self: center;
+            }
+
+            td,
+            th {
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                padding: 0.5rem;
+                border-radius: 5px;
+                font-family: 'Times New Roman', Times, serif;
+            }
+
+            tr:nth-child(odd) td {
+                background-color: #f2f2f2;
+            }
+
+            tr:nth-child(even) td {
+                background-color: #ffffff;
+            }
+        }
+
+        .amazing-table-box {
+            display: none;
+            flex-direction: column;
+            margin-bottom: 50px;
+
+            h1 {
+                margin: 5px 0 50px 0;
+            }
+
+            table {
+                empty-cells: hide;
+                border-spacing: 10px;
+            }
+
+            td,
+            th {
+                position: relative;
+                border-top: 1px solid rgba(124, 104, 238, 0.377);
+                border-left: 1px solid rgba(124, 104, 238, 0.377);
+                box-shadow: 2px 2px 5px rgba(124, 104, 238, 0.15);
+                border-radius: 10px;
+                padding: 0.5rem;
+                text-align: start;
+                height: 40px;
+                z-index: 1;
+            }
+            
+            th {
+                border: 2px solid rgba(124, 104, 238, 0.2);
+                background: rgb(246, 245, 255);
+            }
+
+            td {
+                line-height: 0;
+                font-size: 30px;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 30px;
+            }
+
+            td:hover {
+                scale: 120%;
+                z-index: 2;
+            }
+
+            tr:nth-child(odd) td {
+                background-color: #f2f2f2;
+            }
+
+            tr:nth-child(even) td {
+                background-color: #ffffff;
+            }
+        }
+
+        .cross-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            margin: 0;
+            color: red;
+            font-size: 20px;
+            line-height: 0px;
+            border-radius: 100px;
+            border: 1px solid rgb(255, 178, 178);
+            background: #ffeaea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            rotate: 45deg;
+            cursor: pointer;
+        }
+
+        .cross-btn:hover {
+            background: #ffbbbb;
+            box-shadow: 2px 2px 5px rgba(238, 104, 104, 0.5);
+            scale: 140%;
+        }
+
+        button {
+            min-height: 40px;
+            margin-bottom: 50px;
+            font-size: 16px;
+            color: #fff;
+            background: mediumslateblue;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.1s cubic-bezier(0.65, 0.05, 0.36, 1);
+        }
+
+        button:hover {
+            scale: 102%;
+            background: rgb(81, 68, 156);
+        }
+
+        button:active {
+            scale: 98%;
+            background: rgb(58, 48, 109);
+        }
+
+        footer {
+            font-size: 14px;
+            color: #333;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            color: mediumslateblue;
+            text-decoration: none;
+        }
+
+        .social {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div class="boring-table-box">
+            <h1>Boring CSS Table</h1>
+
+            <table>
+                <tr>
+                    <th>Table-Header 1</th>
+                    <th>Table-Header 2</th>
+                </tr>
+
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                </tr>
+                <tr>
+                    <td>Cell 4</td>
+                    <td>Cell 5</td>
+
+                </tr>
+                <tr>
+                    <td>Cell 7</td>
+                    <td>Cell 8</td>
+                </tr>
+                <tr>
+                    <td>Cell 9</td>
+                    <td>Cell 10</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="amazing-table-box">
+            <h1>Amazing CSS Table</h1>
+
+            <table>
+                <tr>
+                    <th>Header 1</th>
+                    <th>Header 2</th>
+                </tr>
+
+                <tr>
+                    <td class="tdx">😀 <div class="cross-btn">+</div>
+                    </td>
+                    <td class="tdx">🍇 <div class="cross-btn">+</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdx">😅 <div class="cross-btn">+</div>
+                    </td>
+                    <td class="tdx">🍕 <div class="cross-btn">+</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdx">😇 <div class="cross-btn">+</div>
+                    </td>
+                    <td class="tdx">🍉 <div class="cross-btn">+</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdx">😍 <div class="cross-btn">+</div>
+                    </td>
+                    <td class="tdx">🧁 <div class="cross-btn">+</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdx">😜 <div class="cross-btn">+</div>
+                    </td>
+                    <td class="tdx">🍔 <div class="cross-btn">+</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <button>Click Here To See Amazing Table</button>
+
+        <footer>
+            <p>Created by <a target="_blank"
+                    href="https://drive.google.com/file/d/1uu5crqTDzOiWwbaevrHqCNdRF0Zy742a/view?usp=sharing">Tathagata
+                    Mishra</a></p>
+
+            <div class="social">
+                <a target="_blank" href="https://github.com/tathagatamishra/CuvetteProjects" class="fa fa-github"></a>
+                <a target="_blank" href="https://www.linkedin.com/in/tathagatamishra/" class="fa fa-linkedin"></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const button = document.querySelector('button');
+        const boringTable = document.querySelector('.boring-table-box');
+        const amazingTable = document.querySelector('.amazing-table-box');
+
+        let clicked = false
+
+        // Toggle between tables
+        button.addEventListener('click', () => {
+            clicked = !clicked
+
+            if (clicked) {
+                boringTable.style.display = 'none'
+                amazingTable.style.display = 'flex'
+            } else {
+                boringTable.style.display = 'flex'
+                amazingTable.style.display = 'none'
+            }
+        });
+
+
+
+        // Handle cross button clicks
+        amazingTable.addEventListener('click', (e) => {
+
+            if (e.target.classList.contains('cross-btn')) {
+                const cell = e.target.parentElement;
+                cell.innerHTML = ""
+            }
+        });
+    </script>
+</body>
+
+</html>
