@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Sheet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            transition: 0.3s;
+        }
+
+        html,
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            margin: 0%;
+            padding: 0%;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        h1 {
+            margin: 5px 0 100px 0;
+            font-size: 26px;
+            background: linear-gradient(45deg, rgb(81, 68, 156), #000, mediumslateblue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 10s ease-in-out infinite;
+            background-size: 200% 200%;
+            background-position: 100% 0;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0 0;
+            }
+
+            50% {
+                background-position: 100% 0;
+            }
+
+            100% {
+                background-position: 0 0;
+            }
+        }
+
+        .page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: fit-content;
+            height: fit-content;
+            width: 90%;
+            max-width: 840px;
+            padding: 20px;
+            margin-top: 8%;
+            box-sizing: border-box;
+            border-radius: 20px;
+            background: #fff;
+            border-top: 1px solid rgba(124, 104, 238, 0.377);
+            border-left: 1px solid rgba(124, 104, 238, 0.377);
+            box-shadow: 4px 4px 10px rgba(124, 104, 238, 0.285);
+        }
+
+        .boring-table-box {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 50px;
+
+            table {
+                width: 100%;
+
+                border-width: 0 0 1px 1px;
+                border-style: solid;
+                border-color: orange;
+            }
+
+            table th {
+                background: #888;
+                color: #fff;
+            }
+
+            table th,
+            table td {
+                text-align: center;
+                border-width: 1px 1px 0 0;
+                border-style: solid;
+                border-color: orange;
+                padding: 3px 5px;
+            }
+
+            .subTotatlRow .total-td {
+                text-align: right;
+            }
+        }
+
+        .amazing-table-box {
+            display: none;
+            flex-direction: column;
+            margin-bottom: 50px;
+            height: fit-content;
+
+            h1 {
+                margin-bottom: 50px;
+            }
+
+            table {
+                width: 100%;
+                border-width: 0 0 1px 1px;
+                border-style: solid;
+                border-color: orange;
+            }
+
+            table th {
+                background: #888;
+                color: #fff;
+            }
+
+            table th,
+            table td {
+                text-align: center;
+                border-width: 1px 1px 0 0;
+                border-style: solid;
+                border-color: orange;
+                padding: 3px 5px;
+                height: 30px;
+                max-width: 100px;
+            }
+
+            table td {
+                padding: 0;
+                padding: 0 5px;
+            }
+
+            .subTotatlRow .total-td {
+                text-align: right;
+            }
+
+            .total-td {
+                border-width: 2px 1px 1px 0;
+                padding-right: 5px;
+            }
+        }
+
+        input {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            text-align: end;
+            border-radius: 0px;
+            outline: 0px;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .sub-btn {
+            width: 100%;
+            height: 30px;
+            margin: 0;
+            border-radius: 0;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .sub-btn:active {
+            scale: 90%;
+        }
+
+        .style-btn {
+            min-height: 40px;
+            margin-bottom: 50px;
+            font-size: 16px;
+            color: #fff;
+            background: mediumslateblue;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.1s cubic-bezier(0.65, 0.05, 0.36, 1);
+        }
+
+        .style-btn:hover {
+            scale: 102%;
+            background: rgb(81, 68, 156);
+        }
+
+        .style-btn:active {
+            scale: 98%;
+            background: rgb(58, 48, 109);
+        }
+
+        footer {
+            font-size: 14px;
+            color: #333;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            color: mediumslateblue;
+            text-decoration: none;
+        }
+
+        .social {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div class="boring-table-box">
+            <h1>Boring HTML Excel Sheet</h1>
+
+            <table border="0" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Firm</th>
+                        <th>Org</th>
+                        <th>Lob</th>
+                        <th>Sub Lob</th>
+                        <th>Business Plans</th>
+                        <th>Business Components</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td rowspan="11">XYZ</td>
+                        <td rowspan="5">CST</td>
+                        <td rowspan="3">CT</td>
+                        <td>ADS</td>
+                        <td>1</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>BTO</th>
+                        <td>2</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>CSI</th>
+                        <td>3</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">VCT</th>
+                        <td>ADS</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>BTO</th>
+                        <td>5</td>
+                        <td>15</td>
+                    </tr>
+                    <tr class="subTotatlRow">
+                        <td class="total-td" colspan="3">Sub Total</th>
+                        <td>6</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="4">CST</th>
+                        <td rowspan="3">CT</td>
+                        <td>ADS</td>
+                        <td>7</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>BTO</th>
+                        <td>8</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>CSI</th>
+                        <td>9</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>VCT</th>
+                        <td>ADS</td>
+                        <td>10</td>
+                        <td>10</td>
+                    </tr>
+                    <tr class="subTotatlRow">
+                        <td class="total-td" colspan="3">Sub Total</th>
+                        <td>11</td>
+                        <td>15</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="amazing-table-box">
+            <h1>Actually Usable HTML Sheet</h1>
+
+            <table border="0" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Region</th>
+                        <th>Department</th>
+                        <th>Team</th>
+                        <th>Activity</th>
+                        <th>Hours Spent</th>
+                        <th>Cost (₹)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td rowspan="11">East</td>
+                        <td rowspan="5">Operations</td>
+                        <td rowspan="3">Logistics</td>
+                        <td>Inventory Check</td>
+                        <td><input type="number" placeholder="enter value" class="group1-plans" /></td>
+                        <td><input type="number" placeholder="enter value" class="group1-components" /></td>
+                    </tr>
+                    <tr>
+                        <td>Shipment Dispatch</th>
+                        <td><input type="number" placeholder="enter value" class="group1-plans" /></td>
+                        <td><input type="number" placeholder="enter value" class="group1-components" /></td>
+                    </tr>
+                    <tr>
+                        <td>Order Packing</th>
+                        <td><input type="number" placeholder="enter value" class="group1-plans" /></td>
+                        <td><input type="number" placeholder="enter value" class="group1-components" /></td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Delivery</th>
+                        <td>Route Planning</td>
+                        <td><input type="number" placeholder="enter value" class="group1-plans" /></td>
+                        <td><input type="number" placeholder="enter value" class="group1-components" /></td>
+                    </tr>
+                    <tr>
+                        <td>Parcel Tracking</th>
+                        <td><input type="number" placeholder="enter value" class="group1-plans" /></td>
+                        <td><input type="number" placeholder="enter value" class="group1-components" /></td>
+                    </tr>
+                    <tr class="subTotatlRow">
+                        <td class="total-td" colspan="3">Sub Total</th>
+                        <td class="total-td total-display" id="group1-plans-total">0</td>
+                        <td class="total-td total-display" id="group1-components-total">0</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="4">HR</th>
+                        <td rowspan="3">Recruitment</td>
+                        <td>Resume Screening</td>
+                        <td><input type="number" placeholder="enter value" class="group2-plans" /></td>
+                        <td><input type="number" placeholder="enter value" class="group2-components" /></td>
+                    </tr>
+                    <tr>
+                        <td>Interviewing</th>
+                        <td><input type="number" placeholder="enter value" class="group2-plans" /></td>
+                        <td><input type="number" placeholder="enter value" class="group2-components" /></td>
+                    </tr>
+                    <tr>
+                        <td>Onboarding</th>
+                        <td><input type="number" placeholder="enter value" class="group2-plans" /></td>
+                        <td><input type="number" placeholder="enter value" class="group2-components" /></td>
+                    </tr>
+                    <tr>
+                        <td>Training</th>
+                        <td>Compliance</td>
+                        <td><input type="number" placeholder="enter value" class="group2-plans" /></td>
+                        <td><input type="number" placeholder="enter value" class="group2-components" /></td>
+                    </tr>
+                    <tr class="subTotatlRow">
+                        <td class="total-td" colspan="3">Sub Total</th>
+                        <td class="total-td total-display" id="group2-plans-total">0</td>
+                        <td class="total-td total-display" id="group2-components-total">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="style-btn">Click Here To See Useful Table</button>
+
+        <footer>
+            <p>Created by <a target="_blank"
+                    href="https://drive.google.com/file/d/1uu5crqTDzOiWwbaevrHqCNdRF0Zy742a/view?usp=sharing">Tathagata
+                    Mishra</a></p>
+
+            <div class="social">
+                <a target="_blank" href="https://github.com/tathagatamishra/CuvetteProjects" class="fa fa-github"></a>
+                <a target="_blank" href="https://www.linkedin.com/in/tathagatamishra/" class="fa fa-linkedin"></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const styleBtn = document.querySelector('.style-btn');
+        const boringTable = document.querySelector('.boring-table-box');
+        const amazingTable = document.querySelector('.amazing-table-box');
+        const subBtn = document.querySelector('.sub-btn')
+
+        let clicked = false
+
+        // Toggle between tables
+        styleBtn.addEventListener('click', () => {
+            clicked = !clicked
+
+            if (clicked) {
+                boringTable.style.display = 'none'
+                amazingTable.style.display = 'flex'
+            } else {
+                boringTable.style.display = 'flex'
+                amazingTable.style.display = 'none'
+            }
+        });
+
+        // Function to calculate subtotal for a specific group
+        function calculateSubTotal(group) {
+            const plansInputs = document.querySelectorAll(`.${group}-plans`);
+            const componentsInputs = document.querySelectorAll(`.${group}-components`);
+
+            let plansTotal = 0;
+            let componentsTotal = 0;
+
+            plansInputs.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                plansTotal += value;
+            });
+
+            componentsInputs.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                componentsTotal += value;
+            });
+
+            document.getElementById(`${group}-plans-total`).textContent = plansTotal;
+            document.getElementById(`${group}-components-total`).textContent = componentsTotal;
+        }
+
+        // Add event listeners to all input fields for real-time calculation
+        document.addEventListener('DOMContentLoaded', function () {
+            const allInputs = document.querySelectorAll('input[type="number"]');
+
+            allInputs.forEach(input => {
+                input.addEventListener('input', function () {
+                    // Determine which group this input belongs to
+                    if (this.classList.contains('group1-plans') || this.classList.contains('group1-components')) {
+                        calculateSubTotal('group1');
+                    } else if (this.classList.contains('group2-plans') || this.classList.contains('group2-components')) {
+                        calculateSubTotal('group2');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
