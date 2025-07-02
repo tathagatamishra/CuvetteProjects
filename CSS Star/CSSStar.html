@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Stars</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            outline: none;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        *::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+        }
+
+        html,
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            margin: 0%;
+            padding: 0%;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 32px;
+            height: 32px;
+            background-image: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjZrbnIwdHBhdjBjZGlnZWRuMjF1Z2tpMmc0ZHBpdWV5bzdkNnhhYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/ObNTw8Uzwy6KQ/giphy.gif');
+            background-size: contain;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        h1 {
+            margin: 5px 0 50px 0;
+            font-size: 26px;
+            background: linear-gradient(45deg, rgb(81, 68, 156), #000, #7D00FF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 10s ease-in-out infinite;
+            background-size: 200% 200%;
+            background-position: 100% 0;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0 0;
+            }
+
+            50% {
+                background-position: 100% 0;
+            }
+
+            100% {
+                background-position: 0 0;
+            }
+        }
+
+        .page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            max-width: 620px;
+            max-height: 720px;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 20px;
+            background: #fff;
+            border-top: 1px solid rgba(125, 0, 255, 0.377);
+            border-left: 1px solid rgba(125, 0, 255, 0.377);
+            box-shadow: 4px 4px 10px rgba(125, 0, 255, 0.285);
+            overflow-y: scroll;
+        }
+
+        .main-box {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            height: 100%;
+            width: 100%;
+            min-height: fit-content;
+        }
+
+        .star-box {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            grid-column-gap: 20px;
+            grid-row-gap: 20px;
+
+            section {
+                z-index: 1;
+                transition: 0.3s;
+                border: 1px solid rgba(125, 0, 255, 0.2);
+                border-bottom: 0;
+                border-right: 0;
+                background: rgb(255, 255, 255);
+                width: 100%;
+                height: 100%;
+                min-width: 240px;
+                min-height: 240px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 20px;
+                text-align: center;
+                position: relative;
+                box-shadow: 4px 4px 10px rgba(125, 0, 255, 0.1);
+
+                p {
+                    background: #7D00FF;
+                    position: absolute;
+                    top: -5%;
+                    left: -2%;
+                    margin: 0%;
+                    padding: 6px 12px;
+                    border-radius: 50px;
+                    color: #fff;
+                    box-shadow: 4px 4px 10px rgba(125, 0, 255, 0.2);
+                }
+            }
+
+            section:hover {
+                scale: 105%;
+                z-index: 2;
+            }
+        }
+
+        .top {
+            border-bottom: 120px solid yellow;
+            border-top: 100px solid transparent;
+            border-left: 70px solid transparent;
+            border-right: 70px solid transparent;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -80%);
+        }
+
+        .bottom {
+            border-bottom: 100px solid transparent;
+            border-top: 120px solid yellow;
+            border-left: 70px solid transparent;
+            border-right: 70px solid transparent;
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .clip-star {
+            width: 200px;
+            height: 200px;
+            background: yellow;
+            clip-path: polygon(50% 10%,
+                    61.6% 30%,
+                    86.6% 30%,
+                    75.3% 50%,
+                    86.6% 70%,
+                    61.6% 70%,
+                    50% 90%,
+                    38.4% 70%,
+                    13.4% 70%,
+                    24.7% 50%,
+                    14.4% 30%,
+                    38.4% 30%);
+        }
+
+        footer {
+            font-size: 14px;
+            color: #333;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            color: #7D00FF;
+            text-decoration: none;
+        }
+
+        .social {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div class="custom-cursor"></div>
+
+        <div class="main-box">
+            <h1>⭐️ CSS Stars ⭐️</h1>
+
+            <div class="star-box">
+                <section class="1">
+                    <p>Using svg</p>
+
+                    <svg width="200" height="200" viewBox="-100 -100 200 200">
+                        <!-- Top triangle -->
+                        <polygon points="0,-80 69.28,40 -69.28,40" fill="yellow" />
+                        <!-- Bottom triangle -->
+                        <polygon points="0,80 69.28,-40 -69.28,-40" fill="yellow" />
+                    </svg>
+                </section>
+
+                <section class="2">
+                    <p>Using CSS border</p>
+
+                    <div class="top"></div>
+                    <div class="bottom"></div>
+                </section>
+                <section class="3">
+                    <p>Using clip-path</p>
+                    <div class="clip-star"></div>
+                </section>
+                <section class="4">
+                    <p>Using canvas</p>
+                    <canvas id="starCanvas" width="200" height="200"></canvas>
+                </section>
+            </div>
+        </div>
+
+        <footer>
+            <p>Created by <a target="_blank"
+                    href="https://drive.google.com/file/d/1uu5crqTDzOiWwbaevrHqCNdRF0Zy742a/view?usp=sharing">Tathagata
+                    Mishra</a></p>
+
+            <div class="social">
+                <a target="_blank" href="https://github.com/tathagatamishra/CuvetteProjects" class="fa fa-github"></a>
+                <a target="_blank" href="https://www.linkedin.com/in/tathagatamishra/" class="fa fa-linkedin"></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.querySelector('.custom-cursor');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // section 4 star 
+        const canvas = document.getElementById("starCanvas");
+        const ctx = canvas.getContext("2d");
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = 70;
+
+        function drawTriangle(rotation) {
+            ctx.beginPath();
+            for (let i = 0; i < 3; i++) {
+                const angle = ((Math.PI * 2) / 3) * i + rotation;
+                const x = radius * Math.cos(angle);
+                const y = radius * Math.sin(angle);
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.closePath();
+            ctx.fillStyle = "yellow";
+            ctx.fill();
+        }
+
+        ctx.translate(centerX, centerY); // Move origin to center
+        ctx.rotate(Math.PI / 2);         // Rotate 90 degrees (π/2 radians)
+
+        drawTriangle(0);           // Right-facing triangle
+        drawTriangle(Math.PI);     // Left-facing triangle
+    </script>
+</body>
+
+</html>
