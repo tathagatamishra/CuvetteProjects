@@ -135,6 +135,7 @@
             width: 100%;
             height: auto;
             border-radius: 10px;
+            object-fit: cover;
         }
 
         #player {
@@ -256,23 +257,22 @@
     <script>
         const videos = [
             {
-                file: "Big Buck Bunny.mp4",
-                description: "An animated tale of a gentle giant bunny who takes a stand against bullying in a whimsical forest setting. Vibrant, funny, and heartwarming!"
+                file: "Tom and Jerry.mp4",
+                description: "The timeless cat-and-mouse chase continues! Enjoy one of the earliest and most iconic episodes of Tom and Jerry, packed with slapstick humor and vintage animation magic."
             },
             {
-                file: "Gyps Fulvus Griffon Vulture.mp4",
-                description: "Majestic aerial footage of the Griffon Vulture soaring across cliffs and mountains, showcasing its powerful wingspan and graceful flight."
+                file: "The Snoopy Show.mp4",
+                description: "Snoopy hits the waves! Join the world’s most adventurous beagle and his Woodstock buddies for a fun-filled day of surfing, sun, and Snoopy-style silliness."
             },
             {
-                file: "Herd Afghanistan.mp4",
-                description: "A raw and peaceful look at rural Afghanistan — herders guiding their animals across golden plains, framed by rugged landscapes and tradition."
+                file: "The Pink Panther.mp4",
+                description: "The Pink Panther finds himself in a new nocturnal escapade filled with quirky gags, silent mischief, and his signature cool composure under the moonlight."
             },
             {
-                file: "Thailand Bangkok.mp4",
-                description: "A raw nature scene in urban Thailand — a Komodo dragon and a flock of crows feast on a large fish by a riverside. Unexpected and primal."
+                file: "The Tomato Garden.mp4",
+                description: "A quiet garden turns into chaos as unexpected guests mess with the tomato patch. A short, silent comedy full of expressive animation and garden-based giggles."
             }
         ];
-
 
         const player = document.getElementById("player");
         const title = document.querySelector(".title");
@@ -293,7 +293,7 @@
             preview.style.aspectRatio = "16/9";
 
             preview.addEventListener("loadedmetadata", () => {
-                if (preview.duration > 2) preview.currentTime = 2;
+                if (preview.duration > 10) preview.currentTime = 12;
             });
 
             preview.addEventListener("click", e => e.preventDefault());
