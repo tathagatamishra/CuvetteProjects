@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Commentron</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style>
+        * {
+            transition: 200ms;
+            outline: none;
+            box-sizing: border-box;
+            cursor: url(https://cur.cursors-4u.net/cursors/cur-1/cur11.cur), auto !important;
+        }
+
+        *::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+        }
+
+        html,
+        body {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            height: 100vh;
+            width: 100vw;
+            margin: 0%;
+            padding: 0%;
+            overflow: hidden;
+            font-family: 'Trebuchet MS', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(0deg, rgb(0, 3, 19) 20%, #1a486da7 40%, #67ccd17a 48%, #ffffff 50%, #fd7d9f7a 52%, #bc2d539e 60%, rgb(30, 14, 30) 80%);
+        }
+
+        .box {
+            position: absolute;
+            background-color: #fed5e0;
+            box-shadow: 0px 0px 20px #fff;
+            border-radius: 50%;
+        }
+
+        .stars {
+            z-index: 0;
+            top: -50%;
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .lines {
+            z-index: 0;
+            bottom: -50%;
+            transform: perspective(600px) rotateX(80deg);
+            transform-origin: top;
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background-color: #00000000;
+            opacity: 0.8;
+            background-image: linear-gradient(#13f3ff6e 1px, #00000000 1px), linear-gradient(to right, #13f3ff6e 1px, #00000000 1px);
+            background-size: 39.7px 39.7px;
+        }
+
+        .page {
+            z-index: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            max-width: 90vw;
+            max-height: 90vh;
+            width: 820px;
+            height: 820px;
+            padding: 20px 0;
+            overflow: hidden;
+            box-sizing: border-box;
+            border-radius: 0 20px 20px 20px;
+            background: linear-gradient(180deg, rgb(100, 100, 100) 0%, rgb(0, 0, 0) 20%, rgb(0, 0, 0) 90%, rgb(50, 50, 50) 100%);
+            border: 1px solid rgb(254, 134, 164);
+            overflow-y: scroll;
+            box-shadow: rgba(255, 59, 108, 0.15) 0px 0px 40px, rgba(240, 46, 170, 0.3) -5px 5px, rgba(240, 46, 170, 0.2) -10px 10px, rgba(240, 46, 170, 0.1) -15px 15px, rgba(240, 46, 170, 0.05) -20px 20px;
+
+            .overlay {
+                z-index: 0;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color: transparent;
+                opacity: 0.8;
+                background-image: linear-gradient(#000000 1px, transparent 1px), linear-gradient(to right, #000000 1px, transparent 1px);
+                background-size: 31px 31px;
+            }
+
+            span {
+                z-index: 1;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                margin-bottom: 120px;
+                height: 60px;
+                gap: 10px;
+                padding: 0 20px;
+
+                .logo {
+                    margin-top: 50px;
+                    height: 180px;
+                    width: auto;
+                    object-fit: contain;
+                    -webkit-filter: drop-shadow(0px 0px 5px #00d5ff76);
+                    filter: drop-shadow(0px 0px 5px #00d5ff76);
+                }
+
+                @media screen and (max-width: 480px) {
+                    margin-bottom: 80px;
+
+                    .logo {
+                        margin-top: 20px;
+                        height: 140px;
+                    }
+                }
+            }
+
+            .main-box {
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                gap: 20px;
+                overflow: hidden;
+
+                .write {
+                    display: flex;
+                    flex-direction: column;
+                    height: fit-content;
+                    width: calc(100% - 40px);
+                    margin: 0 20px;
+
+                    input {
+                        width: 100%;
+                        background: #00000000;
+                        color: #e0e0e0;
+                        padding: 10px;
+                        font-size: 14px;
+                        border: 1px solid #ffffff3a;
+                        border-top: none;
+                        border-right: none;
+                        border-radius: 10px 0 0 0;
+                        box-shadow: -3px 1px 3px #ffffff1b;
+                    }
+
+                    textarea {
+                        max-height: 160px;
+                        width: 100%;
+                        resize: vertical;
+                        background: #00000000;
+                        color: #e0e0e0;
+                        padding: 10px;
+                        font-size: 14px;
+                        border-radius: 0 0 0 20px;
+                        border: 1px solid #ffffff3a;
+                        border-top: none;
+                        border-right: none;
+                        box-shadow: -3px 1px 3px #ffffff1b;
+                    }
+
+                    button {
+                        position: relative;
+                        margin: 0;
+                        width: 100px;
+                        height: 40px;
+                        align-self: flex-end;
+                        font-size: 14px;
+                        color: #e0e0e0;
+                        background: #000;
+                        border-radius: 0 0 10px 20px;
+                        border-style: none;
+                        border: 1px solid #ffffff3a;
+                        border-top: none;
+                        border-right: none;
+                        box-shadow: 0px 2px 3px #ffffff1b;
+
+                        box-sizing: border-box;
+                        list-style: none;
+                        outline: none;
+                        position: relative;
+                        text-align: center;
+                        text-decoration: none;
+                        user-select: none;
+                        -webkit-user-select: none;
+                        touch-action: manipulation;
+
+                        .corner1 {
+                            z-index: 1;
+                            width: 20px;
+                            height: 20px;
+                            position: absolute;
+                            left: -20px;
+                            top: 0px;
+                            border-radius: 0 20px 0 0;
+                            border-top: 1px solid #ffffff3a;
+                            border-right: 1px solid #ffffff3a;
+                        }
+
+                        .corner2 {
+                            z-index: 0;
+                            background: #000;
+                            width: 20px;
+                            height: 20px;
+                            position: absolute;
+                            left: -20px;
+                            top: 0px;
+                        }
+                    }
+
+                    button:active {
+                        height: 30px;
+                        margin-bottom: 10px;
+                        font-size: 12px;
+                        letter-spacing: 2px;
+                        border-radius: 0 0 10px 15px;
+                        color: #fdd27d;
+
+                        .corner1 {
+                            left: -15px;
+                            width: 15px;
+                            height: 17px;
+                            border-radius: 0 15px 0 0;
+                        }
+
+                        .corner2 {
+                            left: -15px;
+                            width: 15px;
+                            height: 17px;
+                        }
+                    }
+                }
+
+                .list {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    width: calc(100% - 40px);
+                    height: 100%;
+                    max-height: 35vh;
+                    margin: 0 20px 20px 20px;
+                    border-top: 1px solid #ffffff3a;
+                    border-right: 1px solid #ffffff3a;
+                    border-radius: 0 20px 20px;
+                    padding: 10px 0 0 0;
+                    font-size: 14px;
+                    text-decoration: none;
+                    color: #e0e0e0;
+                    box-shadow: 3px 1px 3px #ffffff1b;
+
+                    .count {
+                        top: -40px;
+                        position: absolute;
+                        width: fit-content;
+                        height: fit-content;
+                        background: #000;
+                        padding: 10px 20px 10px 10px;
+                        border-top: 1px solid #ffffff3a;
+                        border-right: 1px solid #ffffff3a;
+                        border-radius: 10px 20px 0 0;
+                        box-shadow: 0px -2px 3px #ffffff1b;
+
+                        .corner1 {
+                            z-index: 1;
+                            width: 20px;
+                            height: 20px;
+                            position: absolute;
+                            right: -20px;
+                            bottom: 0px;
+                            border-radius: 0 0 0 20px;
+                            border-bottom: 1px solid #ffffff3a;
+                            border-left: 1px solid #ffffff3a;
+                        }
+
+                        .corner2 {
+                            z-index: 0;
+                            background: #000;
+                            width: 20px;
+                            height: 20px;
+                            position: absolute;
+                            right: -20px;
+                            bottom: 0px;
+                        }
+                    }
+
+                    .comment-box {
+                        overflow-y: scroll;
+                        position: relative;
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                        height: 100%;
+                        max-height: 100%;
+
+                        .comment {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 10px;
+                            border-bottom: 1px solid #ffffff3a;
+                            border-radius: 0 0 20px 10px;
+                            box-shadow: 0px 2px 3px #ffffff1b;
+                            padding: 15px 15px 15px 10px;
+
+                            p {
+                                height: fit-content;
+                                margin: 0;
+                            }
+
+                            .user {
+                                height: fit-content;
+                                font-style: italic;
+                                display: flex;
+                                justify-content: space-between;
+                                color: #b3b3b3;
+                            }
+                        }
+                    }
+                }
+            }
+
+            footer {
+                z-index: 1;
+                font-size: 14px;
+                font-style: italic;
+                color: #e0e0e0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: calc(100% - 40px);
+                margin: 0 20px;
+
+                a {
+                    color: #67ccd1;
+                    text-decoration: none;
+                }
+
+                a:hover {
+                    color: #fdd27d;
+                }
+
+                .social {
+                    display: flex;
+                    gap: 10px;
+                    font-size: 22px;
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lines"></div>
+    <div class="stars"></div>
+
+    <div class="page">
+        <div class="overlay"></div>
+
+        <span>
+            <img class="logo" alt="logo" src="./comment-below.png" />
+        </span>
+
+        <div class="main-box">
+            <section class="write">
+                <input type="text" placeholder="Enter your name">
+                <textarea name="comment" id="comment" placeholder="Write your comment here..."></textarea>
+                <button>Submit <div class="corner1"></div>
+                    <div class="corner2"></div>
+                </button>
+            </section>
+
+            <section class="list">
+                <div class="count">328 Comments<div class="corner1"></div>
+                    <div class="corner2"></div>
+                </div>
+
+                <div class="comment-box">
+                    <div class="comment">
+                        <p>This is a comment</p>
+
+                        <div class="user">
+                            <p>Anonymous</p>
+                            <p>Today</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>Created by <a target="_blank"
+                    href="https://drive.google.com/file/d/1uu5crqTDzOiWwbaevrHqCNdRF0Zy742a/view?usp=sharing">Tathagata
+                    Mishra</a></p>
+            <div class="social">
+                <a target="_blank" href="https://github.com/tathagatamishra/CuvetteProjects" class="fa fa-github"></a>
+                <a target="_blank" href="https://www.linkedin.com/in/tathagatamishra/" class="fa fa-linkedin"></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const input = document.querySelector("input");
+        const textarea = document.querySelector("textarea");
+        const button = document.querySelector("button");
+        const list = document.querySelector(".comment-box");
+        const countDiv = document.querySelector(".count");
+
+        const getDate = () => {
+            const d = new Date();
+            return d.toLocaleDateString() === new Date().toLocaleDateString() ? "Today" : d.toLocaleDateString();
+        };
+
+        const renderComments = () => {
+            const comments = JSON.parse(localStorage.getItem("comments") || "[]");
+
+            list.innerHTML = "";
+
+            comments.forEach(({ name, text, time }) => {
+                const div = document.createElement("div");
+                div.className = "comment";
+                div.innerHTML = `
+            <p>${text.replace(/\n/g, "<br>")}</p>
+            <div class="user">
+              <p>${name}</p>
+              <p>${time}</p>
+            </div>`;
+                list.appendChild(div);
+            });
+
+            countDiv.innerHTML = `${comments.length} Comments <div class="corner1"></div><div class="corner2"></div>`;
+        };
+
+        const addComment = (name, text) => {
+            const comments = JSON.parse(localStorage.getItem("comments") || "[]");
+            comments.push({ name: name || "Anonymous", text, time: getDate() });
+            localStorage.setItem("comments", JSON.stringify(comments));
+            renderComments();
+        };
+
+        if (!localStorage.getItem("comments")) {
+            localStorage.setItem("comments", JSON.stringify([
+                { name: "Anonymous", text: "This is a comment", time: getDate() },
+                { name: "Morpheus", text: "Wake up, Neo... \nThe Matrix has you... \nFollow the white rabbit. \nKnock, knock, Neo.", time: getDate() }
+            ]));
+        }
+
+        button.addEventListener("click", () => {
+            const name = input.value.trim();
+            const text = textarea.value.trim();
+            if (text) {
+                addComment(name, text);
+                input.value = "";
+                textarea.value = "";
+            }
+        });
+
+        renderComments();
+
+        // -------------
+        const stars = document.querySelector(".stars");
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            function freshDot() {
+                const obj = document.createElement("div");
+                obj.classList.add("box");
+                obj.style.top = (window.innerHeight * Math.random()) + 'px';
+                obj.style.left = (window.innerWidth * Math.random()) + 'px';
+                const size = Math.floor(2 * Math.random()) + 1;
+                obj.style.height = size + 'px';
+                obj.style.width = size + 'px';
+
+                stars.appendChild(obj);
+                return obj;
+            }
+
+            const dot = [];
+            for (let i = 0; i < 1000; i++) {
+                dot.push(freshDot());
+            }
+        });
+    </script>
+</body>
+
+</html>
