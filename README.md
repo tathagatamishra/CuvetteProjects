@@ -1,3 +1,7 @@
+<img height="80" alt="cuvette-wordmark" src="https://github.com/user-attachments/assets/35a4b548-6a9e-4d67-892e-95569721d893" />
+
+---
+
 # CuvetteProjects
 
 - This are project I created for Cuvette assignment.
