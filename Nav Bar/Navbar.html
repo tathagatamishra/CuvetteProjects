@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navbar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            transition: 0.3s;
+            margin: 0%;
+            padding: 0%;
+        }
+
+        html,
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .logo {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            font-size: 26px;
+            background: linear-gradient(45deg, rgb(81, 68, 156), #000, mediumslateblue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 10s ease-in-out infinite;
+            background-size: 200% 200%;
+            background-position: 100% 0;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0 0;
+            }
+
+            50% {
+                background-position: 100% 0;
+            }
+
+            100% {
+                background-position: 0 0;
+            }
+        }
+
+        .page {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 90vw;
+            max-width: 720px;
+            max-height: 90vh;
+            width: 90%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 20px;
+            background: #fff;
+            border-top: 1px solid rgba(124, 104, 238, 0.377);
+            border-left: 1px solid rgba(124, 104, 238, 0.377);
+            box-shadow: 4px 4px 10px rgba(124, 104, 238, 0.285);
+        }
+
+        .main-nav {
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        .main-ul {
+            position: relative;
+            padding: 0;
+            margin: 0;
+            background: black;
+            border-radius: 100px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            cursor: pointer;
+            max-height: 40px;
+            height: 40px;
+            width: calc(5 * 60px);
+            min-width: calc(5 * 60px);
+            border: 2px solid rgb(124, 104, 238);
+            box-shadow: 4px 4px 10px rgba(124, 104, 238, 0.285);
+        }
+
+        .ui-li {
+            z-index: 1;
+            min-width: 60px;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            /* font-size: 22px; */
+            color: #fff;
+        }
+
+        .ui-li:hover {
+            background: #333;
+            font-size: 28px;
+            color: springgreen !important;
+        }
+
+        .ui-li:active {
+            background: #333;
+            font-size: 12px;
+        }
+
+        .li-line {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 40px;
+        }
+
+        @media screen and (max-width: 500px) {
+            .main-nav {
+                margin-bottom: 30px;
+            }
+
+            .main-ul {
+                max-height: fit-content;
+                height: 40px;
+                width: 40px;
+                min-width: 40px;
+                flex-direction: column;
+                position: absolute;
+                top: 0%;
+                right: 0%;
+                margin: 20px 20px 0 0;
+            }
+
+            .ui-li:active {
+                background: #333;
+                font-size: 28px;
+            }
+
+            .li-line {
+                z-index: 3;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                height: 40px;
+                background: rgb(0, 0, 0);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .li-line::before {
+                content: "";
+                z-index: 4;
+                width: 50%;
+                height: 4px;
+                border-top: 3px solid springgreen;
+                border-bottom: 3px solid springgreen;
+            }
+
+            .li-line::after {
+                content: "";
+                z-index: 4;
+                width: 50%;
+                height: 2px;
+                background: springgreen;
+            }
+        }
+
+        .device-1 {
+            z-index: 0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 50px;
+            border-radius: 15px;
+            overflow-y: auto;
+            aspect-ratio: 9/16;
+            border: 8px solid #000;
+            background: #000;
+            max-width: 360px;
+            width: calc(100% - 16px);
+            height: fit-content;
+            align-self: center;
+            overflow: hidden;
+            box-shadow: 2px 6px 10px rgba(0, 0, 0, 0.285);
+            border-radius: 4rem !important;
+            corner-shape: squircle !important;
+        }
+
+        .nav-1 {
+            width: 100%;
+            height: 60px;
+            background: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+            align-items: center;
+        }
+
+        .nav-1>li {
+            max-width: 100px;
+            min-width: fit-content;
+            height: 100%;
+            padding: 0 10px 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .nav-1>li>a {
+            color: #fff;
+        }
+
+        .nav-1>li:hover {
+            border-bottom: 6px solid springgreen;
+        }
+
+        .nav-1>li:hover>a {
+            color: springgreen !important;
+        }
+
+        .content-1 {
+            height: 100%;
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: #fff;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        .content-1>section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .content-1>section:nth-child(2),
+        .content-1>section:nth-child(3),
+        .content-1>section:nth-child(4) {
+            padding-top: 30px;
+            border-top: 2px dashed lightsteelblue;
+        }
+
+        .page-0 p {
+            color: gray;
+        }
+
+        .profile {
+            width: 100px;
+            height: 100px;
+            background: whitesmoke;
+            border-radius: 20px;
+            border: 2px solid lightslategrey;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        .profile::before {
+            content: "";
+            z-index: 1;
+            min-width: 40px;
+            min-height: 40px;
+            background: lightpink;
+            border-radius: 50px;
+            margin-top: 10px;
+        }
+
+        .profile::after {
+            content: "";
+            z-index: 1;
+            width: 80px;
+            height: 80px;
+            border-top-left-radius: 100px;
+            background: skyblue;
+            border-top-right-radius: 100px;
+        }
+
+        .page-1 p:nth-child(1) {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .page-1 p:nth-child(1)>span {
+            font-size: 22px;
+        }
+
+        .page-1 p:nth-child(3) {
+            color: gray;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-top: 10px;
+        }
+
+        .tags>div {
+            background: Moccasin;
+            padding: 2px 8px;
+            border-radius: 50px;
+            border-bottom: 1px solid #33333320;
+            border-right: 1px solid #33333320;
+        }
+
+        .page-2 p {
+            padding-top: 10px;
+        }
+
+        .page-2 p:nth-child(2) {
+            text-align: right;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        .box>div {
+            height: 60px;
+            width: 60px;
+            border-radius: 50px;
+            background: lightsalmon;
+        }
+
+        .page-3>article:nth-child(2) {
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        .page-3>article>div {
+            margin: 10px 0 20px 0;
+            aspect-ratio: 16/9;
+            background: Lavender;
+            width: 200px;
+            border-radius: 10px;
+            border: 1px solid lightsteelblue;
+        }
+
+        footer {
+            font-size: 14px;
+            color: #333;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            color: mediumslateblue;
+            text-decoration: none;
+        }
+
+        .social {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <nav class="main-nav">
+            <h1 class="logo">Navbar</h1>
+
+            <ul class="main-ul">
+                <li class="li-line"></li>
+                <li class="ui-li">1</li>
+                <li class="ui-li">2</li>
+                <li class="ui-li">3</li>
+                <li class="ui-li">4</li>
+                <li class="ui-li">5</li>
+            </ul>
+        </nav>
+
+        <div class="device-1">
+            <ul class="nav-1">
+                <li><a href="">About</a></li>
+                <li><a href="">Skills</a></li>
+                <li><a href="">Projects</a></li>
+            </ul>
+
+            <div class="content-1">
+                <section class="page-0">
+                    <div class="profile"></div>
+                    <h2>Tathagata Mishra</h2>
+                    <p>Creative Web Developer</p>
+                </section>
+                <section class="page-1">
+                    <p>
+                        <span>Hi</span>, I'm a creative developer and designer passionate about building meaningful
+                        digital
+                        experiences.
+                    </p>
+
+                    <div class="box">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+
+                    <p>
+                        I love bringing ideas to life through clean design, thoughtful
+                        interactions, and efficient code.
+                    </p>
+
+                    <p>
+                        For me, technology is not just about functionality — it's about storytelling, emotion, and
+                        connection. I aim to create experiences that feel intuitive, look beautiful, and leave an
+                        impression.
+                    </p>
+                </section>
+                <section class="page-2">
+                    <div class="tags">
+                        <div>JS</div>
+                        <div>Node</div>
+                        <div>Next</div>
+                        <div>Mongodb</div>
+                        <div>Express</div>
+                        <div>React</div>
+                        <div>CSS</div>
+                        <div>HTML</div>
+                        <div>AWS</div>
+                        <div>UI-UX</div>
+                        <div>Python</div>
+                        <div>C++</div>
+                        <div>UE5</div>
+                    </div>
+
+                    <p>
+                        I work across the full stack, blending creativity with technical skill
+                    </p>
+
+                    <div class="box">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+
+                    <p>
+                        — from designing modern
+                        web interfaces with Next.js and TailwindCSS, to crafting smooth backend systems using Node.js,
+                        Express, and MongoDB.
+                    </p>
+                </section>
+                <section class="page-3">
+                    <article>
+                        <h3>Project 1</h3>
+                        <div></div>
+                    </article>
+                    <article>
+                        <h3>Project 2</h3>
+                        <div></div>
+                    </article>
+                    <article>
+                        <h3>Project 3</h3>
+                        <div></div>
+                    </article>
+                </section>
+            </div>
+        </div>
+
+        <footer>
+            <p>Created by <a target="_blank"
+                    href="https://drive.google.com/file/d/1uu5crqTDzOiWwbaevrHqCNdRF0Zy742a/view?usp=sharing">Tathagata
+                    Mishra</a></p>
+
+            <div class="social">
+                <a target="_blank" href="https://github.com/tathagatamishra/CuvetteProjects" class="fa fa-github"></a>
+                <a target="_blank" href="https://www.linkedin.com/in/tathagatamishra/" class="fa fa-linkedin"></a>
+            </div>
+        </footer>
+    </div>
+</body>
+
+<script>
+    const mainNav = document.querySelector('.main-ul');
+    const mainNavLine = document.querySelector('.li-line');
+    const uiLis = document.querySelectorAll('.ui-li');
+
+    let menuOpen = false;
+
+    uiLis.forEach(li => {
+        li.addEventListener('click', () => {
+            uiLis.forEach(x => {
+                x.style.fontSize = '';
+                x.style.color = '';
+            });
+            li.style.fontSize = '28px';
+            li.style.color = 'springgreen';
+        });
+    });
+
+    // only for small screens
+    mainNav.addEventListener('click', () => {
+        if (window.innerWidth > 500) return;
+        menuOpen = !menuOpen;
+        mainNav.style.height = menuOpen ? '200px' : '40px';
+        mainNavLine.style.display = menuOpen ? 'none' : 'flex';
+    });
+
+    // nav
+    const navList = document.querySelector('.nav-1');
+    const navItems = Array.from(navList.querySelectorAll('li'));
+    const content = document.querySelector('.content-1');
+
+    // sections array .page-1, .page-2, .page-3
+    const sections = navItems
+        .map((_, i) => document.querySelector(`.page-${i + 1}`))
+        .filter(Boolean);
+
+    function clearNavActive() {
+        navItems.forEach(li => {
+            li.style.borderBottom = '';
+            const a = li.querySelector('a');
+            if (a) a.style.color = '';
+        });
+    }
+
+    function setNavActive(index) {
+        clearNavActive();
+        const li = navItems[index];
+        if (!li) return;
+        li.style.borderBottom = '6px solid springgreen';
+        const a = li.querySelector('a');
+        if (a) a.style.color = 'springgreen';
+    }
+
+    // compute current nav bar height (accounts for responsive changes)
+    function getNavOffset() {
+        return navList ? navList.offsetHeight : 0;
+    }
+
+    function scrollToSection(section) {
+        if (!section) return;
+        // offset so section top is visible below the nav
+        const navOffset = getNavOffset();
+        const target = Math.max(0, section.offsetTop - navOffset);
+        content.scrollTo({ top: target, behavior: 'smooth' });
+    }
+
+    navList.addEventListener('click', (e) => {
+        const li = e.target.closest('li');
+        if (!li || !navList.contains(li)) return;
+        e.preventDefault();
+        const idx = navItems.indexOf(li);
+        if (sections[idx]) {
+            scrollToSection(sections[idx]);
+            setNavActive(idx);
+        }
+    });
+
+    // on content scroll check nearest to scrollTop
+    content.addEventListener('scroll', () => {
+        const scrollTop = content.scrollTop;
+        const navOffset = getNavOffset();
+        let bestIdx = 0;
+        let bestDist = Infinity;
+        sections.forEach((s, i) => {
+            const targetTop = s.offsetTop - navOffset;
+            const dist = Math.abs(targetTop - scrollTop);
+            if (dist < bestDist) {
+                bestDist = dist;
+                bestIdx = i;
+            }
+        });
+        setNavActive(bestIdx);
+    });
+
+    function makeObserver() {
+        const navOffset = getNavOffset();
+        
+        const rootMargin = `-${navOffset}px 0px 0px 0px`;
+        return new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const idx = sections.indexOf(entry.target);
+                    if (idx !== -1) setNavActive(idx);
+                }
+            });
+        }, {
+            root: content,
+            threshold: 0.6,
+            rootMargin
+        });
+    }
+
+    let observer = makeObserver();
+    sections.forEach(s => observer.observe(s));
+
+    window.addEventListener('resize', () => {
+        if (observer) {
+            sections.forEach(s => observer.unobserve(s));
+        }
+        observer = makeObserver();
+        sections.forEach(s => observer.observe(s));
+    });
+
+    // default active
+    setNavActive(0);
+</script>
+
+</html>
