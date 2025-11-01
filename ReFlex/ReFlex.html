@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Re-Flex</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style>
+        * {
+            margin: 0%;
+            padding: 0%;
+        }
+
+        html,
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+                "Lucida Sans", Arial, sans-serif;
+        }
+
+        .logo {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            font-size: 26px;
+            background: linear-gradient(45deg,
+                    rgb(81, 68, 156),
+                    #000,
+                    mediumslateblue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 10s ease-in-out infinite;
+            background-size: 200% 200%;
+            background-position: 100% 0;
+        }
+
+        .caption {
+            margin-top: 6px;
+            color: LightSlateGray;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0 0;
+            }
+
+            50% {
+                background-position: 100% 0;
+            }
+
+            100% {
+                background-position: 0 0;
+            }
+        }
+
+        .page {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 90vw;
+            max-width: 720px;
+            max-height: 90vh;
+            width: 90%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 20px;
+            background: #fff;
+            border-top: 1px solid rgba(124, 104, 238, 0.377);
+            border-left: 1px solid rgba(124, 104, 238, 0.377);
+            box-shadow: 4px 4px 10px rgba(124, 104, 238, 0.285);
+        }
+
+        .box {
+            width: 100%;
+            aspect-ratio: 1/1;
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 50px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 20px;
+            outline: 4px solid rgb(171, 157, 255);
+            background: rgb(171, 157, 255);
+        }
+
+        .nav {
+            width: 20%;
+            height: 100%;
+            background: AliceBlue;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content {
+            width: 80%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .header {
+            width: 100%;
+            height: 20%;
+            background: HoneyDew;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mid-content {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            flex-direction: row;
+            position: relative;
+        }
+
+        .article {
+            width: 80%;
+            height: 100%;
+            background: white;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .aside {
+            width: 20%;
+            height: 100%;
+            background: FloralWhite;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer {
+            width: 100%;
+            height: 20%;
+            background: HoneyDew;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Resize handles */
+        .resize-handle {
+            position: absolute;
+            background: rgba(124, 104, 238, 0.3);
+            z-index: 10;
+            transition: background 0.2s;
+        }
+
+        .resize-handle:hover {
+            background: rgba(124, 104, 238, 0.6);
+        }
+
+        .resize-handle.active {
+            background: rgba(124, 104, 238, 0.8);
+        }
+
+        .resize-handle-h {
+            height: 100%;
+            width: 6px;
+            cursor: ew-resize;
+            right: -3px;
+            top: 0;
+        }
+
+        .resize-handle-v {
+            width: 100%;
+            height: 6px;
+            cursor: ns-resize;
+            bottom: -3px;
+            left: 0;
+        }
+
+        .footer .resize-handle-v {
+            top: -3px;
+            bottom: auto;
+        }
+
+        footer {
+            font-size: 14px;
+            color: #333;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            color: mediumslateblue;
+            text-decoration: none;
+        }
+
+        .social {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+        }
+
+        .resizing {
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div>
+            <h1 class="logo">Re-Flex</h1>
+            <p class="caption">Resizable Flex Boxes</p>
+        </div>
+
+        <div class="box" id="box">
+            <div class="nav" id="nav">
+                nav
+                <div class="resize-handle resize-handle-h" data-target="nav" data-direction="horizontal"></div>
+            </div>
+
+            <div class="content" id="content">
+                <div class="header" id="header">
+                    header
+                    <div class="resize-handle resize-handle-v" data-target="header" data-direction="vertical"></div>
+                </div>
+
+                <div class="mid-content" id="mid-content">
+                    <div class="article" id="article">
+                        article
+                        <div class="resize-handle resize-handle-h" data-target="article" data-direction="horizontal">
+                        </div>
+                    </div>
+                    <div class="aside" id="aside">aside</div>
+                </div>
+
+                <div class="footer" id="footer">
+                    footer
+                    <div class="resize-handle resize-handle-v" data-target="footer" data-direction="vertical"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>
+                Created by
+                <a target="_blank"
+                    href="https://drive.google.com/file/d/1uu5crqTDzOiWwbaevrHqCNdRF0Zy742a/view?usp=sharing">Tathagata
+                    Mishra</a>
+            </p>
+
+            <div class="social">
+                <a target="_blank" href="https://github.com/tathagatamishra/CuvetteProjects" class="fa fa-github"></a>
+                <a target="_blank" href="https://www.linkedin.com/in/tathagatamishra/" class="fa fa-linkedin"></a>
+            </div>
+        </footer>
+    </div>
+</body>
+
+<script>
+    let isResizing = false;
+    let currentHandle = null;
+    let startX = 0;
+    let startY = 0;
+    let startWidth = 0;
+    let startHeight = 0;
+
+    const handles = document.querySelectorAll('.resize-handle');
+    const box = document.getElementById('box');
+
+    handles.forEach(handle => {
+        handle.addEventListener('mousedown', startResize);
+    });
+
+    function startResize(e) {
+        e.preventDefault();
+        isResizing = true;
+        currentHandle = e.target;
+        startX = e.clientX;
+        startY = e.clientY;
+
+        const targetId = currentHandle.dataset.target;
+        const targetElement = document.getElementById(targetId);
+        const direction = currentHandle.dataset.direction;
+
+        if (direction === 'horizontal') {
+            startWidth = targetElement.offsetWidth;
+        } else {
+            startHeight = targetElement.offsetHeight;
+        }
+
+        currentHandle.classList.add('active');
+        document.body.classList.add('resizing');
+
+        document.addEventListener('mousemove', resize);
+        document.addEventListener('mouseup', stopResize);
+    }
+
+    function resize(e) {
+        if (!isResizing) return;
+
+        const targetId = currentHandle.dataset.target;
+        const targetElement = document.getElementById(targetId);
+        const direction = currentHandle.dataset.direction;
+
+        if (direction === 'horizontal') {
+            const deltaX = e.clientX - startX;
+            const containerWidth = targetElement.parentElement.offsetWidth;
+            let newWidth = startWidth + deltaX;
+
+            // Constrain width between 10% and 90%
+            newWidth = Math.max(containerWidth * 0.15, Math.min(containerWidth * 0.9, newWidth));
+            const percentage = (newWidth / containerWidth) * 100;
+
+            targetElement.style.width = percentage + '%';
+
+            // Adjust sibling widths
+            if (targetId === 'nav') {
+                const content = document.getElementById('content');
+                content.style.width = (100 - percentage) + '%';
+            } else if (targetId === 'article') {
+                const aside = document.getElementById('aside');
+                aside.style.width = (100 - percentage) + '%';
+            }
+        } else if (direction === 'vertical') {
+            const deltaY = e.clientY - startY;
+            const containerHeight = targetElement.parentElement.offsetHeight;
+            let newHeight = startHeight + deltaY;
+
+            // If target is footer, dragging top edge should invert delta
+            if (targetId === 'footer') {
+                // (deltaY>0) reduces footer height
+                newHeight = startHeight - deltaY;
+            }
+
+            // Constrain height between 10% and 70%
+            newHeight = Math.max(containerHeight * 0.1, Math.min(containerHeight * 0.7, newHeight));
+            const percentage = (newHeight / containerHeight) * 100;
+
+            targetElement.style.height = percentage + '%';
+
+            // Adjust sibling heights
+            if (targetId === 'header') {
+                const midContent = document.getElementById('mid-content');
+                const footer = document.getElementById('footer');
+                const remainingHeight = 100 - percentage;
+                const footerPercentage = (footer.offsetHeight / containerHeight) * 100;
+                midContent.style.height = (remainingHeight - footerPercentage) + '%';
+            } else if (targetId === 'footer') {
+                const midContent = document.getElementById('mid-content');
+                const header = document.getElementById('header');
+                const headerPercentage = (header.offsetHeight / containerHeight) * 100;
+                // remaining for mid-content = 100 - header - footer
+                midContent.style.height = (100 - headerPercentage - percentage) + '%';
+            }
+        }
+    }
+
+    function stopResize() {
+        if (isResizing) {
+            isResizing = false;
+            currentHandle.classList.remove('active');
+            document.body.classList.remove('resizing');
+            currentHandle = null;
+
+            document.removeEventListener('mousemove', resize);
+            document.removeEventListener('mouseup', stopResize);
+        }
+    }
+</script>
+
+</html>
