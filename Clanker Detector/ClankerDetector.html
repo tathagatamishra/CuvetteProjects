@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clanker Detector</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      * {
+        transition: 0.3s;
+        margin: 0%;
+        padding: 0%;
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+      }
+
+      html,
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      nav > h1 {
+        font-size: 26px;
+      }
+
+      .logo {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(
+          45deg,
+          rgb(81, 68, 156),
+          #000,
+          mediumslateblue
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: rainbow 10s ease-in-out infinite;
+        background-size: 200% 200%;
+        background-position: 100% 0;
+      }
+
+      @keyframes rainbow {
+        0% {
+          background-position: 0 0;
+        }
+
+        50% {
+          background-position: 100% 0;
+        }
+
+        100% {
+          background-position: 0 0;
+        }
+      }
+
+      footer {
+        font-size: 14px;
+        color: #333;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      a {
+        color: mediumslateblue;
+        text-decoration: none;
+      }
+
+      .social {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        font-size: 22px;
+      }
+
+      .page {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 90vw;
+        max-width: 720px;
+        max-height: 90vh;
+        width: 90%;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 20px;
+        background: #fff;
+        border-top: 1px solid rgba(124, 104, 238, 0.377);
+        border-left: 1px solid rgba(124, 104, 238, 0.377);
+        box-shadow: 4px 4px 10px rgba(124, 104, 238, 0.285);
+      }
+
+      .box {
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 50px;
+        border-radius: 10px;
+        overflow-y: auto;
+        max-width: 520px;
+        width: calc(100% - 40px);
+        background: linen;
+        box-shadow: 2px 2px 5px #00000026;
+        border: 2px solid #000;
+        padding: 20px 20px 40px 20px;
+      }
+
+      .box > h2 {
+        font-size: 20px;
+      }
+      .box > label {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      .captcha {
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        justify-content: center;
+        gap: 20px;
+      }
+      .char-box {
+        min-width: calc(50% - 10px);
+        height: 150px;
+        background: #fff;
+        border-radius: 10px;
+        border: 2px solid #000;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+      .char {
+        font-size: 38px;
+        letter-spacing: 10px;
+        font-weight: 600;
+        opacity: 30%;
+      }
+      .form {
+        min-width: calc(50% - 10px);
+        height: 140px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        position: relative;
+      }
+      .form > input {
+        padding: 0px 10px;
+        min-height: 40px;
+        font-size: 26px;
+        font-weight: 600;
+        border-radius: 10px;
+        letter-spacing: 8px;
+        text-align: center;
+      }
+      .form > button {
+        width: 50%;
+        min-height: 40px;
+        border-radius: 10px;
+        border: none;
+        position: relative;
+        margin: 4px 0 0 4px;
+        background: #000;
+        transition: 0.3s ease-in-out;
+        cursor: pointer;
+      }
+      .form > button::before {
+        border: 2px solid #000;
+        margin: -4px 0 0 -4px;
+        content: "Submit";
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        font-size: 18px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+      }
+      .form > button:hover {
+        scale: 104%;
+      }
+      .form > button:active {
+        scale: 100%;
+        margin: 0px;
+      }
+      .form > button:active::before {
+        margin: 0px;
+      }
+      .form > p {
+        color: tomato;
+        font-size: 14px;
+        position: absolute;
+        bottom: -10%;
+      }
+
+      @media screen and (max-width: 550px) {
+        .box {
+          gap: 10px;
+        }
+        .box > h2 {
+          font-size: 16px;
+        }
+        .box > label {
+          font-size: 12px;
+        }
+        .char-box {
+          width: 100%;
+        }
+        .form {
+          width: 100%;
+        }
+        .form > p {
+          font-size: 12px;
+        }
+        .form > button {
+          align-self: flex-end;
+        }
+        .form > button::before {
+          font-size: 16px;
+        }
+        .captcha {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <nav>
+        <h1 class="logo">Clanker Detector</h1>
+        <h1>🤖</h1>
+      </nav>
+
+      <div class="box">
+        <h2>Human Verification Check</h2>
+        <label>
+          Please enter the characters to verify that you are not a CLANKER !!
+        </label>
+
+        <div class="captcha">
+          <div class="char-box">
+            <p class="char"></p>
+          </div>
+
+          <div class="form">
+            <input type="text" />
+            <button>Submit</button>
+            <p>* So you are a human, we have no problem, you are welcome!</p>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>
+          Created by
+          <a
+            target="_blank"
+            href="https://drive.google.com/file/d/1uu5crqTDzOiWwbaevrHqCNdRF0Zy742a/view?usp=sharing"
+            >Tathagata Mishra</a
+          >
+        </p>
+
+        <div class="social">
+          <a
+            target="_blank"
+            href="https://github.com/tathagatamishra/CuvetteProjects"
+            class="fa fa-github"
+          ></a>
+          <a
+            target="_blank"
+            href="https://www.linkedin.com/in/tathagatamishra/"
+            class="fa fa-linkedin"
+          ></a>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const charBox = document.querySelector(".char-box");
+      const char = document.querySelector(".char");
+      const inputEl = document.querySelector(".form > input");
+      const submitBtn = document.querySelector(".form > button");
+      const messageP = document.querySelector(".form > p");
+
+      let currentCode = "";
+
+      function generateCode() {
+        const chars =
+          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let out = "";
+        for (let i = 0; i < 4; i++) {
+          out += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return out;
+      }
+
+      function getRandomColor() {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      // Render the code with random colors
+      function renderCode() {
+        currentCode = generateCode();
+        char.innerHTML = "";
+        for (let i = 0; i < currentCode.length; i++) {
+          const span = document.createElement("span");
+          span.textContent = currentCode[i];
+          span.style.color = getRandomColor();
+          char.appendChild(span);
+        }
+      }
+
+      inputEl.setAttribute("maxlength", "4");
+      inputEl.setAttribute("autocomplete", "off");
+      inputEl.setAttribute("inputmode", "text");
+
+      function resetMessage() {
+        messageP.style.color = "tomato";
+        messageP.textContent = "* Enter the characters shown above.";
+      }
+
+      function handleSubmit(e) {
+        if (e) e.preventDefault && e.preventDefault();
+        const raw = (inputEl.value || "").trim();
+        if (raw.length !== 4) {
+          messageP.style.color = "tomato";
+          messageP.textContent = "* Please enter all 4 characters.";
+          return;
+        }
+        if (raw === currentCode) {
+          messageP.style.color = "green";
+          messageP.textContent = "* You are human! Welcome 🎉";
+          renderCode();
+          inputEl.value = "";
+        } else {
+          messageP.style.color = "tomato";
+          messageP.textContent = "* Get the hell out of here Clanker 🤖";
+        }
+      }
+
+      inputEl.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") {
+          handleSubmit(ev);
+        }
+      });
+
+      submitBtn.addEventListener("click", (ev) => {
+        handleSubmit(ev);
+      });
+
+      charBox.addEventListener("click", () => {
+        renderCode();
+        resetMessage();
+        inputEl.value = "";
+        inputEl.focus();
+      });
+
+      renderCode();
+      resetMessage();
+    </script>
+  </body>
+</html>
