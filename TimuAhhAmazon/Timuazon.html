@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timuazon</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      * {
+        transition: 0.3s;
+        margin: 0%;
+        padding: 0%;
+      }
+
+      html,
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+      }
+
+      footer {
+        font-size: 14px;
+        color: #333;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      a {
+        color: mediumslateblue;
+        text-decoration: none;
+      }
+
+      .social {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        font-size: 22px;
+      }
+
+      .logo {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        font-size: 26px;
+        background: linear-gradient(
+          45deg,
+          rgb(81, 68, 156),
+          #000,
+          mediumslateblue
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: rainbow 10s ease-in-out infinite;
+        background-size: 200% 200%;
+        background-position: 100% 0;
+      }
+
+      @keyframes rainbow {
+        0% {
+          background-position: 0 0;
+        }
+
+        50% {
+          background-position: 100% 0;
+        }
+
+        100% {
+          background-position: 0 0;
+        }
+      }
+
+      .page {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 20px;
+        width: 90vw;
+        max-width: 720px;
+        max-height: 90vh;
+        width: 90%;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 20px;
+        background: #fff;
+        border-top: 1px solid rgba(124, 104, 238, 0.377);
+        border-left: 1px solid rgba(124, 104, 238, 0.377);
+        box-shadow: 4px 4px 10px rgba(124, 104, 238, 0.285);
+      }
+
+      .web-box {
+        z-index: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border-radius: 16px;
+        overflow-y: auto;
+        background: #000;
+        width: 100%;
+        height: 100%;
+        max-height: fit-content;
+        align-self: center;
+        overflow: hidden;
+        outline: 1px solid lightsteelblue;
+      }
+
+      nav {
+        width: calc(100% - 40px);
+        height: 60px;
+        background: #000;
+        border-bottom: 1px solid lightslategrey;
+        margin: 0;
+        padding: 0 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+      }
+
+      nav > h3 {
+        color: #fff;
+      }
+
+      nav > div {
+        aspect-ratio: 1/1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+      }
+
+      nav > div::before {
+        content: "";
+        width: 50%;
+        height: 4px;
+        border-top: 2px solid #fff;
+        border-bottom: 2px solid #fff;
+      }
+
+      nav > div::after {
+        content: "";
+        width: 50%;
+        border-top: 2px solid #fff;
+      }
+
+      .web-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+
+      .banner {
+        width: 100%;
+        min-height: 400px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 0;
+      }
+
+      .slider {
+        width: 100%;
+        min-height: 480px;
+        padding: 10px 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 20px;
+        background: whitesmoke;
+        z-index: 1;
+      }
+
+      .shadow {
+        z-index: 0;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        height: 4px;
+        width: 100%;
+        box-shadow: 0px 0px 50px 80px whitesmoke;
+      }
+
+      .marquee {
+        z-index: 1;
+        width: 100%;
+        height: 40px;
+        overflow: hidden;
+        position: relative;
+        display: block;
+        align-items: center;
+        background: transparent;
+      }
+      .marquee-track {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        height: 100%;
+      }
+      .marquee img {
+        height: 100%;
+        pointer-events: none;
+        user-select: none;
+      }
+      .marquee::before,
+      .marquee::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 80px;
+        z-index: 5;
+        pointer-events: none;
+      }
+      .marquee::before {
+        left: 0;
+        background: linear-gradient(90deg, whitesmoke 5%, transparent 100%);
+      }
+      .marquee::after {
+        right: 0;
+        background: linear-gradient(270deg, whitesmoke 5%, transparent 100%);
+      }
+
+      .carousel {
+        z-index: 1;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      .carousel-track {
+        display: flex;
+        gap: 12px;
+        width: 100%;
+        overflow: hidden;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        padding: 10px 6px;
+      }
+
+      .slider-card {
+        width: 25%;
+        aspect-ratio: 3/4;
+        padding: 10px;
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 2px 2px 4px #0000000e;
+        flex: 0 0 auto;
+        user-select: none;
+      }
+
+      .slider-card > img {
+        width: 100%;
+        object-fit: contain;
+        pointer-events: none;
+      }
+
+      .bg {
+        position: absolute;
+        width: 140%;
+        z-index: 0;
+        top: 0%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .bg:hover img {
+        width: 104%;
+      }
+
+      .bg img {
+        transition: 0.9s ease-in-out;
+        object-fit: contain;
+        width: 100%;
+        height: fit-content;
+      }
+
+      .top-products {
+        width: 100%;
+        height: 0px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        z-index: 2;
+      }
+
+      .item-card {
+        margin-top: -150px;
+        width: 25%;
+        aspect-ratio: 3/4;
+        padding: 10px;
+        padding-bottom: 14px;
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 2px 2px 4px #0000000e;
+      }
+
+      .item-card:hover {
+        scale: 104%;
+      }
+
+      .item-card > img {
+        height: 70%;
+        width: 100%;
+        margin-bottom: 8px;
+        object-fit: contain;
+      }
+
+      .item-card > h3 {
+        font-size: 16px;
+        margin-bottom: 8px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        line-height: 1.25em;
+        max-height: calc(1.25em * 1);
+      }
+
+      .item-card > p {
+        font-size: 12px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        line-height: 1.25em;
+        max-height: calc(1.25em * 3);
+      }
+
+      .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        border: none;
+        background: rgba(255, 255, 255, 0.85);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+        cursor: pointer;
+      }
+      .carousel-btn:hover {
+        transform: translateY(-50%) scale(1.03);
+      }
+      .carousel-btn:active {
+        transform: translateY(-50%) scale(0.98);
+      }
+      .carousel-btn.prev {
+        left: 8px;
+      }
+      .carousel-btn.next {
+        right: 8px;
+      }
+      .carousel-btn .fa {
+        color: mediumslateblue;
+        font-size: 14px;
+        line-height: 0px;
+        margin-top: 2px;
+      }
+
+      @media screen and (max-width: 800px) {
+        .banner {
+          min-height: 45vw;
+        }
+
+        .slider {
+          gap: 10px;
+          min-height: 50vw;
+        }
+
+        .shadow {
+          height: 4px;
+          box-shadow: 0px 0px 30px 40px whitesmoke;
+        }
+
+        .slider-card {
+          width: 20%;
+          padding: 5px;
+        }
+
+        .item-card {
+          margin-top: -70px;
+          padding: 5px;
+          padding-bottom: 8px;
+        }
+
+        .carousel-btn {
+          width: 30px;
+          height: 30px;
+        }
+
+        .marquee {
+          height: 30px;
+        }
+
+        .carousel {
+          margin-bottom: 0px;
+        }
+      }
+
+      @media screen and (max-width: 700px) {
+        nav {
+          height: 30px;
+          width: calc(100% - 20px);
+          padding: 0 10px;
+        }
+
+        nav > h3 {
+          font-size: 14px;
+        }
+
+        .shadow {
+          box-shadow: 0px 0px 30px 40px whitesmoke;
+        }
+
+        .item-card > img {
+          margin-bottom: 4px;
+        }
+
+        .item-card > h3 {
+          font-size: 14px;
+          margin-bottom: 4px;
+        }
+
+        .item-card > p {
+          font-size: 11px;
+          -webkit-line-clamp: 2;
+          line-height: 1em;
+          max-height: calc(1em * 2);
+        }
+      }
+
+      @media screen and (max-width: 550px) {
+        nav > h3 {
+          font-size: 12px;
+        }
+
+        .shadow {
+          box-shadow: 0px 0px 20px 30px whitesmoke;
+        }
+
+        .item-card > img {
+          margin-bottom: 2px;
+        }
+
+        .item-card > h3 {
+          font-size: 11px;
+          margin-bottom: 2px;
+        }
+
+        .item-card > p {
+          font-size: 9px;
+          -webkit-line-clamp: 2;
+          line-height: 1em;
+          max-height: calc(1em * 2);
+        }
+
+        .marquee {
+          height: 20px;
+        }
+
+        .carousel-track {
+          gap: 8px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <h1 class="logo">Timuazon</h1>
+
+      <div class="web-box">
+        <nav>
+          <h3>Timuazon</h3>
+          <div></div>
+        </nav>
+
+        <div class="web-content">
+          <section class="banner">
+            <div class="bg">
+              <img src="bg.jpg" alt="" />
+            </div>
+          </section>
+
+          <section class="top-products">
+            <div class="item-card">
+              <img
+                src="https://drive.google.com/thumbnail?id=1S_WpsERyKTji3paQEGubkrqhgAfmlZUE"
+                alt=""
+              />
+              <h3>Berserk Manga</h3>
+              <p>
+                His name is Guts, the Black Swordsman, a feared warrior spoken
+                of only in whispers
+              </p>
+            </div>
+
+            <div class="item-card">
+              <img src="p2.jpg" alt="" />
+              <h3>Cyberpunk 2077</h3>
+              <p>
+                Cyberpunk 2077 is an open-world, action-adventure RPG set in the
+                megalopolis of Night City
+              </p>
+            </div>
+
+            <div class="item-card">
+              <img
+                src="https://m.media-amazon.com/images/I/81KR0fO8WgL._AC_SL1500_.jpg"
+                alt=""
+              />
+              <h3>RTX 4090</h3>
+              <p>
+                MSI GeForce RTX 4090 GAMING X TRIO 24G GAMING IN STYLE Play with
+                style!
+              </p>
+            </div>
+          </section>
+
+          <section class="slider">
+            <div class="shadow"></div>
+            <div class="marquee" data-speed="40">
+              <div class="marquee-track" aria-hidden="false">
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e417a5df973d8424299_ProLineDark.svg"
+                  alt=""
+                />
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12d35fce2ed357fb7ef3a_BlossomDark.svg"
+                  alt=""
+                />
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e321b3fc6a76b701fd3_PinpointDark.svg"
+                  alt=""
+                />
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73563dba154dad_SitemarkDark.svg"
+                  alt=""
+                />
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e78784f08679efe2756_SnapShotDark.svg"
+                  alt=""
+                />
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e417a5df973d8424299_ProLineDark.svg"
+                  alt=""
+                />
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12d35fce2ed357fb7ef3a_BlossomDark.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <div class="carousel" aria-label="product-carousel">
+              <button class="carousel-btn prev" aria-label="previous">
+                <i class="fa fa-chevron-left"></i>
+              </button>
+
+              <div class="carousel-track" tabindex="0">
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1xhAYqB1AQyJve0IQvjrWnVCPgZCZ9Ue2"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1q2c2rRwqNu9By5ZFBvzRhPQ5N8cFG_E6"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=12NmT2cKq9vHpsuvOOrvZNNsX82MNK3rq"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1JENcZV52jA5xeZrh3Cga0GKcIUcRAK0q"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1NT4DKmwzRSjY0woamb3tBIoHf1mbCfDF"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1itS6qEZJ70dyPqcPlP8WkWP_nCvYuKGr"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1zp3oeobPXnhxplcyCGIqdKIpxuG3OK7t"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+              </div>
+
+              <button class="carousel-btn next" aria-label="next">
+                <i class="fa fa-chevron-right"></i>
+              </button>
+            </div>
+          </section>
+
+          <section class="banner">
+            <div class="bg">
+              <img src="bg.jpg" alt="" />
+            </div>
+          </section>
+
+          <section class="top-products">
+            <div class="item-card">
+              <img
+                src="https://drive.google.com/thumbnail?id=1S_WpsERyKTji3paQEGubkrqhgAfmlZUE"
+                alt=""
+              />
+              <h3>Berserk Manga</h3>
+              <p>
+                His name is Guts, the Black Swordsman, a feared warrior spoken
+                of only in whispers
+              </p>
+            </div>
+
+            <div class="item-card">
+              <img src="p2.jpg" alt="" />
+              <h3>Cyberpunk 2077</h3>
+              <p>
+                Cyberpunk 2077 is an open-world, action-adventure RPG set in the
+                megalopolis of Night City
+              </p>
+            </div>
+
+            <div class="item-card">
+              <img
+                src="https://m.media-amazon.com/images/I/81KR0fO8WgL._AC_SL1500_.jpg"
+                alt=""
+              />
+              <h3>RTX 4090</h3>
+              <p>
+                MSI GeForce RTX 4090 GAMING X TRIO 24G GAMING IN STYLE Play with
+                style!
+              </p>
+            </div>
+          </section>
+
+          <section class="slider">
+            <div class="shadow"></div>
+            <div class="marquee" data-speed="36">
+              <div class="marquee-track">
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e417a5df973d8424299_ProLineDark.svg"
+                  alt=""
+                />
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12d35fce2ed357fb7ef3a_BlossomDark.svg"
+                  alt=""
+                />
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e321b3fc6a76b701fd3_PinpointDark.svg"
+                  alt=""
+                />
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73563dba154dad_SitemarkDark.svg"
+                  alt=""
+                />
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e78784f08679efe2756_SnapShotDark.svg"
+                  alt=""
+                />
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e417a5df973d8424299_ProLineDark.svg"
+                  alt=""
+                />
+                <img
+                  src="https://cdn.prod.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12d35fce2ed357fb7ef3a_BlossomDark.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <div class="carousel" aria-label="product-carousel-2">
+              <button class="carousel-btn prev" aria-label="previous-2">
+                <i class="fa fa-chevron-left"></i>
+              </button>
+
+              <div class="carousel-track" tabindex="0">
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1ig0gm0ghK3TeaBAtXsjktzzGDMTiTOXD"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1Orb11QrFG5v9VMNH-xW1977SakMCEdGQ"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1AL0ZLPq9HlYelr4nONLNUw4Rz_NF2dON"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1E5XHbQlZVbPZTDQcMog7_PAnf4By5fTu"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1MimtsGK5_KpYpSWTOMtoPiUG4Im3bqEK"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1UskpTzKqdumj9ls2tbmevV2K5k7caEbm"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+                <div class="slider-card">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1q5jz_sIdpbWTyAoSauf5qMSFZa05UMdP"
+                    alt=""
+                    draggable="false"
+                  />
+                </div>
+              </div>
+
+              <button class="carousel-btn next" aria-label="next-2">
+                <i class="fa fa-chevron-right"></i>
+              </button>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <footer>
+        <p>
+          Created by
+          <a
+            target="_blank"
+            href="https://drive.google.com/file/d/1uu5crqTDzOiWwbaevrHqCNdRF0Zy742a/view?usp=sharing"
+            >Tathagata Mishra</a
+          >
+        </p>
+
+        <div class="social">
+          <a
+            target="_blank"
+            href="https://github.com/tathagatamishra/CuvetteProjects"
+            class="fa fa-github"
+          ></a>
+          <a
+            target="_blank"
+            href="https://www.linkedin.com/in/tathagatamishra/"
+            class="fa fa-linkedin"
+          ></a>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      (function initMarquees() {
+        const marquees = document.querySelectorAll(".marquee");
+        marquees.forEach((m) => {
+          const track = m.querySelector(".marquee-track");
+          if (!track) return;
+
+          // width based animation
+          const speedAttr = Number(m.dataset.speed) || 40; // pixels per second
+          // measure length
+          function startMarquee() {
+            const trackWidth = track.scrollWidth;
+            const containerWidth = m.clientWidth;
+            // duration = distance / speed (px / px/s)
+            const distance = trackWidth;
+            const duration = Math.max(6, Math.round(distance / speedAttr));
+            // animation via CSS variable and requestAnimationFrame
+            track.style.animation = `marquee-scroll ${duration}s linear infinite`;
+          }
+
+          // keyframes
+          if (!document.getElementById("marquee-keyframes")) {
+            const styleEl = document.createElement("style");
+            styleEl.id = "marquee-keyframes";
+            styleEl.textContent = `
+              @keyframes marquee-scroll {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+              }`;
+            document.head.appendChild(styleEl);
+          }
+
+          // double-wide
+          if (track.scrollWidth < m.clientWidth * 2) {
+            // clone child
+            const children = Array.from(track.children);
+            children.forEach((c) => track.appendChild(c.cloneNode(true)));
+          }
+
+          m.addEventListener("mouseenter", () => {
+            track.style.animationPlayState = "paused";
+          });
+          m.addEventListener("mouseleave", () => {
+            track.style.animationPlayState = "running";
+          });
+
+          // start when images loaded (to compute widths correctly)
+          const imgs = track.querySelectorAll("img");
+          let toLoad = imgs.length;
+          if (toLoad === 0) {
+            startMarquee();
+          } else {
+            imgs.forEach((img) => {
+              if (img.complete) {
+                toLoad--;
+                if (toLoad === 0) startMarquee();
+              } else {
+                img.addEventListener("load", () => {
+                  toLoad--;
+                  if (toLoad === 0) startMarquee();
+                });
+                img.addEventListener("error", () => {
+                  toLoad--;
+                  if (toLoad === 0) startMarquee();
+                });
+              }
+            });
+          }
+        });
+      })();
+
+      (function initCarousels() {
+        const carousels = document.querySelectorAll(".carousel");
+        carousels.forEach((carousel) => {
+          const track = carousel.querySelector(".carousel-track");
+          const prev = carousel.querySelector(".carousel-btn.prev");
+          const next = carousel.querySelector(".carousel-btn.next");
+          if (!track) return;
+
+          let isDown = false;
+          let startX;
+          let scrollLeft;
+          let autoPlayInterval;
+          const autoplayDelay = 3000;
+          const cardGap = 12;
+
+          function getCardScrollAmount() {
+            const firstCard = track.querySelector(".slider-card");
+            if (!firstCard) return track.clientWidth / 3;
+            const style = window.getComputedStyle(track);
+            const gap =
+              Number(getComputedStyle(track).gap.replace("px", "")) || cardGap;
+            return firstCard.getBoundingClientRect().width + gap;
+          }
+
+          function nextSlide() {
+            const amount = getCardScrollAmount();
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            if (Math.abs(track.scrollLeft - maxScroll) <= 1) {
+              track.scrollTo({ left: 0, behavior: "smooth" });
+            } else {
+              track.scrollBy({ left: amount, behavior: "smooth" });
+            }
+          }
+
+          function prevSlide() {
+            const amount = getCardScrollAmount();
+            if (track.scrollLeft <= 1) {
+              // jump to end
+              track.scrollTo({
+                left: track.scrollWidth - track.clientWidth,
+                behavior: "smooth",
+              });
+            } else {
+              track.scrollBy({ left: -amount, behavior: "smooth" });
+            }
+          }
+
+          // autoplay
+          function startAutoplay() {
+            stopAutoplay();
+            autoPlayInterval = setInterval(() => {
+              // don't auto if user is interacting
+              if (!isDown && document.visibilityState === "visible")
+                nextSlide();
+            }, autoplayDelay);
+          }
+          function stopAutoplay() {
+            if (autoPlayInterval) {
+              clearInterval(autoPlayInterval);
+              autoPlayInterval = null;
+            }
+          }
+
+          next &&
+            next.addEventListener("click", () => {
+              nextSlide();
+              stopAutoplay();
+              setTimeout(startAutoplay, autoplayDelay);
+            });
+          prev &&
+            prev.addEventListener("click", () => {
+              prevSlide();
+              stopAutoplay();
+              setTimeout(startAutoplay, autoplayDelay);
+            });
+
+          // drag to scroll
+          track.addEventListener("mousedown", (e) => {
+            isDown = true;
+            track.classList.add("active");
+            startX = e.pageX - track.offsetLeft;
+            scrollLeft = track.scrollLeft;
+            stopAutoplay();
+          });
+          track.addEventListener("mouseleave", () => {
+            isDown = false;
+            track.classList.remove("active");
+            setTimeout(startAutoplay, autoplayDelay);
+          });
+          track.addEventListener("mouseup", () => {
+            isDown = false;
+            track.classList.remove("active");
+            setTimeout(startAutoplay, autoplayDelay);
+          });
+          track.addEventListener("mousemove", (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - track.offsetLeft;
+            const walk = (x - startX) * 1; //scroll-fast
+            track.scrollLeft = scrollLeft - walk;
+          });
+
+          // touch events
+          track.addEventListener("touchstart", (e) => {
+            isDown = true;
+            startX = e.touches[0].pageX - track.offsetLeft;
+            scrollLeft = track.scrollLeft;
+            stopAutoplay();
+          });
+          track.addEventListener("touchend", () => {
+            isDown = false;
+            setTimeout(startAutoplay, autoplayDelay);
+          });
+          track.addEventListener("touchmove", (e) => {
+            if (!isDown) return;
+            const x = e.touches[0].pageX - track.offsetLeft;
+            const walk = (x - startX) * 1;
+            track.scrollLeft = scrollLeft - walk;
+          });
+
+          // pause autoplay on hover / focus
+          carousel.addEventListener("mouseenter", () => stopAutoplay());
+          carousel.addEventListener("mouseleave", () => startAutoplay());
+          track.addEventListener("focusin", () => stopAutoplay());
+          track.addEventListener("focusout", () => startAutoplay());
+
+          // keyboard arrow left/right
+          track.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowRight") {
+              nextSlide();
+              e.preventDefault();
+            } else if (e.key === "ArrowLeft") {
+              prevSlide();
+              e.preventDefault();
+            }
+          });
+
+          // autoplay starts after images load
+          const imgs = track.querySelectorAll("img");
+          let toLoad = imgs.length;
+          if (toLoad === 0) {
+            startAutoplay();
+          } else {
+            imgs.forEach((img) => {
+              if (img.complete) {
+                toLoad--;
+                if (toLoad === 0) startAutoplay();
+              } else {
+                img.addEventListener("load", () => {
+                  toLoad--;
+                  if (toLoad === 0) startAutoplay();
+                });
+                img.addEventListener("error", () => {
+                  toLoad--;
+                  if (toLoad === 0) startAutoplay();
+                });
+              }
+            });
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
