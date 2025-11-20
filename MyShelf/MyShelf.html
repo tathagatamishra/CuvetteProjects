@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Shelf</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      * {
+        transition: 0.3s;
+        margin: 0%;
+        padding: 0%;
+      }
+
+      html,
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+      }
+
+      .logo {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        font-size: 26px;
+        background: linear-gradient(
+          45deg,
+          rgb(81, 68, 156),
+          #000,
+          mediumslateblue
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: rainbow 10s ease-in-out infinite;
+        background-size: 200% 200%;
+        background-position: 100% 0;
+      }
+
+      @keyframes rainbow {
+        0% {
+          background-position: 0 0;
+        }
+
+        50% {
+          background-position: 100% 0;
+        }
+
+        100% {
+          background-position: 0 0;
+        }
+      }
+
+      .page {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 90vw;
+        max-width: 720px;
+        max-height: 90vh;
+        width: 90%;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 20px;
+        background: #fff;
+        border-top: 1px solid rgba(124, 104, 238, 0.377);
+        border-left: 1px solid rgba(124, 104, 238, 0.377);
+        box-shadow: 4px 4px 10px rgba(124, 104, 238, 0.285);
+      }
+
+      .box {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 50px;
+        border-radius: 10px;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      .shelf {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-width: 70%;
+        max-height: 70%;
+        padding: 6%;
+        aspect-ratio: 9 / 16;
+      }
+
+      .shelf-frame {
+        z-index: 0;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background: burlywood;
+        background-image: url("https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_01/oak_veneer_01_diff_1k.jpg");
+      }
+
+      .shelf-top {
+        background: burlywood;
+        height: 2%;
+        width: 100%;
+        position: absolute;
+        top: -2%;
+        left: 3%;
+        z-index: 2;
+        transform: skewX(-60deg);
+        background-image: url("https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/plywood/plywood_diff_1k.jpg");
+      }
+
+      .shelf-Rside {
+        background: burlywood;
+        height: 100%;
+        width: 6%;
+        position: absolute;
+        right: -6%;
+        top: -1%;
+        z-index: 2;
+        transform: skewY(-30deg);
+        background-image: url("https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/plywood/plywood_diff_1k.jpg");
+      }
+
+      .shelf-shelf {
+        z-index: 1;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2%;
+      }
+
+      .shelf-box {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 2px;
+        background: burlywood;
+        overflow: hidden;
+      }
+
+      .shelf-bottom {
+        position: absolute;
+        width: 110%;
+        height: 14%;
+        bottom: 0%;
+        left: 4%;
+        z-index: 1;
+        transform: skewX(-60deg);
+        background-image: url("https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/plywood/plywood_diff_1k.jpg");
+      }
+
+      .shelf-Lside {
+        position: absolute;
+        height: 100%;
+        width: 8%;
+        left: 0%;
+        top: -4%;
+        transform: skewY(-20deg);
+        z-index: 0;
+        background-image: url("https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_table_worn/wood_table_worn_diff_1k.jpg");
+        opacity: 80%;
+      }
+
+      .space {
+        /* width: 100%; */
+        height: 100%;
+        z-index: 2;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: end;
+        justify-content: space-around;
+      }
+
+      .item {
+        margin: 0 0 1.5% 2%;
+        /* border: 1px solid; */
+        width: 20%;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: end;
+        position: relative;
+      }
+
+      img {
+        scale: 102%;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: contain;
+      }
+
+      .shadow {
+        width: 70%;
+        height: 10%;
+        position: absolute;
+        background: #413226;
+        border-radius: 100%;
+        filter: blur(10px);
+      }
+
+      footer {
+        font-size: 14px;
+        color: #333;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      a {
+        color: mediumslateblue;
+        text-decoration: none;
+      }
+
+      .social {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        font-size: 22px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <h1 class="logo">My Shelf</h1>
+      <div class="box">
+        <div class="shelf">
+          <div class="shelf-frame"></div>
+
+          <div class="shelf-top"></div>
+          <div class="shelf-Rside"></div>
+
+          <div class="shelf-shelf">
+            <div class="shelf-box">
+              <div class="space">
+                <div class="item">
+                  <img
+                    src="https://cdn.pixabay.com/objects3d/2025/07/11/04-37-00-279/render_720_720_0_340_0.png"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+                <div class="item">
+                  <img
+                    src="https://img.freepik.com/3d-models/v2/9/O/S/U/A/1/N/9OSUA1NS/cat-character-poster-2.png?t=st=1763665689~exp=1763669289~hmac=73ef8a3b56925f7fef9114515584c415dea48cb90de5ff217d17f82cd9267a6d"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+                <div class="item">
+                  <img
+                    src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3V1b3lpNDd2enppeHZqbnFnd3Q4amYzZ2d6MDRrNW1sM3NucmQzdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/ITyttLEHEbBTaUcqrm/giphy.gif"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+                <div class="item">
+                  <img
+                    src="https://png.pngtree.com/png-vector/20250525/ourmid/pngtree-a-white-and-black-soccer-ball-png-image_16380864.png"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+              </div>
+
+              <div class="shelf-bottom"></div>
+              <div class="shelf-Lside"></div>
+            </div>
+            <div class="shelf-box">
+              <div class="space">
+                <div class="item">
+                  <img
+                    src="https://cdn.pixabay.com/objects3d/2025/07/11/05-22-12-478/render_720_720_0_340_0.png"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+                <div class="item">
+                  <img
+                    src="https://cdn3d.iconscout.com/3d/premium/thumb/geography-book-3d-icon-png-download-6578321.png"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+              </div>
+
+              <div class="shelf-bottom"></div>
+              <div class="shelf-Lside"></div>
+            </div>
+            <div class="shelf-box">
+              <div class="space">
+                <div class="item">
+                  <img
+                    src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnE0bmc1ZjRidHZjN2l1NDg1NzF3bDh3cGV2Ymh2ZWszNmF0bnRnaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/7NDDCBIcE29XmAx8iF/giphy.gif"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+                <div class="item">
+                  <img
+                    src="https://cdn.pixabay.com/objects3d/2025/07/19/07-28-30-942/render_720_720_0_340_0.png"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+                <div class="item">
+                  <img
+                    src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmRpbGUyN21pYTNqYjYxeXg2cWprdjFzcXBsbDg5MTA2aHZtZzU0cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fk67bAaCPjW88gqc0T/giphy.gif"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+              </div>
+
+              <div class="shelf-bottom"></div>
+              <div class="shelf-Lside"></div>
+            </div>
+            <div class="shelf-box">
+              <div class="space">
+                <div class="item">
+                  <img
+                    src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZm44eWllcm9hNDFsdzh2MzQ1NzNnd3hxanVmdTB5a21haXljMW03YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/tR1ZZeJXR9RUDvaFVP/giphy.gif"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+              </div>
+
+              <div class="shelf-bottom"></div>
+              <div class="shelf-Lside"></div>
+            </div>
+            <div class="shelf-box">
+              <div class="space">
+                <div class="item">
+                  <img
+                    src="https://img.freepik.com/3d-models/v2/E/Q/9/A/S/R/K/EQ9ASRKL/wine-bottle-poster-1.png?t=st=1763665714~exp=1763669314~hmac=33ffaa64bb49426c1caec857fd50201b05d6dba36d407d9b2c06d5aeb728d3cd&w=1000"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+                <div class="item">
+                  <img
+                    src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpiejJnbDlkbjF0Ynd6aXc4ZHBldDJ0OTFxNjM1MHE4OXRlamJjbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/ztisqLhP99tVSHG136/giphy.gif"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+                <div class="item">
+                  <img
+                    src="https://img.freepik.com/3d-models/v2/W/U/5/Q/N/3/M/WU5QN3M8/drawstring-bag-poster-1.png?t=st=1763665717~exp=1763669317~hmac=8da25f660804aef9560651b2205e01ee614c5e9d8891dc187fd3e0418668c36e&w=1000"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+                <div class="item">
+                  <img
+                    src="https://img.freepik.com/3d-models/v2/B/7/B/V/6/9/G/B7BV69GX/box-with-sticker-poster-1.png?t=st=1763666743~exp=1763670343~hmac=0f40810b7368bd169cb9ae724bdf3bbdc7c2e121070c0c61c964d87813f53c57&w=1000"
+                    alt=""
+                  />
+                  <div class="shadow"></div>
+                </div>
+              </div>
+
+              <div class="shelf-bottom"></div>
+              <div class="shelf-Lside"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>
+          Created by
+          <a
+            target="_blank"
+            href="https://drive.google.com/file/d/1uu5crqTDzOiWwbaevrHqCNdRF0Zy742a/view?usp=sharing"
+            >Tathagata Mishra</a
+          >
+        </p>
+
+        <div class="social">
+          <a
+            target="_blank"
+            href="https://github.com/tathagatamishra/CuvetteProjects"
+            class="fa fa-github"
+          ></a>
+          <a
+            target="_blank"
+            href="https://www.linkedin.com/in/tathagatamishra/"
+            class="fa fa-linkedin"
+          ></a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
