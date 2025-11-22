@@ -98,7 +98,7 @@
       .card:hover {
         scale: 105%;
       }
-      
+
       .content {
         width: 100%;
         height: 100%;
@@ -214,33 +214,52 @@
 
     <script>
       async function load() {
-        const res = await fetch("projects.json");
-        const projects = await res.json();
-        const box = document.getElementById("box");
+        try {
+          const url = "/projects.json"; // use absolute path for deployed site
+          console.log("Fetching", url);
 
-        projects.reverse().forEach((project) => {
-          const card = document.createElement("div");
-          card.className = "card";
-          const content = document.createElement("div");
-          content.className = "content";
+          const res = await fetch(url, { cache: "no-cache" });
+          if (!res.ok) {
+            // Log status + response text (if any) to help debug
+            const text = await res.text().catch(() => "<no body>");
+            throw new Error(
+              `Failed to fetch ${url}: ${res.status} ${res.statusText} — ${text}`
+            );
+          }
 
-          const image = document.createElement("img");
-          image.src = project.thumbnail;
-          image.setAttribute("loading", "lazy");
+          const projects = await res.json();
+          const box = document.getElementById("box");
 
-          const meta = document.createElement("div");
-          meta.className = "meta";
-          meta.innerHTML = `<div class="title">${project.name}</div>`;
+          projects.reverse().forEach((project) => {
+            const card = document.createElement("div");
+            card.className = "card";
+            const content = document.createElement("div");
+            content.className = "content";
 
-          card.appendChild(content);
-          content.appendChild(image);
-          content.appendChild(meta);
+            const image = document.createElement("img");
+            image.src = project.thumbnail;
+            image.setAttribute("loading", "lazy");
 
-          card.addEventListener("click", () =>
-            window.open(project.path, "_blank")
-          );
-          box.appendChild(card);
-        });
+            const meta = document.createElement("div");
+            meta.className = "meta";
+            meta.innerHTML = `<div class="title">${project.name}</div>`;
+
+            card.appendChild(content);
+            content.appendChild(image);
+            content.appendChild(meta);
+
+            card.addEventListener("click", () =>
+              window.open(project.path, "_blank")
+            );
+            box.appendChild(card);
+          });
+        } catch (err) {
+          console.error("Error loading projects:", err);
+          // Optionally show a user-friendly message on the page:
+          const box = document.getElementById("box");
+          box.innerHTML =
+            '<p style="padding:20px">Could not load projects. Open console for details.</p>';
+        }
       }
 
       load();
