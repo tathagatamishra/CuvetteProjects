@@ -2,61 +2,61 @@
   {
     "name": "Password Input",
     "path": "Password Input/PasswordInput.html",
-    "thumbnail": "./public/a.png"
+    "thumbnail": "./images/a.png"
   },
   {
     "name": "HTML Excel Sheet",
     "path": "HTML Excel Sheet/HTMLSheet.html",
-    "thumbnail": "./public/b.png"
+    "thumbnail": "./images/b.png"
   },
   {
     "name": "Google Map Iframe",
     "path": "Google Map Iframe/GoogleMapIframe.html",
-    "thumbnail": "./public/c.png"
+    "thumbnail": "./images/c.png"
   },
   {
     "name": "CSS Table",
     "path": "CSS Table/CSSTable.html",
-    "thumbnail": "./public/d.png"
+    "thumbnail": "./images/d.png"
   },
   {
     "name": "CSS Star",
     "path": "CSS Star/CSSStar.html",
-    "thumbnail": "./public/e.png"
+    "thumbnail": "./images/e.png"
   },
   {
     "name": "Kawaii Tube",
     "path": "Kawaii Tube/KawaiiTube.html",
-    "thumbnail": "./public/f.png"
+    "thumbnail": "./images/f.png"
   },
   {
     "name": "Commentron",
     "path": "Commentron/index.html",
-    "thumbnail": "./public/g.png"
+    "thumbnail": "./images/g.png"
   },
   {
     "name": "Nav Bar",
     "path": "Nav Bar/Navbar.html",
-    "thumbnail": "./public/h.png"
+    "thumbnail": "./images/h.png"
   },
   {
     "name": "ReFlex",
     "path": "ReFlex/ReFlex.html",
-    "thumbnail": "./public/i.png"
+    "thumbnail": "./images/i.png"
   },
   {
     "name": "TimuAhhAmazon",
     "path": "TimuAhhAmazon/Timuazon.html",
-    "thumbnail": "./public/j.png"
+    "thumbnail": "./images/j.png"
   },
   {
     "name": "Clanker Detector",
     "path": "Clanker Detector/ClankerDetector.html",
-    "thumbnail": "./public/k.png"
+    "thumbnail": "./images/k.png"
   },
   {
     "name": "MyShelf",
     "path": "MyShelf/MyShelf.html",
-    "thumbnail": "./public/l.png"
+    "thumbnail": "./images/l.png"
   }
 ]
