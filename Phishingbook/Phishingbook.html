@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facebook – log in or sign up</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      * {
+        transition: 0.3s;
+        margin: 0%;
+        padding: 0%;
+        text-decoration: none;
+      }
+      
+      html {
+        height: 100vh;
+        width: 100vw;
+        background: #fff;
+        overflow-x: hidden;
+      }
+
+      body {
+        position: relative;
+        height: 100vh;
+        width: 100vw;
+        background: #fff;
+        color: #1c1e21;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .page {
+        background: #f2f4f7;
+        padding-bottom: 112px;
+        padding-top: 72px;
+      }
+
+      .box {
+        margin: 0 auto;
+        padding: 20px 0;
+        max-width: 980px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .left {
+        position: relative;
+        box-sizing: border-box;
+        margin-right: 0;
+        padding-right: 32px;
+        width: 580px;
+      }
+
+      .fb-logo {
+        padding: 112px 0 16px;
+      }
+
+      img {
+        height: 106px;
+        margin: -28px;
+      }
+
+      h2 {
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 32px;
+        width: 500px;
+        color: #1c1e21;
+        padding: 0 0 20px;
+      }
+
+      .right {
+        width: 396px;
+        min-height: 496px;
+        position: relative;
+      }
+
+      form {
+        width: 396px;
+        text-align: center;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px #0000001a, 0 8px 16px #0000001a;
+        margin: 40px 0 0;
+        border: none;
+        outline: none;
+      }
+
+      .input-div {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 16px 16px 16px 16px;
+        gap: 12px;
+      }
+
+      input {
+        border: none;
+        outline: none;
+        background: #fff
+          url("https://static.xx.fbcdn.net/rsrc.php/v4/yU/r/O7nelmd9XSI.png")
+          repeat-x;
+        border: 1px solid #dddfe2;
+        height: 22px;
+        line-height: 16px;
+        color: #1d2129;
+        font-size: 17px;
+        padding: 14px 16px;
+        border-radius: 6px;
+      }
+      input:focus {
+        color: #1d2129;
+        border-color: #0866ff;
+        box-shadow: 0 0 0 2px #e7f3ff;
+        caret-color: #0866ff;
+      }
+
+      .button-div {
+        padding: 0px 16px;
+      }
+
+      .button-div > button {
+        background-color: #0866ff;
+        border: none;
+        border-radius: 6px;
+        font-size: 20px;
+        line-height: 48px;
+        padding: 0 16px;
+        width: 100%;
+        color: #fff;
+        font-size: 20px;
+        line-height: 48px;
+        font-weight: 700;
+        cursor: pointer;
+        border: none;
+        outline: none;
+      }
+      .button-div > button:hover {
+        background-color: #1877f2;
+        border-color: #365899;
+      }
+      .button-div > button:active {
+        background-color: #4267b2;
+      }
+      .button-div > button:focus {
+        box-shadow: 0 0 1px 2px #5890ffbf, 0 1px 1px #00000026;
+      }
+
+      .forgot {
+        margin-top: 16px;
+      }
+
+      .forgot > a {
+        color: #0866ff;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      .forgot > a:hover {
+        text-decoration: underline;
+      }
+
+      .line {
+        border-bottom: 1px solid #dadde1;
+        margin: 20px 16px;
+      }
+
+      .create-btn {
+        padding: 6px 0 24px 0;
+      }
+
+      .create-btn > a {
+        border-radius: 6px;
+        font-size: 17px;
+        line-height: 48px;
+        padding: 16px 16px;
+        background-color: #42b72a;
+        color: #fff;
+        font-weight: 700;
+        border: none;
+        outline: none;
+      }
+      .create-btn > a:hover {
+        background-color: #36a420;
+        border-color: #36a420;
+      }
+      .create-btn > a:hover {
+        background-color: #2b9217;
+        border-color: #2b9217;
+      }
+      .create-btn > a:focus {
+        box-shadow: 0 0 1px 2px #5890ffbf, 0 1px 1px #00000026;
+      }
+
+      .bottom {
+        color: #1c1e21;
+        font-size: 14px;
+        font-weight: 400;
+        margin-top: 28px;
+        text-align: center;
+      }
+      .bottom > a {
+        cursor: pointer;
+        color: #1c1e21;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .bottom > a:hover {
+        text-decoration: underline;
+      }
+
+      .footer {
+        padding-top: 28px;
+      }
+
+      .foot_content {
+        color: #737373;
+        font-size: 12px;
+        margin: 0 auto;
+        width: 980px;
+      }
+
+      ul {
+        padding-top: 8px;
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        unicode-bidi: isolate;
+      }
+
+      li {
+        line-height: 1.6;
+      }
+
+      .ul1 > li {
+        padding-right: 10px;
+      }
+
+      li > button {
+        border: none;
+        outline: none;
+        color: #8a8d91;
+        background-color: #f5f6f7;
+        height: 18px;
+        line-height: 18px;
+        border: 1px solid #ccd0d5;
+        border-radius: 2px;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 0 8px;
+        text-align: center;
+      }
+
+      .foot_line {
+        border-bottom: 1px solid #dddfe2;
+        height: 8px;
+        margin-bottom: 8px;
+      }
+
+      .ul2 > li {
+        padding-right: 20px;
+      }
+
+      .cc {
+        font-size: 11px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      @media (width <=1074px) {
+        .box {
+          margin: 0 40px;
+        }
+
+        .left {
+          min-width: 400px;
+          width: 400px;
+        }
+
+        h2 {
+          font-size: 24px;
+          line-height: 28px;
+          width: 368px;
+        }
+
+        .foot_content {
+          width: auto;
+          margin: 0 40px;
+        }
+      }
+
+      @media (width <=900px) {
+        .page {
+          padding-top: 20px;
+          padding-bottom: 34px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: start;
+        }
+
+        .box {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: start;
+        }
+
+        .left {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding-right: 0px;
+        }
+
+        .fb-logo {
+          padding: 0px 0 20px;
+        }
+
+        h2 {
+          text-align: center;
+          padding: 0px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <div class="box">
+        <div class="left">
+          <div class="fb-logo">
+            <img
+              class=""
+              src="https://static.xx.fbcdn.net/rsrc.php/y1/r/4lCu2zih0ca.svg"
+              alt="Facebook"
+            />
+          </div>
+
+          <h2 class="">
+            Facebook helps you connect and share with the people in your life.
+          </h2>
+        </div>
+
+        <div class="right">
+          <form class="" action="#" method="post" id="">
+            <div class="input-div">
+              <input
+                type="text"
+                class=""
+                name="email"
+                placeholder="Email address or phone number"
+              />
+              <input
+                type="password"
+                class=""
+                name="pass"
+                placeholder="Password"
+              />
+            </div>
+
+            <div class="button-div">
+              <button class="" name="login" type="submit">Log in</button>
+            </div>
+
+            <div class="forgot">
+              <a
+                href="https://www.facebook.com/login/identify/?ctx=recover&ars=facebook_login&from_login_screen=0"
+                >Forgotten password?</a
+              >
+            </div>
+
+            <div class="line"></div>
+
+            <div class="create-btn">
+              <a
+                class=""
+                href="https://www.facebook.com/r.php?entry_point=login"
+                >Create new account</a
+              >
+            </div>
+          </form>
+
+          <div class="bottom">
+            <a
+              href="https://www.facebook.com/pages/create/?ref_type=registration_form"
+              class=""
+              >Create a Page</a
+            >
+            for a celebrity, brand or business.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="foot_content">
+        <ul class="ul1">
+          <li>English (UK)</li>
+          <li>বাংলা</li>
+          <li>हिन्दी</li>
+          <li>اردو</li>
+          <li>नेपाली</li>
+          <li>ଓଡ଼ିଆ</li>
+          <li>Español</li>
+          <li>Português (Brasil)</li>
+          <li>Français (France)</li>
+          <li>Deutsch</li>
+          <li>Italiano</li>
+          <li>
+            <button>&#43;</button>
+          </li>
+        </ul>
+
+        <div class="foot_line"></div>
+
+        <ul class="ul2">
+          <li>Sign Up</li>
+          <li>Log in</li>
+          <li>Messenger</li>
+          <li>Facebook Lite</li>
+          <li>Video</li>
+          <li>Meta Pay</li>
+          <li>Meta Store</li>
+          <li>Meta Quest</li>
+          <li>Ray-Ban Meta</li>
+          <li>Meta AI</li>
+          <li>Meta AI more content</li>
+          <li>Instagram</li>
+          <li>Threads</li>
+          <li>Voting Information Centre</li>
+          <li>Privacy Policy</li>
+          <li>Privacy Centre</li>
+          <li>About</li>
+          <li>Create ad</li>
+          <li>Create Page</li>
+          <li>Developers</li>
+          <li>Careers</li>
+          <li>Cookies</li>
+          <li>AdChoices</li>
+          <li>Terms</li>
+          <li>Help</li>
+          <li>Contact uploading and non-users</li>
+        </ul>
+
+        <div class="cc"><span> Meta © 2025</span></div>
+      </div>
+    </div>
+  </body>
+</html>

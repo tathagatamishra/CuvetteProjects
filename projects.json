@@ -58,5 +58,10 @@
     "name": "MyShelf",
     "path": "MyShelf/MyShelf.html",
     "thumbnail": "./images/l.png"
+  },
+  {
+    "name": "Phishingbook",
+    "path": "Phishingbook/Phishingbook.html",
+    "thumbnail": "./images/m.png"
   }
 ]
