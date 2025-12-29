@@ -63,5 +63,10 @@
     "name": "Phishingbook",
     "path": "Phishingbook/Phishingbook.html",
     "thumbnail": "./images/m.png"
+  },
+  {
+    "name": "Bootstrafolio",
+    "path": "Bootstrafolio/Bootstrafolio.html",
+    "thumbnail": "./images/n.png"
   }
 ]

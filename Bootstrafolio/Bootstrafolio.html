@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bootstrafolio</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+          url("https://images.unsplash.com/photo-1759661990336-51bd4b951fea?w=1200")
+            center/cover;
+        height: 500px;
+      }
+
+      .navbar-brand {
+        font-weight: 600;
+        font-size: 1.2rem;
+      }
+
+      .hero-title {
+        font-size: 3rem;
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        font-weight: 400;
+      }
+
+      .project-item {
+        overflow: hidden;
+        border-radius: 8px;
+        height: 250px;
+      }
+
+      .project-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .project-item.wide {
+        grid-column: span 2;
+      }
+
+      .project-item:hover img {
+        transform: scale(1.05);
+      }
+
+      .feature-icon {
+        font-size: 3rem;
+        color: #5ba4cf;
+      }
+
+      .feature-title {
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg fixed-top navbar-dark"
+      style="
+        background-color: rgba(8, 10, 13, 0.36);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+      "
+    >
+      <div class="container-fluid px-4 py-2">
+        <a class="navbar-brand text-white" href="#">Tathagata Mishra</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link text-white ms-lg-4" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white ms-lg-4" href="#project">Project</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white ms-lg-4" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white ms-lg-4" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      class="hero-section d-flex align-items-center justify-content-center text-white"
+      id="home"
+    >
+      <h1 class="hero-title text-center">Creative Full Stack Developer</h1>
+    </section>
+
+    <!-- Project Section -->
+    <section class="py-5 bg-light" id="project">
+      <div class="container py-4">
+        <h2 class="section-title text-center text-dark mb-3">
+          Some Of My Work
+        </h2>
+        <p
+          class="text-center text-secondary mx-auto mb-5"
+          style="max-width: 700px; line-height: 1.6"
+        >
+          I have worked on diverse projects, from creating interactive 3D
+          websites to developing custom admin panels for corporate clients,
+          delivering both high-performance and visually engaging web solutions.
+        </p>
+
+        <div class="row g-3" style="max-width: 1200px; margin: 0 auto">
+          <div class="col-md-4">
+            <div class="project-item">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.instagram.com/chaoticrealm3d/"
+              >
+                <img
+                  src="./img/Project-3d.png"
+                  alt="3D Project"
+                  class="img-fluid"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="project-item">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.shubukanindia.org/"
+              >
+                <img
+                  src="./img/Project-shubukan.jpg"
+                  alt="Martial Art Website"
+                  class="img-fluid"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="project-item">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.dmassociates.in/"
+              >
+                <img
+                  src="./img/Project-dma.jpg"
+                  alt="Law Firm Website"
+                  class="img-fluid"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="project-item">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.youtube.com/@vfxinvein"
+              >
+                <img
+                  src="./img/Project-viv.png"
+                  alt="Content Creation"
+                  class="img-fluid"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skill Section -->
+    <section class="py-5 bg-body-secondary" id="about">
+      <div class="container py-4">
+        <h2 class="section-title text-center text-dark mb-3">
+          Skills And Services
+        </h2>
+        <p
+          class="text-center text-secondary mx-auto mb-5"
+          style="max-width: 700px; line-height: 1.6"
+        >
+          I build end-to-end products with robust backend systems, scalable
+          content sites and internal SaaS skill, custom web interfaces, and
+          CMS-based business websites. Skilled at optimizing performance, SEO,
+          maintainability and user experience using modern technologies and
+          tools. Passionate about building scalable, user-friendly, and visually
+          engaging web applications.
+        </p>
+
+        <div
+          class="row justify-content-center g-5"
+          style="max-width: 1200px; margin: 0 auto"
+        >
+          <div class="col-lg-4 col-md-6">
+            <div class="text-center p-4">
+              <div class="feature-icon mb-4">
+                <i class="bi bi-boxes"></i>
+              </div>
+              <h3 class="feature-title text-dark mb-3">3D Modeling</h3>
+              <p
+                class="text-secondary"
+                style="line-height: 1.6; font-size: 0.95rem"
+              >
+                Blender, Unreal Engine 5, C++, UE Blueprint, UE Visual
+                Scripting, Game Development, 3D Animation
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="text-center p-4">
+              <div class="feature-icon mb-4">
+                <i class="bi bi-globe2"></i>
+              </div>
+              <h3 class="feature-title text-dark mb-3">Web Development</h3>
+              <p
+                class="text-secondary"
+                style="line-height: 1.6; font-size: 0.95rem"
+              >
+                JavaScript, React.js, Next.js, Tailwind, Three.js, Node,
+                Express, MongoDB, WebSockets, AWS, Git, Cloudinary
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="text-center p-4">
+              <div class="feature-icon mb-4">
+                <i class="bi bi-bounding-box"></i>
+              </div>
+              <h3 class="feature-title text-dark mb-3">Content Editing</h3>
+              <p
+                class="text-secondary"
+                style="line-height: 1.6; font-size: 0.95rem"
+              >
+                Figma, Blender, Adobe Premiere Pro, Stable Diffusion, Prompt
+                Engineering
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-5 bg-light" id="contact">
+      <div class="container py-4">
+        <h2 class="section-title text-center text-dark mb-3">Get In Touch</h2>
+        <p
+          class="text-center text-secondary mx-auto mb-5"
+          style="max-width: 700px; line-height: 1.6"
+        >
+          I'm available for freelance work and full-time opportunities. Send a
+          message and I will get back to you shortly.
+        </p>
+
+        <div class="d-flex flex-wrap justify-content-center gap-2">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="mailto:tathagatamishra007@gmail.com"
+            class="btn btn-outline-primary"
+          >
+            <i class="bi bi-envelope-at-fill"></i> Gmail
+          </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.linkedin.com/in/tathagatamishra"
+            class="btn btn-outline-primary"
+          >
+            <i class="bi bi-linkedin"></i> LinkedIn
+          </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/tathagatamishra"
+            class="btn btn-outline-primary"
+          >
+            <i class="bi bi-github"></i> GitHub
+          </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.youtube.com/@vfxinvein"
+            class="btn btn-outline-primary"
+          >
+            <i class="bi bi-youtube"></i> YouTube
+          </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.instagram.com/chaoticrealm3d/"
+            class="btn btn-outline-primary"
+          >
+            <i class="bi bi-instagram"></i> Instagram
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
