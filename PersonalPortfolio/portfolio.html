@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="en" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Code</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @font-face {
+        font-family: "Against";
+        src: url("./fonts/Against.woff2") format("truetype");
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "RoyaleMilano";
+        src: url("./fonts/RoyaleMilano.otf") format("opentype");
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Semiotic";
+        src: url("./fonts/Semiotic.woff2") format("opentype");
+        font-display: swap;
+      }
+      /* These are just collection of colors to copy & reuse later */
+      .Colors {
+        /* Skin color pallet */
+        color: #ff6f61;
+        color: #ff8f7a;
+        color: #ffb3a0;
+        color: #ffccb6;
+        color: #ffe5d4;
+
+        color: #fff5e9;
+        color: #ffeedd;
+        color: #ffdbc2;
+        color: #ffcbb2;
+        color: #ffbba2;
+
+        /* My colors */
+        color: #000000;
+        color: #880000;
+        color: #ff0000;
+        color: #ff2f00;
+        color: #ff4400;
+        color: #ff4848;
+        color: #f2bfac;
+        color: #e0c5ba;
+        color: #ffffff;
+      }
+      * {
+        scrollbar-width: none;
+        /* Debug outline */
+        /* outline: 1px solid rgb(255, 0, 0) !important; */
+      }
+      *::selection {
+        color: #ff6f61;
+        background: #ffe5d4;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      html {
+        background: #000;
+        height: 100svh;
+        width: 100vw;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+      body {
+        background: url("./noise.webp");
+        /* Enable repeating-linear-gradient to visualize & debug Blur wrapper  */
+        /* background: repeating-linear-gradient(
+          90deg,
+          #fff,
+          #fff 12px,
+          #111 12px,
+          #111 24px
+        ); */
+      }
+      .Round_corner {
+        border-radius: 10rem !important;
+        corner-shape: squircle !important;
+      }
+      nav {
+        position: fixed;
+        backdrop-filter: none; /* prevent single-layer blur */
+        -webkit-backdrop-filter: none;
+      }
+      /* Blur wrapper inside nav */
+      .nav-blur-wrap {
+        pointer-events: none;
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        --blur: 20px; /* maximum blur strength */
+        --ratio: 2.4; /* geometric falloff ratio */
+      }
+      /* Base panel styling */
+      .nav-blur-panel {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      /* Layer 1: Strongest blur at top edge */
+      .nav-blur-panel.is-1 {
+        -webkit-backdrop-filter: blur(var(--blur));
+        backdrop-filter: blur(var(--blur));
+        -webkit-mask: linear-gradient(to bottom, #000 0% 20%, #0000 50%);
+        mask: linear-gradient(to bottom, #000 0% 20%, #0000 50%);
+      }
+      /* Layer 2: Strong blur */
+      .nav-blur-panel.is-2 {
+        -webkit-backdrop-filter: blur(calc(var(--blur) / var(--ratio)));
+        backdrop-filter: blur(calc(var(--blur) / var(--ratio)));
+        -webkit-mask: linear-gradient(
+          to bottom,
+          #0000 0%,
+          #000 20% 40%,
+          #0000 65%
+        );
+        mask: linear-gradient(to bottom, #0000 0%, #000 20% 40%, #0000 65%);
+      }
+      /* Layer 3: Medium blur */
+      .nav-blur-panel.is-3 {
+        -webkit-backdrop-filter: blur(
+          calc(var(--blur) / (var(--ratio) * var(--ratio)))
+        );
+        backdrop-filter: blur(
+          calc(var(--blur) / (var(--ratio) * var(--ratio)))
+        );
+        -webkit-mask: linear-gradient(
+          to bottom,
+          #0000 10%,
+          #000 40% 60%,
+          #0000 80%
+        );
+        mask: linear-gradient(to bottom, #0000 10%, #000 40% 60%, #0000 80%);
+      }
+      /* Layer 4: Light blur */
+      .nav-blur-panel.is-4 {
+        -webkit-backdrop-filter: blur(
+          calc(var(--blur) / (var(--ratio) * var(--ratio) * var(--ratio)))
+        );
+        backdrop-filter: blur(
+          calc(var(--blur) / (var(--ratio) * var(--ratio) * var(--ratio)))
+        );
+        -webkit-mask: linear-gradient(
+          to bottom,
+          #0000 30%,
+          #000 60% 75%,
+          #0000 95%
+        );
+        mask: linear-gradient(to bottom, #0000 30%, #000 60% 75%, #0000 95%);
+      }
+      /* Layer 5: Very light blur */
+      .nav-blur-panel.is-5 {
+        -webkit-backdrop-filter: blur(
+          calc(
+            var(--blur) /
+              (var(--ratio) * var(--ratio) * var(--ratio) * var(--ratio))
+          )
+        );
+        backdrop-filter: blur(
+          calc(
+            var(--blur) /
+              (var(--ratio) * var(--ratio) * var(--ratio) * var(--ratio))
+          )
+        );
+        -webkit-mask: linear-gradient(
+          to bottom,
+          #0000 50%,
+          #000 75% 85%,
+          #0000 100%
+        );
+        mask: linear-gradient(to bottom, #0000 50%, #000 75% 85%, #0000 100%);
+      }
+      /* Layer 6: Subtle blur for smooth transition */
+      .nav-blur-panel.is-6 {
+        -webkit-backdrop-filter: blur(
+          calc(
+            var(--blur) /
+              (
+                var(--ratio) * var(--ratio) * var(--ratio) * var(--ratio) *
+                  var(--ratio)
+              )
+          )
+        );
+        backdrop-filter: blur(
+          calc(
+            var(--blur) /
+              (
+                var(--ratio) * var(--ratio) * var(--ratio) * var(--ratio) *
+                  var(--ratio)
+              )
+          )
+        );
+        -webkit-mask: linear-gradient(
+          to bottom,
+          #0000 70%,
+          #000 85% 95%,
+          #0000 100%
+        );
+        mask: linear-gradient(to bottom, #0000 70%, #000 85% 95%, #0000 100%);
+      }
+      nav > a {
+        position: relative;
+        z-index: 1;
+      }
+      nav > a > p {
+        z-index: 0;
+        font-family: "Semiotic", sans-serif;
+        transition: 150ms ease;
+      }
+      nav > a > .Span1 {
+        z-index: 1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 0px;
+        width: 0%;
+        background: #ff4400;
+        border-radius: 100%;
+        filter: blur(6px);
+        transition: 150ms ease;
+        mix-blend-mode: screen;
+      }
+      nav > a:active > .Span1 {
+        height: 12%;
+        width: 150%;
+      }
+      nav > a > .Span2 {
+        z-index: 1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 0px;
+        width: 0%;
+        background: #ffffff;
+        border-radius: 100%;
+        filter: blur(20px);
+        transition: 150ms ease;
+        mix-blend-mode: screen;
+      }
+      nav > a:active > .Span2 {
+        height: 20%;
+        width: 80%;
+      }
+      nav > a:focus > p,
+      nav > a:hover > p {
+        text-shadow: 0px 0px 6px #ff0000;
+        color: #ff4848;
+      }
+      nav > a:active > p {
+        text-shadow: 0px 0px 8px #ff1500;
+        color: #ffccb6;
+      }
+      .Mode_btn1 {
+        box-shadow:
+          inset 1px 2px 10px #ffe5d4,
+          inset 5px -8px 10px #ff8f7a,
+          -10px 10px 100px #ff4848,
+          2px -2px 10px #ffb3a050;
+        background: linear-gradient(
+          90deg,
+          #ff8f7a 0%,
+          #ffb3a0 20%,
+          #ffffff 90%,
+          #ffe5d4 100%
+        );
+        transition:
+          scale 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      .Mode_btn1:active {
+        scale: 90%;
+        box-shadow:
+          inset 1px 2px 10px #ffb3a0,
+          inset 15px -8px 20px #ff8f7a,
+          -10px 10px 80px #ff4848,
+          2px -2px 10px #ffb3a050;
+      }
+      .TextGradient {
+        background: linear-gradient(
+          90deg,
+          #ff4848 0%,
+          #f2bfac 30%,
+          #fff 70%,
+          #ff6f61 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        mix-blend-mode: overlay;
+        user-select: none;
+      }
+      @media (forced-colors: active) {
+        header > h1 {
+          background: transparent;
+          color: #fff;
+        }
+      }
+      .Hero_btn_div:active > .Hero_btn_1 {
+        border-radius: 100px 60px 60px 100px;
+      }
+      .Hero_btn_div:active > .Hero_btn_2 {
+        border-radius: 60px 100px 100px 60px;
+      }
+      .Hero_btn_1 {
+        border-radius: 100px;
+        color: #000000;
+        text-shadow: 0px 0px 15px #ff4848;
+        box-shadow:
+          inset 1px 2px 10px #ffb3a0,
+          inset 15px -8px 20px #ff4848,
+          -10px 10px 100px #ff4848,
+          2px -2px 10px #ffb3a050;
+        background: linear-gradient(
+          90deg,
+          #ff4848 0%,
+          #ffb3a0 20%,
+          #ffffff 90%,
+          #ffe5d4 100%
+        );
+        background-size: 150% 100%;
+        background-position: 0% center;
+        transition:
+          border-radius 0.3s ease,
+          background-position 1s ease,
+          color 0.3s ease,
+          text-shadow 0.3s ease,
+          box-shadow 0.3s ease,
+          width 0.3s ease;
+      }
+      .Hero_btn_1:active {
+        width: 50%;
+        color: #880000;
+        text-shadow:
+          0px 0px 15px #ff4848,
+          0px 0px 10px #ff4848,
+          0px 0px 5px #ff4848;
+        box-shadow:
+          inset 1px 2px 10px #ffb3a0,
+          inset 15px -8px 20px #ff4848,
+          -10px 10px 80px #ff4848,
+          2px -2px 10px #ffb3a050;
+        background-position: 100% center;
+      }
+      .Hero_btn_2 {
+        border-radius: 100px;
+        color: #ffe5d4;
+        text-shadow: 0px 0px 15px #880000;
+        box-shadow:
+          inset 1px 2px 10px #ffe5d4b1,
+          inset 15px -8px 20px #880000,
+          -10px 10px 60px #88000080,
+          2px -2px 5px #ffe5d430;
+        transition:
+          border-radius 0.3s ease,
+          color 0.3s ease,
+          text-shadow 0.3s ease,
+          box-shadow 0.3s ease,
+          width 0.3s ease;
+      }
+      .Hero_btn_2:active {
+        width: 50%;
+        color: #ffb3a0;
+        text-shadow:
+          0px 0px 15px #880000,
+          0px 0px 10px #880000,
+          0px 0px 5px #880000;
+        box-shadow:
+          inset 1px 1px 10px #ffe5d4,
+          inset 25px -18px 20px #880000,
+          -10px 10px 40px #880000,
+          2px -2px 10px #ffe5d493;
+      }
+      .Showcase {
+        background: linear-gradient(
+          90deg,
+          #ff6f61 0%,
+          #ffb3a0 40%,
+          #e0c5ba 90%,
+          #ffe5d4 100%
+        );
+        box-shadow:
+          inset 1px 2px 10px #ffe5d4b1,
+          inset 15px -8px 20px #880000,
+          -10px 10px 60px #88000080,
+          2px -2px 5px #ffe5d430;
+      }
+      /* Project card scroll animations */
+      .Project_cards > button {
+        width: 34%;
+        height: fit-content;
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(60px);
+        /* Separate transitions: scroll animation vs hover expansion */
+        transition:
+          opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+          filter 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+          transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+          height 0.6s ease-in-out,
+          width 0.6s ease-in-out;
+      }
+      .Project_cards > button:nth-child(1) {
+        transition-delay: 0.5s, 0.5s, 0.5s, 0s, 0s;
+      }
+      .Project_cards > button:nth-child(2) {
+        transition-delay: 0.3s, 0.3s, 0.3s, 0s, 0s;
+      }
+      .Project_cards > button:nth-child(3) {
+        transition-delay: 0.5s, 0.5s, 0.5s, 0s, 0s;
+      }
+      .Project_cards > button.animate-in {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0);
+      }
+      .Project_cards > button > .Project_thumbnail {
+        width: 100%;
+        aspect-ratio: 16/9;
+        transition:
+          aspect-ratio 0.6s ease-in-out,
+          height 0.6s ease-in-out,
+          width 0.6s ease-in-out;
+      }
+      /* When ANY button is hovered, target all button EXCEPT the hovered one and apply style to their Project_thumbnail */
+      .Project_cards:has(button:hover) button:not(:hover) > .Project_thumbnail,
+      .Project_cards:has(button:active)
+        button:not(:active)
+        > .Project_thumbnail,
+      .Project_cards:has(button:focus) button:not(:focus) > .Project_thumbnail {
+        aspect-ratio: 1/1;
+      }
+      .Project_cards > button:hover > .Project_thumbnail,
+      .Project_cards > button:active > .Project_thumbnail,
+      .Project_cards > button:focus > .Project_thumbnail {
+        aspect-ratio: 16/9;
+      }
+      @media (width < 768px /* lg */) {
+        .Project_cards > button {
+          width: 100%;
+        }
+      }
+      @media (width >= 768px /* lg */) {
+        .Project_cards > button:hover,
+        .Project_cards > button:active,
+        .Project_cards > button:focus {
+          width: 100%;
+        }
+        .Project_cards > button:hover > div > h3,
+        .Project_cards > button:active > div > h3,
+        .Project_cards > button:focus > div > h3 {
+          letter-spacing: 20px;
+        }
+      }
+      .Project_cards > button > div > h3 {
+        text-shadow:
+          1px 4px 20px #ff2f00,
+          0px 1.5px 2px #880000,
+          2px 4px 50px #ff2f00;
+        transition: all 0.6s ease-in-out;
+      }
+      .Shadow_mask {
+        box-shadow:
+          inset 0px 6px 20px #880000,
+          inset 0px 100px 100px -100px #e0c5ba,
+          inset 0px 80px 80px -40px #ff6f61,
+          inset 0px 80px 200px #e0c5ba;
+        mask: linear-gradient(
+          180deg,
+          rgb(255, 255, 255),
+          rgb(255, 255, 255),
+          transparent
+        );
+      }
+      .Contact_form > h3 {
+        text-shadow:
+          1px 4px 20px #ff2f00,
+          0px 1.5px 2px #880000,
+          2px 4px 50px #ff2f00;
+        transition: all 0.6s ease-in-out;
+      }
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+        -webkit-box-shadow:
+          inset 0px -20px 40px #ffccb6,
+          inset 0px -10px 10px #ff6f61 !important;
+        transition: background-color 5000s ease-in-out 0s;
+      }
+      .Outline1 {
+        filter: blur(24px);
+        pointer-events: none;
+        background-size: 110%;
+        background-position: -10% -4%;
+        background-repeat: no-repeat;
+      }
+      .FooterP1 {
+        text-shadow: 2px 4px 50px #ff2f00;
+      }
+      .FooterP2 {
+        text-shadow:
+          1px 4px 20px #ff2f00,
+          0px 1.5px 2px #880000;
+      }
+    </style>
+  </head>
+
+  <body class="relative h-fit w-full flex flex-col overflow-x-hidden relative">
+    <!-- <div class="Outline1 absolute top-0 left-0 w-screen h-full"></div> -->
+    <nav
+      class="fixed z-[100] w-full h-fit flex flex-row items-center justify-end 2xl:gap-[40px] xl:gap-[32px] lg:gap-[24px] gap-[20px] pt-[20px] 2xl:px-[100px] lg:px-[60px] sm:px-[40px] px-[20px] pb-[50px] select-none text-white 2xl:text-[36px] xl:text-[34px] lg:text-[26px] text-[22px]"
+    >
+      <!-- The idea is the the child now becomes the grandchild and the parent becomes the grandparent. So the parent respects its parent. Hope you get my idea. -->
+      <div class="relative mr-auto">
+        <!-- float-left wont works when parent have flexbox, so using margin-right: auto -->
+        <button
+          class="Mode_btn1 absolute left-0 2xl:h-[36px] xl:h-[34px] lg:h-[26px] h-[22px] aspect-square rounded-full bg-[#fff] z-[1] blur-[2px]"
+        ></button>
+        <div
+          class="Mode_btn2 absolute left-0 2xl:h-[36px] xl:h-[34px] lg:h-[26px] h-[22px] aspect-square rounded-full bg-[#fff] z-[0]"
+        ></div>
+        <div
+          class="Mode_btn2 absolute left-0 2xl:h-[36px] xl:h-[34px] lg:h-[26px] h-[22px] aspect-square rounded-full bg-[#fff] z-[0] blur-[10px]"
+        ></div>
+      </div>
+      <a href="#home" data-section="home">
+        <span class="Span1"></span>
+        <span class="Span2"></span>
+        <p>HOME</p>
+      </a>
+      <a href="#about" data-section="about">
+        <span class="Span1"></span>
+        <span class="Span2"></span>
+        <p>ABOUT ME</p>
+      </a>
+      <a href="#projects" data-section="projects">
+        <span class="Span1"></span>
+        <span class="Span2"></span>
+        <p>PROJECTS</p>
+      </a>
+      <a href="#contact" data-section="contact">
+        <span class="Span1"></span>
+        <span class="Span2"></span>
+        <p>CONTACT</p>
+      </a>
+
+      <!-- Progressive Blur Layers (6 layers for smooth gradient) -->
+      <div class="nav-blur-wrap">
+        <div class="nav-blur-panel is-1"></div>
+        <div class="nav-blur-panel is-2"></div>
+        <div class="nav-blur-panel is-3"></div>
+        <div class="nav-blur-panel is-4"></div>
+        <div class="nav-blur-panel is-5"></div>
+        <div class="nav-blur-panel is-6"></div>
+      </div>
+    </nav>
+
+    <!-- Home section -->
+    <header
+      id="home"
+      class="relative h-screen z-[2] 2xl:pt-[200px] lg:pt-[180px] sm:pt-[160px] pt-[120px] 2xl:px-[140px] lg:px-[80px] sm:px-[40px] px-[20px] mb-[200px] flex flex-col items-center gap-[40px]"
+    >
+      <div class="max-w-[1440px] w-full h-full">
+        <div
+          class="mix-blend-screen absolute z-[2] top-0 left-0 blur-[400px] bg-[#f00] rounded-t-none rounded-b-[100%] w-[200px] h-[400px]"
+        ></div>
+        <div
+          class="mix-blend-screen absolute z-[2] blur-[300px] bg-[#f00] rounded-[100%] w-[400px] h-[40px] 2xl:ml-[315px] lg:ml-[265px] sm:ml-[190px] ml-[170px] 2xl:mt-[95px] lg:mt-[82px] sm:mt-[72px] mt-[60px]"
+        ></div>
+
+        <div class="relative z-[1] h-fit">
+          <div
+            class="mix-blend-screen absolute z-[2] blur-[80px] bg-[#f00] rounded-[100%] w-[400px] h-[40px] 2xl:ml-[315px] lg:ml-[265px] sm:ml-[190px] ml-[170px] 2xl:mt-[95px] lg:mt-[82px] sm:mt-[72px] mt-[60px]"
+          ></div>
+
+          <div
+            class="font-['Against',sans-serif] xl:text-[98px] md:text-[76px] sm:text-[64px] text-[52px] relative z-[1] transition-all duration-300 ease-in-out"
+          >
+            <h1 class="TextGradient z-[2]">Tathagata</h1>
+            <h1 class="TextGradient absolute top-0 left-0 z-[1] select-none">
+              Tathagata
+            </h1>
+            <h1
+              class="TextGradient absolute top-0 left-0 z-[0] blur-[4px] select-none"
+            >
+              Tathagata
+            </h1>
+          </div>
+          <div
+            class="font-['Against',sans-serif] w-fit h-fit xl:text-[98px] md:text-[76px] sm:text-[64px] text-[52px] xl:ml-[444px] md:ml-[380px] sm:ml-[300px] ml-[250px] xl:mt-[-40px] md:mt-[-35px] sm:mt-[-30px] mt-[-22px] relative z-[1] transition-all duration-300 ease-in-out"
+          >
+            <h1 class="TextGradient absolute top-0 left-0 z-[2]">Mishra</h1>
+            <h1 class="TextGradient absolute top-0 left-0 z-[1] select-none">
+              Mishra
+            </h1>
+            <h1
+              class="TextGradient absolute top-0 left-0 z-[0] blur-[4px] select-none"
+            >
+              Mishra
+            </h1>
+          </div>
+        </div>
+
+        <p
+          class="relative z-[3] max-w-[900px] w-[80%] xl:mt-[162px] md:mt-[120px] sm:mt-[60px] mt-[50px] transition-all duration-300 ease-in-out flex flex-col gap-[30px] font-['RoyaleMilano',sans-serif] text-[#ffffff] lg:text-[20px] text-[16px] tracking-[1.5px]"
+        >
+          Builder of resilient systems and crafted visuals <br />
+          from production web platforms to realtime 3D and animation.
+        </p>
+
+        <div
+          class="Hero_btn_div max-w-[745px] w-[80%] xl:mt-[56px] md:mt-[70px] sm:mt-[60px] mt-[50px] flex items-center gap-4 transition-all duration-300 ease-in-out"
+        >
+          <a
+            href="#projects"
+            class="Hero_btn_1 w-full h-full px-5 py-4 text-center font-medium uppercase tracking-wider text-lg select-none"
+          >
+            View Projects
+          </a>
+
+          <a
+            href="/Tathagata Mishra Resume.pdf"
+            download=""
+            class="Hero_btn_2 w-full h-full px-5 py-4 text-center uppercase tracking-wider text-lg select-none"
+          >
+            Obtain the Record
+          </a>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <a
+          href="#about"
+          class="absolute bottom-8 left-1/2 -translate-x-1/2 z-[5]"
+        >
+          <div
+            class="w-8 h-12 border-2 border-[#ff8e7a70] rounded-2xl flex items-start justify-center p-1 opacity-80 animate-bounce"
+          >
+            <span class="block w-1 h-2 bg-[#ff8e7a70] rounded"></span>
+          </div>
+        </a>
+
+        <div
+          class="mix-blend-screen absolute z-[2] bottom-[-80px] right-0 blur-[250px] bg-[#ff0000] rounded-[100%] w-[200px] h-[200px]"
+        ></div>
+        <div
+          class="mix-blend-screen absolute z-[2] bottom-0 right-[-10%] blur-[250px] bg-[#F2BFAC] rounded-[100%] w-[400px] h-[400px]"
+        ></div>
+      </div>
+    </header>
+
+    <!-- About section -->
+    <section
+      id="about"
+      class="About-sect z-[2] min-h-screen relative 2xl:pt-[200px] lg:pt-[180px] sm:pt-[160px] pt-[120px] 2xl:px-[140px] lg:px-[80px] sm:px-[40px] px-[20px] mb-[200px] flex flex-col items-center"
+    >
+      <div
+        class="mix-blend-screen absolute z-[2] bottom-0 left-0 blur-[250px] bg-[#ff6f61] rounded-[100%] min-w-[200px] w-[50vw] h-[200px]"
+      ></div>
+      <div
+        class="mix-blend-screen absolute z-[2] top-[-100px] left-[-10%] blur-[250px] bg-[#ffbba2] rounded-[100%] w-[400px] h-full"
+      ></div>
+
+      <div
+        class="max-w-[1440px] mx-auto flex lg:flex-row flex-col gap-12 items-start relative"
+      >
+        <!-- Left: Showcase -->
+        <div
+          class="Showcase rounded-[40px] relative lg:w-[40%] w-full min-h-full 2xl:min-h-[calc(100vh-(200px*2))] lg:min-h-[calc(100vh-(180px*2))] sm:min-h-[calc(100vh-(160px*2))] min-h-[calc(100vh-(120px*2))] flex flex-col items-center gap-6"
+        ></div>
+
+        <!-- Right: bio -->
+        <div class="relative h-full lg:w-[60%] w-full">
+          <h2
+            class="Section_title font-['Against',sans-serif] text-[#fff] text-[34px] uppercase mb-6"
+          >
+            Prologue
+          </h2>
+
+          <p
+            class="font-['RoyaleMilano',sans-serif] text-[#ffffff] lg:text-[20px] text-[16px] tracking-[1.5px]"
+          >
+            I'm a creative full-stack developer who builds production web
+            platforms and interactive 3D experiences...
+          </p>
+
+          <h3
+            class="font-['Against',sans-serif] text-[#fff] text-[16px] tracking-wider uppercase mb-6 mt-[64px]"
+          >
+            Core Skills
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            <!-- skills -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project section -->
+    <section
+      id="projects"
+      class="Project-sect z-[2] min-h-screen relative 2xl:pt-[200px] lg:pt-[180px] sm:pt-[160px] pt-[120px] 2xl:px-[140px] lg:px-[80px] sm:px-[40px] px-[20px] mb-[200px] flex flex-col items-center justify-center"
+    >
+      <p
+        class="font-['RoyaleMilano',sans-serif] text-[#fff] text-center lg:text-[20px] text-[16px] tracking-[1.5px] max-w-[1440px] px-[100px] mb-[50px]"
+      >
+        I construct architectures of code and compose interactive realms,
+        shaping motion and form across two and three dimensions. Each work is
+        measured in design and resolute in structure - fashioned to endure
+        beyond appearance.
+      </p>
+      <h2
+        class="Section_title font-['Against',sans-serif] text-[#fff] text-center text-[34px] uppercase mb-[60px]"
+      >
+        The Archive
+      </h2>
+
+      <div
+        class="Project_cards relative max-w-[1440px] w-full h-fit flex md:flex-row flex-col justify-start gap-6"
+      >
+        <button
+          class="relative h-fit flex flex-col justify-start gap-6 items-center p-[24px]"
+        >
+          <div class="relative z-[1]">
+            <h3
+              class="font-['Against',sans-serif] text-center z-[1] text-[#fff] text-[16px] tracking-widest uppercase mb-6"
+            >
+              Systems
+            </h3>
+          </div>
+
+          <div
+            class="Project_thumbnail z-[1] relative w-full bg-black/20 rounded-md overflow-hidden"
+          >
+            1
+          </div>
+          <div
+            class="Project_thumbnail z-[1] relative w-full bg-black/20 rounded-md overflow-hidden"
+          >
+            2
+          </div>
+          <div
+            class="Project_thumbnail z-[1] relative w-full bg-black/20 rounded-md overflow-hidden"
+          >
+            3
+          </div>
+          <div
+            class="Shadow_mask z-[0] absolute w-full h-full top-0 left-0 rounded-t-[20px]"
+          ></div>
+        </button>
+
+        <button
+          class="relative h-fit flex flex-col justify-start gap-6 items-center p-[24px]"
+        >
+          <div class="relative z-[1]">
+            <h3
+              class="font-['Against',sans-serif] text-center z-[1] text-[#fff] text-[16px] tracking-widest uppercase mb-6"
+            >
+              Worlds
+            </h3>
+          </div>
+
+          <div
+            class="Project_thumbnail z-[1] relative w-full bg-black/20 rounded-md overflow-hidden"
+          >
+            1
+          </div>
+          <div
+            class="Project_thumbnail z-[1] relative w-full bg-black/20 rounded-md overflow-hidden"
+          >
+            2
+          </div>
+          <div
+            class="Project_thumbnail z-[1] relative w-full bg-black/20 rounded-md overflow-hidden"
+          >
+            3
+          </div>
+          <div
+            class="Shadow_mask z-[0] absolute w-full h-full top-0 left-0 rounded-t-[20px]"
+          ></div>
+        </button>
+
+        <button
+          class="relative h-fit flex flex-col justify-start gap-6 items-center p-[24px]"
+        >
+          <div class="relative z-[1]">
+            <h3
+              class="font-['Against',sans-serif] text-center z-[1] text-[#fff] text-[16px] tracking-widest uppercase mb-6"
+            >
+              Visions
+            </h3>
+          </div>
+
+          <div
+            class="Project_thumbnail z-[1] relative w-full bg-black/20 rounded-md overflow-hidden"
+          >
+            1
+          </div>
+          <div
+            class="Project_thumbnail z-[1] relative w-full bg-black/20 rounded-md overflow-hidden"
+          >
+            2
+          </div>
+          <div
+            class="Project_thumbnail z-[1] relative w-full bg-black/20 rounded-md overflow-hidden"
+          >
+            3
+          </div>
+          <div
+            class="Shadow_mask z-[0] absolute w-full h-full top-0 left-0 rounded-t-[20px]"
+          ></div>
+        </button>
+      </div>
+    </section>
+
+    <!-- Contact and footer -->
+    <section
+      id="contact"
+      class="Contact-sect z-[2] min-h-screen relative 2xl:pt-[200px] lg:pt-[180px] sm:pt-[160px] pt-[120px] 2xl:px-[140px] lg:px-[80px] sm:px-[40px] px-[20px] flex flex-col items-center"
+    >
+      <section
+        class="max-w-[1440px] z-[2] mb-[200px] flex flex-col items-center"
+      >
+        <h2
+          class="Section_title font-['Against',sans-serif] text-[#fff] text-[34px] uppercase mb-6"
+        >
+          Correspondence
+        </h2>
+        <p
+          class="font-['RoyaleMilano',sans-serif] text-[#fff] text-center lg:text-[20px] text-[16px] tracking-[1.5px] max-w-[1440px] px-[100px] mb-[50px]"
+        >
+          Should you seek collaboration, commission, or counsel in matters of
+          digital craft, you may send word. I answer considered inquiries with
+          due attention. Where structural discipline and visual command stand
+          together - there lies our common ground.
+        </p>
+
+        <div
+          class="Contact_form relative max-w-[660px] w-full mx-auto p-6 mt-[34px]"
+        >
+          <h3
+            class="font-['Against',sans-serif] text-center relative z-[2] text-[#fff] text-[16px] tracking-widest uppercase mb-[28px]"
+          >
+            Get in touch
+          </h3>
+          <form
+            action="mailto:tathagatamishra007@gmail.com"
+            method="post"
+            enctype="text/plain"
+            class="relative z-[2] flex flex-col"
+          >
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              class="w-full p-3 rounded-t-[18px] bg-transparent text-[#fff] border border-[rgba(255,255,255,0.06)]"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              class="w-full p-3 bg-transparent text-[#fff] border border-[rgba(255,255,255,0.06)]"
+            />
+            <textarea
+              name="message"
+              rows="5"
+              placeholder="Message"
+              class="w-full p-3 rounded-b-[18px] bg-transparent text-[#fff] border border-[rgba(255,255,255,0.06)]"
+            ></textarea>
+
+            <div
+              class="Hero_btn_div max-w-full w-full xl:mt-[50px] md:mt-[70px] sm:mt-[60px] mt-[50px] flex items-center gap-4 transition-all duration-300 ease-in-out"
+            >
+              <button
+                type="submit"
+                class="Hero_btn_1 w-full h-full px-5 py-4 text-center font-medium uppercase tracking-wider text-lg select-none"
+              >
+                Dispatch
+              </button>
+
+              <a
+                href="mailto:tathagatamishra007@gmail.com"
+                class="Hero_btn_2 w-full h-full px-5 py-4 text-center uppercase tracking-wider text-lg select-none"
+              >
+                Or email directly
+              </a>
+            </div>
+          </form>
+
+          <div
+            class="Shadow_mask z-[0] absolute w-full h-full top-0 left-0 rounded-t-[30px]"
+          ></div>
+        </div>
+      </section>
+
+      <footer
+        class="relative w-full flex flex-col justify-end items-center 2xl:p-[60px] lg:p-[60px] sm:p-[40px] p-[20px]"
+      >
+        <div class="relative flex flex-col justify-end items-center">
+          <p
+            class="FooterP1 font-['Semiotic',sans-serif] text-[#ffffff] 2xl:text-[32px] xl:text-[28px] lg:text-[24px] text-[20px] z-[2] text-center uppercase absolute"
+          >
+            © 2026 Tathagata Mishra. All rights reserved.
+          </p>
+          <p
+            class="FooterP2 font-['Semiotic',sans-serif] text-[#ffffff] 2xl:text-[32px] xl:text-[28px] lg:text-[24px] text-[20px] z-[2] text-center uppercase"
+          >
+            © 2026 Tathagata Mishra. All rights reserved.
+          </p>
+        </div>
+        <p class="z-[2] text-[#fff]">
+          Work and imagery presented here remain the intellectual property of
+          their creator unless otherwise stated
+        </p>
+        <div
+          class="mix-blend-screen absolute z-[0] bottom-0 blur-[140px] bg-[#F2BFAC] rounded-t-[100%] rounded-b-none w-full h-full"
+        ></div>
+        <div
+          class="mix-blend-screen absolute z-[0] bottom-0 blur-[300px] bg-[#F2BFAC] rounded-t-[100%] rounded-b-none w-full h-full"
+        ></div>
+      </footer>
+    </section>
+
+    <script>
+      // Active section highlighting based on scroll position
+      (function () {
+        const sections = document.querySelectorAll("section[id], header[id]");
+        const navLinks = document.querySelectorAll("nav a[data-section]");
+
+        function updateActiveNav() {
+          let current = "";
+          const scrollY = window.scrollY;
+
+          // Find which section is currently in view
+          sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+
+            // Check if we're in this section (with 150px offset for navbar)
+            if (scrollY >= sectionTop - 200) {
+              current = section.getAttribute("id");
+            }
+          });
+
+          // Update active class on nav links
+          navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("data-section") === current) {
+              link.classList.add("active");
+            }
+          });
+        }
+
+        // Update on scroll
+        window.addEventListener("scroll", updateActiveNav, { passive: true });
+
+        // Update on load
+        updateActiveNav();
+      })();
+
+      // Project cards animation on scroll
+      (function () {
+        const projectCards = document.querySelectorAll(
+          ".Project_cards > button",
+        );
+
+        // Intersection Observer
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                // Add animation class when element comes into view
+                entry.target.classList.add("animate-in");
+              } else {
+                // Remove animation class when element leaves view
+                entry.target.classList.remove("animate-in");
+              }
+            });
+          },
+          {
+            threshold: 0.2, // Trigger when 20% of the element is visible
+            rootMargin: "-50px", // Start animation slightly before element is fully in view
+          },
+        );
+
+        // Observe each project card
+        projectCards.forEach((card) => {
+          observer.observe(card);
+        });
+      })();
+    </script>
+
+    <script>
+      // Dataset
+      const skills = [
+        {
+          type: "Frontend",
+          content: [
+            "JavaScript",
+            "React.js",
+            "Next.js",
+            "HTML5",
+            "CSS3",
+            "SCSS",
+            "Tailwind",
+            "Three.js",
+            "React Three Fiber",
+          ],
+        },
+        {
+          type: "Backend",
+          content: [
+            "Node.js",
+            "Express",
+            "MongoDB",
+            "SQL",
+            "JWT",
+            "WebSockets",
+            "REST APIs",
+          ],
+        },
+        {
+          type: "Cloud & DevOps",
+          content: ["AWS", "Git", "Vercel", "Cloudinary"],
+        },
+        {
+          type: "Other",
+          content: [
+            "WordPress",
+            "React Native",
+            "Python",
+            "Figma",
+            "Blender",
+            "Unreal Engine 5",
+            "C++",
+            "UE Blueprint",
+          ],
+        },
+      ];
+
+      const projects = [
+        {
+          type: "Systems",
+          content: [
+            {
+              image: "image_path",
+              title: "title",
+              description: "description",
+              link: [
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+              ],
+            },
+            {
+              image: "image_path",
+              title: "title",
+              description: "description",
+              link: [
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+              ],
+            },
+            {
+              image: "image_path",
+              title: "title",
+              description: "description",
+              link: [
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+              ],
+            },
+          ],
+        },
+        {
+          type: "Worlds",
+          content: [],
+        },
+        {
+          type: "Visions",
+          content: [],
+        },
+      ];
+    </script>
+  </body>
+</html>
