@@ -21,6 +21,16 @@
         src: url("./fonts/Semiotic.woff2") format("opentype");
         font-display: swap;
       }
+      @font-face {
+        font-family: "WsParadose";
+        src: url("./fonts/WsParadose.woff2") format("opentype");
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Vailery";
+        src: url("./fonts/Vailery.woff2") format("opentype");
+        font-display: swap;
+      }
       /* These are just collection of colors to copy & reuse later */
       .Colors {
         /* Skin color pallet */
@@ -316,7 +326,9 @@
       }
       .Hero_btn_1 {
         border-radius: 100px;
-        color: #000000;
+        color: #000000dd;
+        letter-spacing: 3px;
+        word-spacing: 4px;
         text-shadow: 0px 0px 15px #ff4848;
         box-shadow:
           inset 1px 2px 10px #ffb3a0,
@@ -336,12 +348,16 @@
           border-radius 0.3s ease,
           background-position 1s ease,
           color 0.3s ease,
+          letter-spacing 0.3s ease,
+          word-spacing 0.3s ease,
           text-shadow 0.3s ease,
           box-shadow 0.3s ease,
           width 0.3s ease;
       }
       .Hero_btn_1:active {
         width: 50%;
+        letter-spacing: 1px;
+        word-spacing: 2px;
         color: #880000;
         text-shadow:
           0px 0px 15px #ff4848,
@@ -356,7 +372,9 @@
       }
       .Hero_btn_2 {
         border-radius: 100px;
-        color: #ffe5d4;
+        color: #ffe5d4ee;
+        letter-spacing: 3px;
+        word-spacing: 4px;
         text-shadow: 0px 0px 15px #880000;
         box-shadow:
           inset 1px 2px 10px #ffe5d4b1,
@@ -366,12 +384,16 @@
         transition:
           border-radius 0.3s ease,
           color 0.3s ease,
+          letter-spacing 0.3s ease,
+          word-spacing 0.3s ease,
           text-shadow 0.3s ease,
           box-shadow 0.3s ease,
           width 0.3s ease;
       }
       .Hero_btn_2:active {
         width: 50%;
+        letter-spacing: 1px;
+        word-spacing: 2px;
         color: #ffb3a0;
         text-shadow:
           0px 0px 15px #880000,
@@ -405,11 +427,11 @@
         filter: blur(10px);
         /* Separate transitions: scroll animation vs hover expansion */
         transition:
-        opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-        filter 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-        height 0.6s ease-in-out,
-        width 0.6s ease-in-out;
+          opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+          filter 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+          transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+          height 0.6s ease-in-out,
+          width 0.6s ease-in-out;
       }
       .Project_cards > button:nth-child(1) {
         transform: translateY(70px);
@@ -493,15 +515,6 @@
           2px 4px 50px #ff2f00;
         transition: all 0.6s ease-in-out;
       }
-      input:-webkit-autofill,
-      input:-webkit-autofill:hover,
-      input:-webkit-autofill:focus,
-      input:-webkit-autofill:active {
-        -webkit-box-shadow:
-          inset 0px -20px 40px #ffccb6,
-          inset 0px -10px 10px #ff6f61 !important;
-        transition: background-color 5000s ease-in-out 0s;
-      }
       .Outline1 {
         filter: blur(24px);
         pointer-events: none;
@@ -516,6 +529,61 @@
         text-shadow:
           1px 4px 20px #ff2f00,
           0px 1.5px 2px #880000;
+      }
+
+      ::placeholder {
+        color: #ffccb6 !important;
+      }
+      input:focus,
+      textarea:focus {
+        border-top: 2px solid #ffb3a0ad !important;
+        border-bottom: 2px solid #ffb3a0ad !important;
+        border-left: 4px solid #ffb3a0ad !important;
+        border-right: 4px solid #ffb3a0ad !important;
+        outline: none !important;
+        background: #977c7c4a !important;
+      }
+      input,
+      textarea {
+        background: #0000001c !important;
+      }
+      textarea {
+        mask: linear-gradient(
+          180deg,
+          rgb(255, 255, 255),
+          rgb(255, 255, 255),
+          transparent
+        );
+      }
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      textarea:-webkit-autofill,
+      textarea:-webkit-autofill:hover,
+      textarea:-webkit-autofill:focus,
+      select:-webkit-autofill,
+      select:-webkit-autofill:hover,
+      select:-webkit-autofill:focus {
+        border-top: 2px solid #ffb3a0 !important;
+        border-bottom: 2px solid #ffb3a0 !important;
+        border-left: 4px solid #ffb3a0 !important;
+        border-right: 4px solid #ffb3a0 !important;
+        outline: none !important;
+        -webkit-text-fill-color: #ffffff !important;
+        -webkit-box-shadow: 0 0 0px 1000px #0000004a inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+      }
+      .Top_input:focus,
+      .Top_input:-webkit-autofill,
+      .Top_input:-webkit-autofill:hover,
+      .Top_input:-webkit-autofill:focus {
+        border-top: 4px solid #ffb3a0 !important;
+      }
+      .Bottom_input:focus,
+      .Bottom_input:-webkit-autofill,
+      .Bottom_input:-webkit-autofill:hover,
+      .Bottom_input:-webkit-autofill:focus {
+        border-bottom: 0px solid #ffb3a0 !important;
       }
     </style>
   </head>
@@ -628,7 +696,7 @@
         >
           <a
             href="#projects"
-            class="Hero_btn_1 w-full h-full px-5 py-4 text-center font-medium uppercase tracking-wider text-lg select-none"
+            class="Hero_btn_1 font-['WsParadose',sans-serif] w-[80%] h-full px-5 py-4 text-center uppercase text-[16px] select-none"
           >
             View Projects
           </a>
@@ -636,7 +704,7 @@
           <a
             href="/Tathagata Mishra Resume.pdf"
             download=""
-            class="Hero_btn_2 w-full h-full px-5 py-4 text-center uppercase tracking-wider text-lg select-none"
+            class="Hero_btn_2 font-['WsParadose',sans-serif] w-full h-full px-5 py-4 text-center uppercase text-[16px] select-none"
           >
             Obtain the Record
           </a>
@@ -699,7 +767,7 @@
           </p>
 
           <h3
-            class="font-['Against',sans-serif] text-[#fff] text-[16px] tracking-wider uppercase mb-6 mt-[64px]"
+            class="font-['Against',sans-serif] text-[#fff] text-[18px] tracking-wider uppercase mb-6 mt-[64px]"
           >
             Core Skills
           </h3>
@@ -850,10 +918,10 @@
         </p>
 
         <div
-          class="Contact_form relative max-w-[660px] w-full mx-auto p-6 mt-[34px]"
+          class="Contact_form relative max-w-[660px] w-full mx-auto py-[24px] px-[28px] mt-[34px]"
         >
           <h3
-            class="font-['Against',sans-serif] text-center relative z-[2] text-[#fff] text-[16px] tracking-widest uppercase mb-[28px]"
+            class="font-['Against',sans-serif] text-center relative z-[2] text-[#fff] text-[18px] tracking-widest uppercase mb-[28px]"
           >
             Get in touch
           </h3>
@@ -867,34 +935,34 @@
               type="text"
               name="name"
               placeholder="Name"
-              class="w-full p-3 rounded-t-[18px] bg-transparent text-[#fff] border border-[rgba(255,255,255,0.06)]"
+              class="Top_input w-full p-3 rounded-t-[18px] bg-transparent text-[#fff] font-['Vailery',sans-serif] tracking-wide border border-[4px] border-b-[2px] border-[rgba(255,255,255,0.06)]"
             />
             <input
               type="email"
               name="email"
               placeholder="Email"
-              class="w-full p-3 bg-transparent text-[#fff] border border-[rgba(255,255,255,0.06)]"
+              class="w-full p-3 bg-transparent text-[#fff] font-['Vailery',sans-serif] tracking-wide border border-x-[4px] border-y-[2px] border-[rgba(255,255,255,0.06)]"
             />
             <textarea
               name="message"
               rows="5"
               placeholder="Message"
-              class="w-full p-3 rounded-b-[18px] bg-transparent text-[#fff] border border-[rgba(255,255,255,0.06)]"
+              class="Bottom_input w-full p-3 pb-[40px] bg-transparent text-[#fff] font-['Vailery',sans-serif] tracking-wide border border-[4px] border-b-[0px] border-t-[2px] border-[rgba(255,255,255,0.06)]"
             ></textarea>
 
             <div
-              class="Hero_btn_div max-w-full w-full xl:mt-[50px] md:mt-[70px] sm:mt-[60px] mt-[50px] flex items-center gap-4 transition-all duration-300 ease-in-out"
+              class="Hero_btn_div max-w-full w-full xl:mt-[40px] md:mt-[30px] sm:mt-[20px] mt-[10px] flex items-center gap-4 transition-all duration-300 ease-in-out"
             >
               <button
                 type="submit"
-                class="Hero_btn_1 w-full h-full px-5 py-4 text-center font-medium uppercase tracking-wider text-lg select-none"
+                class="Hero_btn_1 font-['WsParadose',sans-serif] w-[80%] h-full px-5 py-4 text-center uppercase text-[16px] select-none"
               >
                 Dispatch
               </button>
 
               <a
                 href="mailto:tathagatamishra007@gmail.com"
-                class="Hero_btn_2 w-full h-full px-5 py-4 text-center uppercase tracking-wider text-lg select-none"
+                class="Hero_btn_2 font-['WsParadose',sans-serif] w-full h-full px-5 py-4 text-center uppercase text-[16px] select-none"
               >
                 Or email directly
               </a>
@@ -912,20 +980,35 @@
       >
         <div class="relative flex flex-col justify-end items-center">
           <p
-            class="FooterP1 font-['Semiotic',sans-serif] text-[#ffffff] 2xl:text-[32px] xl:text-[28px] lg:text-[24px] text-[20px] z-[2] text-center uppercase absolute"
+            class="FooterP1 font-['Semiotic',sans-serif] uppercase text-[#ffffff] 2xl:text-[32px] xl:text-[26px] lg:text-[24px] text-[20px] z-[2] text-center tracking-wide absolute"
           >
-            © 2026 Tathagata Mishra. All rights reserved.
+            © 2026 Tathagata Mishra.
           </p>
           <p
-            class="FooterP2 font-['Semiotic',sans-serif] text-[#ffffff] 2xl:text-[32px] xl:text-[28px] lg:text-[24px] text-[20px] z-[2] text-center uppercase"
+            class="FooterP2 font-['Semiotic',sans-serif] uppercase text-[#ffffff] 2xl:text-[32px] xl:text-[26px] lg:text-[24px] text-[20px] z-[1] text-center tracking-wide select-none relative"
           >
-            © 2026 Tathagata Mishra. All rights reserved.
+            © 2026 Tathagata Mishra.
           </p>
         </div>
-        <p class="z-[2] text-[#fff]">
-          Work and imagery presented here remain the intellectual property of
-          their creator unless otherwise stated
-        </p>
+        <div
+          class="relative flex flex-col justify-end items-center max-w-[1200px]"
+        >
+          <p
+            class="FooterP1 font-['Semiotic',sans-serif] uppercase text-[#ffffff] 2xl:text-[32px] xl:text-[26px] lg:text-[24px] text-[20px] z-[2] text-center tracking-wide absolute"
+          >
+            Work and imagery presented here remain the intellectual property of
+            their creator unless otherwise stated.
+          </p>
+          <p
+            class="FooterP2 font-['Semiotic',sans-serif] uppercase text-[#ffffff] 2xl:text-[32px] xl:text-[26px] lg:text-[24px] text-[20px] z-[1] text-center tracking-wide select-none relative"
+          >
+            Work and imagery presented here remain the intellectual property of
+            their creator unless otherwise stated.
+          </p>
+        </div>
+        <div
+          class="mix-blend-screen absolute z-[0] bottom-0 blur-[100px] bg-[#ff8f7a] rounded-t-[100%] rounded-b-none w-[50%] h-full"
+        ></div>
         <div
           class="mix-blend-screen absolute z-[0] bottom-0 blur-[140px] bg-[#F2BFAC] rounded-t-[100%] rounded-b-none w-full h-full"
         ></div>

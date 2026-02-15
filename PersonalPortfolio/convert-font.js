@@ -1,8 +1,8 @@
 const fs = require("fs");
 const woff2 = require("woff2");
 
-const inputPath = "./RoyaleMilanoRegular-DYXP3.otf";
-const outputPath = "./RoyaleMilano.woff2";
+const inputPath = "./fonts/WsParadose.ttf";
+const outputPath = "./fonts/WsParadose.woff2";
 
 const input = fs.readFileSync(inputPath);
 const output = woff2.encode(input);
