@@ -31,6 +31,8 @@
         src: url("./fonts/Vailery.woff2") format("opentype");
         font-display: swap;
       }
+    </style>
+    <style>
       /* These are just collection of colors to copy & reuse later */
       .Colors {
         /* Skin color pallet */
@@ -91,6 +93,21 @@
         border-radius: 10rem !important;
         corner-shape: squircle !important;
       }
+      .Shadow_mask {
+        box-shadow:
+          inset 0px 6px 20px #880000,
+          inset 0px 100px 100px -100px #e0c5ba,
+          inset 0px 80px 80px -40px #ff6f61,
+          inset 0px 80px 200px #e0c5ba;
+        mask: linear-gradient(
+          180deg,
+          rgb(255, 255, 255),
+          rgb(255, 255, 255),
+          transparent
+        );
+      }
+    </style>
+    <style>
       nav {
         position: fixed;
         backdrop-filter: none; /* prevent single-layer blur */
@@ -298,6 +315,8 @@
           -10px 10px 80px #ff4848,
           2px -2px 10px #ffb3a050;
       }
+    </style>
+    <style>
       .TextGradient {
         background: linear-gradient(
           90deg,
@@ -345,14 +364,14 @@
         background-size: 150% 100%;
         background-position: 0% center;
         transition:
-          border-radius 0.3s ease,
+          border-radius 0.2s ease,
           background-position 1s ease,
-          color 0.3s ease,
-          letter-spacing 0.3s ease,
-          word-spacing 0.3s ease,
-          text-shadow 0.3s ease,
-          box-shadow 0.3s ease,
-          width 0.3s ease;
+          color 0.2s ease,
+          letter-spacing 0.2s ease,
+          word-spacing 0.2s ease,
+          text-shadow 0.2s ease,
+          box-shadow 0.2s ease,
+          width 0.2s ease;
       }
       .Hero_btn_1:active {
         width: 50%;
@@ -382,13 +401,13 @@
           -10px 10px 60px #88000080,
           2px -2px 5px #ffe5d430;
         transition:
-          border-radius 0.3s ease,
-          color 0.3s ease,
-          letter-spacing 0.3s ease,
-          word-spacing 0.3s ease,
-          text-shadow 0.3s ease,
-          box-shadow 0.3s ease,
-          width 0.3s ease;
+          border-radius 0.2s ease,
+          color 0.2s ease,
+          letter-spacing 0.2s ease,
+          word-spacing 0.2s ease,
+          text-shadow 0.2s ease,
+          box-shadow 0.2s ease,
+          width 0.2s ease;
       }
       .Hero_btn_2:active {
         width: 50%;
@@ -405,6 +424,8 @@
           -10px 10px 40px #880000,
           2px -2px 10px #ffe5d493;
       }
+    </style>
+    <style>
       .Showcase {
         background: linear-gradient(
           90deg,
@@ -427,57 +448,50 @@
         filter: blur(10px);
         /* Separate transitions: scroll animation vs hover expansion */
         transition:
-          opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-          filter 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-          transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-          height 0.6s ease-in-out,
-          width 0.6s ease-in-out;
+          opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+          filter 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+          transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+          height 0.4s ease-in-out,
+          width 0.4s ease-in-out;
       }
       .Project_cards > button:nth-child(1) {
         transform: translateY(70px);
-        transition-delay: 0.5s, 0.5s, 0.5s, 0s, 0s;
+        transition-delay: 0.3s, 0.3s, 0.3s, 0s, 0s;
       }
       .Project_cards > button:nth-child(2) {
         transform: translateY(50px);
-        transition-delay: 0.3s, 0.3s, 0.3s, 0s, 0s;
+        transition-delay: 0.2s, 0.2s, 0.2s, 0s, 0s;
       }
       .Project_cards > button:nth-child(3) {
         transform: translateY(70px);
-        transition-delay: 0.5s, 0.5s, 0.5s, 0s, 0s;
+        transition-delay: 0.3s, 0.3s, 0.3s, 0s, 0s;
       }
       .Project_cards > button.animate-in {
         opacity: 1;
         filter: blur(0px);
         transform: translateY(0);
       }
-      .Project_cards > button > .Project_thumbnail {
+      .Project_thumbnail {
         width: 100%;
         aspect-ratio: 16/9;
         /* filter: saturate(20%);
         opacity: 80%; */
+        mix-blend-mode: color-burn;
         transition:
-          opacity 0.5s ease-in-out,
-          filter 0.3s ease-in-out,
-          aspect-ratio 0.6s ease-in-out,
-          height 0.6s ease-in-out,
-          width 0.6s ease-in-out;
+          opacity 0.3s ease-in-out,
+          filter 0.2s ease-in-out,
+          aspect-ratio 0.4s ease-in-out,
+          height 0.4s ease-in-out,
+          width 0.4s ease-in-out;
       }
       /* When ANY button is hovered, target all button EXCEPT the hovered one and apply style to their Project_thumbnail */
       /* .Project_cards:has(button:focus) button:not(:focus) > .Project_thumbnail, */
       /* .Project_cards:has(button:active)
         button:not(:active)
         > .Project_thumbnail, */
-      .Project_cards:has(button:hover) button:not(:hover) > .Project_thumbnail {
-        aspect-ratio: 1/1;
-      }
       .Project_thumbnail:hover {
         opacity: 100%;
         filter: saturate(100%);
-      }
-      /* .Project_cards > button:focus > .Project_thumbnail, */
-      /* .Project_cards > button:active > .Project_thumbnail, */
-      .Project_cards > button:hover > .Project_thumbnail {
-        aspect-ratio: 16/9;
       }
       @media (width < 768px /* lg */) {
         .Project_cards > button {
@@ -485,6 +499,16 @@
         }
       }
       @media (width >= 768px /* lg */) {
+        .Project_cards:has(button:hover)
+          button:not(:hover)
+          > .Project_thumbnail {
+          aspect-ratio: 1/1;
+        }
+        /* .Project_cards > button:focus > .Project_thumbnail, */
+        /* .Project_cards > button:active > .Project_thumbnail, */
+        .Project_cards > button:hover > .Project_thumbnail {
+          aspect-ratio: 16/9;
+        }
         /* .Project_cards > button:focus, */
         /* .Project_cards > button:active, */
         .Project_cards > button:hover {
@@ -501,33 +525,78 @@
           1px 4px 20px #ff2f00,
           0px 1.5px 2px #880000,
           2px 4px 50px #ff2f00;
-        transition: all 0.6s ease-in-out;
+        transition: all 0.4s ease-in-out;
       }
       .Open_btn {
-        display: none;
+        border-radius: 100px;
+        color: #000000dd;
+        letter-spacing: 3px;
+        word-spacing: 4px;
+        text-shadow: 0px 0px 15px #ff4848;
+        box-shadow:
+          inset 1px 2px 10px #ffb3a0,
+          inset 15px -8px 20px #ff4848,
+          -10px 10px 100px #5a1919,
+          2px -2px 10px #4a342e50;
+        background: linear-gradient(
+          90deg,
+          #ff4848 0%,
+          #ffb3a0 20%,
+          #ffffff 90%,
+          #ffe5d4 100%
+        );
+        background-size: 150% 100%;
+        background-position: 0% center;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          border-radius 0.2s ease,
+          background-position 1s ease,
+          color 0.2s ease,
+          letter-spacing 0.2s ease,
+          word-spacing 0.2s ease,
+          text-shadow 0.2s ease,
+          box-shadow 0.2s ease,
+          scale 0.1s ease;
+      }
+      .Open_btn:active {
+        scale: 80%;
+        letter-spacing: 1px;
+        word-spacing: 2px;
+        color: #880000;
+        text-shadow:
+          0px 0px 15px #ff4848,
+          0px 0px 10px #ff4848,
+          0px 0px 5px #ff4848;
+        box-shadow:
+          inset 1px 2px 10px #ffb3a0,
+          inset 15px -8px 20px #ff4848,
+          -10px 10px 80px #5a1919,
+          2px -2px 10px #4a342e50;
+        background-position: 100% center;
       }
       .Project_thumbnail:hover > .Open_btn {
-        display: block;
+        opacity: 1;
       }
-      .Shadow_mask {
-        box-shadow:
-          inset 0px 6px 20px #880000,
-          inset 0px 100px 100px -100px #e0c5ba,
-          inset 0px 80px 80px -40px #ff6f61,
-          inset 0px 80px 200px #e0c5ba;
-        mask: linear-gradient(
-          180deg,
-          rgb(255, 255, 255),
-          rgb(255, 255, 255),
-          transparent
-        );
+      .Project_thumbnail > img {
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
       }
+      .Project_thumbnail:hover > img {
+        opacity: 0.5;
+      }
+      .Project_thumbnail:active > .Open_btn {
+      }
+      .Project_thumbnail:hover {
+      }
+    </style>
+    <style>
       .Contact_form > h3 {
         text-shadow:
           1px 4px 20px #ff2f00,
           0px 1.5px 2px #880000,
           2px 4px 50px #ff2f00;
-        transition: all 0.6s ease-in-out;
+        transition: all 0.4s ease-in-out;
       }
       .Outline1 {
         filter: blur(24px);
@@ -598,6 +667,196 @@
       .Bottom_input:-webkit-autofill:hover,
       .Bottom_input:-webkit-autofill:focus {
         border-bottom: 0px solid #ffb3a000 !important;
+      }
+    </style>
+    <style>
+      /* PROJECT MODAL */
+      #project-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        /* hidden state */
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+      }
+      #project-modal.modal-open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      #modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: #00000090;
+        -webkit-backdrop-filter: blur(14px);
+        backdrop-filter: blur(14px);
+      }
+      #modal-box {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 780px;
+        max-height: 90svh;
+        overflow-y: auto;
+        scrollbar-width: none;
+        border-radius: 28px;
+        background: #0d0101cc;
+        border:
+          1px solid #ff4848,
+          20%;
+        border: 1px solid rgba(255, 72, 72, 0.2);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 200, 180, 0.08),
+          0 0 80px #88000060,
+          0 0 200px #ff000020;
+        transform: translateY(30px) scale(0.97);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      #project-modal.modal-open #modal-box {
+        transform: translateY(0) scale(1);
+      }
+      /* Hero image */
+      #modal-hero {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        border-radius: 28px 28px 0 0;
+        display: block;
+      }
+      /* Empty hero placeholder when no image */
+      #modal-hero-placeholder {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 28px 28px 0 0;
+        background: linear-gradient(135deg, #1a0000 0%, #2d0808 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #modal-body {
+        padding: 32px 36px 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      #modal-category {
+        font-family: "Semiotic", sans-serif;
+        font-size: 11px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #ff8f7a;
+      }
+      #modal-title {
+        font-family: "Against", sans-serif;
+        font-size: clamp(24px, 4vw, 38px);
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        text-shadow:
+          1px 4px 20px #ff2f00,
+          0px 1.5px 2px #880000,
+          2px 4px 50px #ff2f00;
+        color: #fff;
+      }
+      #modal-description {
+        font-family: "RoyaleMilano", sans-serif;
+        font-size: 16px;
+        line-height: 1.75;
+        letter-spacing: 1px;
+        color: #ffe5d4cc;
+      }
+      /* Divider */
+      .modal-divider {
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #ff484840, transparent);
+      }
+      /* Links section */
+      #modal-links-label {
+        font-family: "Semiotic", sans-serif;
+        font-size: 11px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #ff8f7a;
+        margin-bottom: 12px;
+      }
+      #modal-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .modal-link-btn {
+        font-family: "WsParadose", sans-serif;
+        font-size: 13px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 10px 22px;
+        border-radius: 100px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+      .modal-link-btn.primary {
+        color: #000000cc;
+        background: linear-gradient(90deg, #ff4848, #ffb3a0 60%, #fff);
+        box-shadow:
+          inset 1px 2px 8px #ffb3a0,
+          -6px 6px 40px #ff484860;
+      }
+      .modal-link-btn.primary:hover {
+        box-shadow:
+          inset 1px 2px 8px #ffb3a0,
+          -6px 6px 60px #ff484890;
+      }
+      .modal-link-btn.secondary {
+        color: #ffe5d4cc;
+        border: 1px solid rgba(255, 200, 180, 0.2);
+        box-shadow: inset 0 0 20px #88000030;
+      }
+      .modal-link-btn.secondary:hover {
+        border-color: rgba(255, 72, 72, 0.4);
+        color: #fff;
+        box-shadow: inset 0 0 20px #88000060;
+      }
+      /* Empty state pill (no links, no description) */
+      .modal-empty-note {
+        font-family: "Vailery", sans-serif;
+        font-size: 13px;
+        letter-spacing: 1px;
+        color: #ff8f7a60;
+        font-style: italic;
+      }
+      /* Close button */
+      #modal-close {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        z-index: 10;
+        width: 38px;
+        height: 38px;
+        border-radius: 100%;
+        background: #0d0101bb;
+        border: 1px solid rgba(255, 200, 180, 0.18);
+        color: #ffe5d4;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 0 20px #88000040;
+      }
+      #modal-close:hover {
+        background: #ff484820;
+        border-color: rgba(255, 72, 72, 0.4);
+        box-shadow: 0 0 30px #ff000040;
+      }
+      @media (max-width: 500px) {
+        #modal-body {
+          padding: 24px 20px 32px;
+        }
       }
     </style>
   </head>
@@ -710,7 +969,7 @@
         >
           <a
             href="#projects"
-            class="Hero_btn_1 font-['WsParadose',sans-serif] w-[80%] h-full px-5 py-4 text-center uppercase text-[16px] select-none"
+            class="Hero_btn_1 font-['WsParadose',sans-serif] w-[80%] px-5 py-4 text-center uppercase text-[16px] select-none"
           >
             View Projects
           </a>
@@ -718,7 +977,7 @@
           <a
             href="/Tathagata Mishra Resume.pdf"
             download=""
-            class="Hero_btn_2 font-['WsParadose',sans-serif] w-full h-full px-5 py-4 text-center uppercase text-[16px] select-none"
+            class="Hero_btn_2 font-['WsParadose',sans-serif] w-full px-5 py-4 text-center uppercase text-[16px] select-none"
           >
             Obtain the Record
           </a>
@@ -813,121 +1072,7 @@
 
       <div
         class="Project_cards relative max-w-[1440px] w-full h-fit flex md:flex-row flex-col justify-start gap-6"
-      >
-        <button
-          class="relative h-fit flex flex-col justify-start gap-6 items-center p-[24px] pb-[100px]"
-        >
-          <div class="relative z-[1]">
-            <h3
-              class="font-['Against',sans-serif] text-center z-[1] text-[#fff] text-[16px] tracking-widest uppercase mb-6"
-            >
-              Systems
-            </h3>
-          </div>
-
-          <div
-            class="Project_thumbnail z-[1] relative flex items-center justify-center w-full bg-black/20 rounded-md overflow-hidden"
-          >
-          <div class="Open_btn absolute w-fit h-fit rounded-full px-[28px] py-[10px] bg-[#fff] uppercase">Open</div>
-            <img
-              class="w-full h-full object-cover"
-              src="https://res.cloudinary.com/da54sljjk/image/upload/v1771452470/CuvetteProjects/Project-dma_lipprk.png"
-              alt=""
-              srcset=""
-            />
-          </div>
-          <div
-            class="Project_thumbnail z-[1] relative flex items-center justify-center w-full bg-black/20 rounded-md overflow-hidden"
-          >
-          <div class="Open_btn absolute w-fit h-fit rounded-full px-[28px] py-[10px] bg-[#fff] uppercase">Open</div>
-            <img
-              class="w-full h-full object-cover"
-              src="https://res.cloudinary.com/da54sljjk/image/upload/v1771452471/CuvetteProjects/Project-shubukan_v7n07r.png"
-              alt=""
-              srcset=""
-            />
-          </div>
-          <div
-            class="Shadow_mask z-[0] absolute w-full h-full top-0 left-0 rounded-t-[20px]"
-          ></div>
-        </button>
-
-        <button
-          class="relative h-fit flex flex-col justify-start gap-6 items-center p-[24px] pb-[100px]"
-        >
-          <div class="relative z-[1]">
-            <h3
-              class="font-['Against',sans-serif] text-center z-[1] text-[#fff] text-[16px] tracking-widest uppercase mb-6"
-            >
-              Worlds
-            </h3>
-          </div>
-
-          <div
-            class="Project_thumbnail z-[1] relative flex items-center justify-center w-full bg-black/20 rounded-md overflow-hidden"
-          >
-          <div class="Open_btn absolute w-fit h-fit rounded-full px-[28px] py-[10px] bg-[#fff] uppercase">Open</div>
-            <img
-              class="w-full h-full object-cover"
-              src="https://res.cloudinary.com/da54sljjk/image/upload/v1771452471/CuvetteProjects/Project-3D_jz0bk9.png"
-              alt=""
-              srcset=""
-            />
-          </div>
-          <div
-            class="Project_thumbnail z-[1] relative flex items-center justify-center w-full bg-black/20 rounded-md overflow-hidden"
-          >
-          <div class="Open_btn absolute w-fit h-fit rounded-full px-[28px] py-[10px] bg-[#fff] uppercase">Open</div>
-            <img
-              class="w-full h-full object-cover"
-              src="https://res.cloudinary.com/da54sljjk/image/upload/v1771452469/CuvetteProjects/Project-3DAnim_ttnljq.png"
-              alt=""
-              srcset=""
-            />
-          </div>
-          <div
-            class="Shadow_mask z-[0] absolute w-full h-full top-0 left-0 rounded-t-[20px]"
-          ></div>
-        </button>
-
-        <button
-          class="relative h-fit flex flex-col justify-start gap-6 items-center p-[24px] pb-[100px]"
-        >
-          <div class="relative z-[1]">
-            <h3
-              class="font-['Against',sans-serif] text-center z-[1] text-[#fff] text-[16px] tracking-widest uppercase mb-6"
-            >
-              Visions
-            </h3>
-          </div>
-
-          <div
-            class="Project_thumbnail z-[1] relative flex items-center justify-center w-full bg-black/20 rounded-md overflow-hidden"
-          >
-          <div class="Open_btn absolute w-fit h-fit rounded-full px-[28px] py-[10px] bg-[#fff] uppercase">Open</div>
-            <img
-              class="w-full h-full object-cover"
-              src="https://res.cloudinary.com/da54sljjk/image/upload/v1771452472/CuvetteProjects/Project-Card_r71gis.png"
-              alt=""
-              srcset=""
-            />
-          </div>
-          <div
-            class="Project_thumbnail z-[1] relative flex items-center justify-center w-full bg-black/20 rounded-md overflow-hidden"
-          >
-          <div class="Open_btn absolute w-fit h-fit rounded-full px-[28px] py-[10px] bg-[#fff] uppercase">Open</div>
-            <img
-              class="w-full h-full object-cover"
-              src="https://res.cloudinary.com/da54sljjk/image/upload/v1771452469/CuvetteProjects/Project-editing_xqp2ie.png"
-              alt=""
-              srcset=""
-            />
-          </div>
-          <div
-            class="Shadow_mask z-[0] absolute w-full h-full top-0 left-0 rounded-t-[20px]"
-          ></div>
-        </button>
-      </div>
+      ></div>
     </section>
 
     <!-- Contact and footer -->
@@ -990,14 +1135,14 @@
             >
               <button
                 type="submit"
-                class="Hero_btn_1 font-['WsParadose',sans-serif] w-[80%] h-full px-5 py-4 text-center uppercase text-[16px] select-none"
+                class="Hero_btn_1 font-['WsParadose',sans-serif] w-[80%] px-5 py-4 text-center uppercase text-[16px] select-none"
               >
                 Dispatch
               </button>
 
               <a
                 href="mailto:tathagatamishra007@gmail.com"
-                class="Hero_btn_2 font-['WsParadose',sans-serif] w-full h-full px-5 py-4 text-center uppercase text-[16px] select-none"
+                class="Hero_btn_2 font-['WsParadose',sans-serif] w-full px-5 py-4 text-center uppercase text-[16px] select-none"
               >
                 Or email directly
               </a>
@@ -1053,6 +1198,50 @@
       </footer>
     </section>
 
+    <!-- PROJECT MODAL -->
+    <div
+      id="project-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div id="modal-backdrop"></div>
+      <div id="modal-box">
+        <button id="modal-close" aria-label="Close modal">&#x2715;</button>
+
+        <!-- Hero image (shown when project.image is set) -->
+        <img id="modal-hero" src="" alt="" />
+        <!-- Placeholder shown when no image -->
+        <div id="modal-hero-placeholder">
+          <span
+            style="
+              font-family: &quot;Against&quot;, sans-serif;
+              color: #ff484840;
+              font-size: 32px;
+              letter-spacing: 6px;
+              text-transform: uppercase;
+            "
+            >No Preview</span
+          >
+        </div>
+
+        <div id="modal-body">
+          <span id="modal-category"></span>
+
+          <h2 id="modal-title"></h2>
+
+          <p id="modal-description"></p>
+
+          <div class="modal-divider"></div>
+
+          <div>
+            <p id="modal-links-label">Links</p>
+            <div id="modal-links"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
       // Active section highlighting based on scroll position
       (function () {
@@ -1092,38 +1281,39 @@
 
       // Project cards animation on scroll
       (function () {
-        const projectCards = document.querySelectorAll(
-          ".Project_cards > button",
-        );
+        function initProjectObserver() {
+          const projectCards = document.querySelectorAll(
+            ".Project_cards > button",
+          );
+          // Intersection Observer
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  // Add animation class when element comes into view
+                  entry.target.classList.add("animate-in");
+                } else {
+                  // Remove animation class when element leaves view
+                  entry.target.classList.remove("animate-in");
+                }
+              });
+            },
+            {
+              threshold: 0.2, // Trigger when 20% of the element is visible
+              rootMargin: "-50px", // Start animation slightly before element is fully in view
+            },
+          );
+          projectCards.forEach((card) => observer.observe(card));
+        }
 
-        // Intersection Observer
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                // Add animation class when element comes into view
-                entry.target.classList.add("animate-in");
-              } else {
-                // Remove animation class when element leaves view
-                entry.target.classList.remove("animate-in");
-              }
-            });
-          },
-          {
-            threshold: 0.2, // Trigger when 20% of the element is visible
-            rootMargin: "-50px", // Start animation slightly before element is fully in view
-          },
-        );
-
-        // Observe each project card
-        projectCards.forEach((card) => {
-          observer.observe(card);
-        });
+        // Called after renderProjects() so cards exist in DOM
+        window._initProjectObserver = initProjectObserver;
       })();
     </script>
 
     <script>
-      // Dataset
+      // DATASET
+
       const skills = [
         {
           type: "Frontend",
@@ -1175,7 +1365,8 @@
           type: "Systems",
           content: [
             {
-              image: "image_path",
+              image:
+                "https://res.cloudinary.com/da54sljjk/image/upload/v1771452470/CuvetteProjects/Project-dma_lipprk.png",
               title: "title",
               description: "description",
               link: [
@@ -1185,17 +1376,8 @@
               ],
             },
             {
-              image: "image_path",
-              title: "title",
-              description: "description",
-              link: [
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
-              ],
-            },
-            {
-              image: "image_path",
+              image:
+                "https://res.cloudinary.com/da54sljjk/image/upload/v1771452471/CuvetteProjects/Project-shubukan_v7n07r.png",
               title: "title",
               description: "description",
               link: [
@@ -1208,13 +1390,211 @@
         },
         {
           type: "Worlds",
-          content: [],
+          content: [
+            {
+              image:
+                "https://res.cloudinary.com/da54sljjk/image/upload/v1771452471/CuvetteProjects/Project-3D_jz0bk9.png",
+              title: "title",
+              description: "description",
+              link: [
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+              ],
+            },
+            {
+              image:
+                "https://res.cloudinary.com/da54sljjk/image/upload/v1771452469/CuvetteProjects/Project-3DAnim_ttnljq.png",
+              title: "title",
+              description: "description",
+              link: [
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+              ],
+            },
+          ],
         },
         {
           type: "Visions",
-          content: [],
+          content: [
+            {
+              image:
+                "https://res.cloudinary.com/da54sljjk/image/upload/v1771452472/CuvetteProjects/Project-Card_r71gis.png",
+              title: "title",
+              description: "description",
+              link: [
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+              ],
+            },
+            {
+              image:
+                "https://res.cloudinary.com/da54sljjk/image/upload/v1771452469/CuvetteProjects/Project-editing_xqp2ie.png",
+              title: "title",
+              description: "description",
+              link: [
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+                { type: "type", url: "url" },
+              ],
+            },
+          ],
         },
       ];
+    </script>
+
+    <script>
+      // Map project
+      function renderProjects() {
+        const container = document.querySelector(".Project_cards");
+        container.innerHTML = "";
+
+        projects.forEach((group) => {
+          const btn = document.createElement("button");
+          btn.className =
+            "relative h-fit flex flex-col justify-start gap-6 items-center p-[24px] pb-[100px]";
+
+          // Column heading
+          const headingDiv = document.createElement("div");
+          headingDiv.className = "relative z-[1]";
+          headingDiv.innerHTML = `
+            <h3 class="font-['Against',sans-serif] text-center z-[1] text-[#fff] text-[16px] tracking-widest uppercase mb-6">
+              ${group.type}
+            </h3>`;
+          btn.appendChild(headingDiv);
+
+          // Thumbnails
+          group.content.forEach((project, idx) => {
+            const thumb = document.createElement("div");
+            thumb.className =
+              "Project_thumbnail z-[1] relative flex items-center justify-center w-full bg-black/20 rounded-md overflow-hidden";
+            // Store project data on the element for the modal
+            thumb.dataset.projectGroup = group.type;
+            thumb.dataset.projectIndex = idx;
+
+            const openBtn = document.createElement("div");
+            openBtn.className =
+              "Open_btn absolute z-[2] font-['WsParadose',sans-serif] w-fit aspect-[1/1] flex items-center justify-center px-5 py-4 text-center uppercase text-[16px] select-none";
+            openBtn.textContent = "Open";
+
+            const img = document.createElement("img");
+            img.className = "w-full h-full object-cover z-[0]";
+            img.src = project.image || "";
+            img.alt = project.title || group.type;
+
+            thumb.appendChild(openBtn);
+            thumb.appendChild(img);
+
+            // Open modal on click anywhere on the thumbnail
+            thumb.addEventListener("click", () =>
+              openModal(group.type, project),
+            );
+
+            btn.appendChild(thumb);
+          });
+
+          // Shadow overlay
+          const shadow = document.createElement("div");
+          shadow.className =
+            "Shadow_mask z-[0] absolute w-full h-full top-0 left-0 rounded-t-[20px]";
+          btn.appendChild(shadow);
+
+          container.appendChild(btn);
+        });
+
+        // Re-initialise scroll observer now that cards are in the DOM
+        window._initProjectObserver();
+      }
+    </script>
+
+    <script>
+      // MODAL
+      const modal = document.getElementById("project-modal");
+      const modalHero = document.getElementById("modal-hero");
+      const modalHeroPlaceholder = document.getElementById(
+        "modal-hero-placeholder",
+      );
+      const modalCat = document.getElementById("modal-category");
+      const modalTitle = document.getElementById("modal-title");
+      const modalDesc = document.getElementById("modal-description");
+      const modalLinks = document.getElementById("modal-links");
+      const modalClose = document.getElementById("modal-close");
+      const modalBackdrop = document.getElementById("modal-backdrop");
+
+      function openModal(categoryType, project) {
+        // Hero image
+        if (project.image) {
+          modalHero.src = project.image;
+          modalHero.alt = project.title || categoryType;
+          modalHero.style.display = "block";
+          modalHeroPlaceholder.style.display = "none";
+        } else {
+          modalHero.style.display = "none";
+          modalHeroPlaceholder.style.display = "flex";
+        }
+
+        // Category tag
+        modalCat.textContent = categoryType;
+
+        // Title
+        modalTitle.textContent = project.title || "—";
+
+        // Description
+        if (project.description) {
+          modalDesc.textContent = project.description;
+          modalDesc.style.display = "block";
+        } else {
+          modalDesc.style.display = "none";
+        }
+
+        // Links
+        modalLinks.innerHTML = "";
+        const validLinks = (project.link || []).filter(
+          (l) => l.url && l.url !== "url",
+        );
+
+        if (validLinks.length > 0) {
+          validLinks.forEach((l, i) => {
+            const a = document.createElement("a");
+            a.href = l.url;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            a.textContent = l.type || "Link";
+            a.className =
+              "modal-link-btn " + (i === 0 ? "primary" : "secondary");
+            modalLinks.appendChild(a);
+          });
+        } else {
+          const note = document.createElement("span");
+          note.className = "modal-empty-note";
+          note.textContent = "No links provided yet.";
+          modalLinks.appendChild(note);
+        }
+
+        // Show modal
+        document.body.style.overflow = "hidden";
+        modal.classList.add("modal-open");
+      }
+
+      function closeModal() {
+        modal.classList.remove("modal-open");
+        document.body.style.overflow = "";
+        // Clear image src after transition to avoid flash on next open
+        setTimeout(() => {
+          modalHero.src = "";
+        }, 350);
+      }
+
+      modalClose.addEventListener("click", closeModal);
+      modalBackdrop.addEventListener("click", closeModal);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      // INIT
+      renderProjects();
     </script>
   </body>
 </html>
