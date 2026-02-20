@@ -440,6 +440,8 @@
           -10px 10px 60px #88000080,
           2px -2px 5px #ffe5d430;
       }
+    </style>
+    <style>
       /* Project card scroll animations */
       .Project_cards > button {
         width: 34%;
@@ -476,7 +478,7 @@
         aspect-ratio: 16/9;
         /* filter: saturate(20%);
         opacity: 80%; */
-        mix-blend-mode: color-burn;
+        /* mix-blend-mode: color-burn; */
         transition:
           opacity 0.3s ease-in-out,
           filter 0.2s ease-in-out,
@@ -557,7 +559,7 @@
           word-spacing 0.2s ease,
           text-shadow 0.2s ease,
           box-shadow 0.2s ease,
-          scale 0.1s ease;
+          scale 0.2s ease-in-out;
       }
       .Open_btn:active {
         scale: 80%;
@@ -575,15 +577,20 @@
           2px -2px 10px #4a342e50;
         background-position: 100% center;
       }
+      .Overlay {
+        opacity: 0;
+        background: #00000050;
+        backdrop-filter: blur(5px);
+        border: 4px solid #e0c5ba;
+        transition:
+          opacity 0.2s ease-in-out,
+          backdrop-filter 0.2s ease-in-out;
+      }
       .Project_thumbnail:hover > .Open_btn {
         opacity: 1;
       }
-      .Project_thumbnail > img {
-        opacity: 1;
-        transition: opacity 0.2s ease-in-out;
-      }
-      .Project_thumbnail:hover > img {
-        opacity: 0.5;
+      .Project_thumbnail:hover > .Overlay {
+        opacity: 0.8;
       }
       .Project_thumbnail:active > .Open_btn {
       }
@@ -670,16 +677,7 @@
       }
     </style>
     <style>
-      /* PROJECT MODAL */
       #project-modal {
-        position: fixed;
-        inset: 0;
-        z-index: 999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        /* hidden state */
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.35s ease;
@@ -689,21 +687,11 @@
         pointer-events: all;
       }
       #modal-backdrop {
-        position: absolute;
-        inset: 0;
         background: #00000090;
         -webkit-backdrop-filter: blur(14px);
         backdrop-filter: blur(14px);
       }
       #modal-box {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        max-width: 780px;
-        max-height: 90svh;
-        overflow-y: auto;
-        scrollbar-width: none;
-        border-radius: 28px;
         background: #0d0101cc;
         border:
           1px solid #ff4848,
@@ -719,74 +707,19 @@
       #project-modal.modal-open #modal-box {
         transform: translateY(0) scale(1);
       }
-      /* Hero image */
-      #modal-hero {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-        border-radius: 28px 28px 0 0;
-        display: block;
-      }
       /* Empty hero placeholder when no image */
       #modal-hero-placeholder {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        border-radius: 28px 28px 0 0;
         background: linear-gradient(135deg, #1a0000 0%, #2d0808 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      #modal-body {
-        padding: 32px 36px 40px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-      #modal-category {
-        font-family: "Semiotic", sans-serif;
-        font-size: 11px;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        color: #ff8f7a;
       }
       #modal-title {
-        font-family: "Against", sans-serif;
         font-size: clamp(24px, 4vw, 38px);
-        text-transform: uppercase;
-        letter-spacing: 4px;
         text-shadow:
           1px 4px 20px #ff2f00,
           0px 1.5px 2px #880000,
           2px 4px 50px #ff2f00;
-        color: #fff;
       }
-      #modal-description {
-        font-family: "RoyaleMilano", sans-serif;
-        font-size: 16px;
-        line-height: 1.75;
-        letter-spacing: 1px;
-        color: #ffe5d4cc;
-      }
-      /* Divider */
       .modal-divider {
-        width: 100%;
-        height: 1px;
         background: linear-gradient(90deg, transparent, #ff484840, transparent);
-      }
-      /* Links section */
-      #modal-links-label {
-        font-family: "Semiotic", sans-serif;
-        font-size: 11px;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        color: #ff8f7a;
-        margin-bottom: 12px;
-      }
-      #modal-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
       }
       .modal-link-btn {
         font-family: "WsParadose", sans-serif;
@@ -1201,42 +1134,66 @@
     <!-- PROJECT MODAL -->
     <div
       id="project-modal"
+      class="fixed z-[999] inset-0 flex items-center justify-center p-[20px]"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
-      <div id="modal-backdrop"></div>
-      <div id="modal-box">
+      <div id="modal-backdrop" class="absolute inset-0"></div>
+      <div
+        id="modal-box"
+        class="relative z-[1] w-full max-w-[1080px] max-h-[90svh] overflow-y-auto rounded-[28px]"
+      >
         <button id="modal-close" aria-label="Close modal">&#x2715;</button>
 
-        <!-- Hero image (shown when project.image is set) -->
-        <img id="modal-hero" src="" alt="" />
+        <!-- Hero image -->
+        <img
+          id="modal-hero"
+          class="block w-full aspect-video object-cover"
+          src=""
+          alt=""
+        />
         <!-- Placeholder shown when no image -->
-        <div id="modal-hero-placeholder">
+        <div
+          id="modal-hero-placeholder"
+          class="w-full aspect-video flex items-center justify-center"
+        >
           <span
-            style="
-              font-family: &quot;Against&quot;, sans-serif;
-              color: #ff484840;
-              font-size: 32px;
-              letter-spacing: 6px;
-              text-transform: uppercase;
-            "
-            >No Preview</span
+            class="font-['Against',sans-serif] uppercase text-[#ff484840] text-[32px] tracking-[6px]"
           >
+            No Preview
+          </span>
         </div>
 
-        <div id="modal-body">
-          <span id="modal-category"></span>
+        <div
+          id="modal-body"
+          class="flex flex-col gap-[20px] pt-[32px] pb-[36px] px-[40px]"
+        >
+          <span
+            id="modal-category"
+            class="font-['Semiotic',sans-serif] relative z-[2] text-[#fff] text-[18px] tracking-widest uppercase mb-[28px]"
+          ></span>
 
-          <h2 id="modal-title"></h2>
+          <h2
+            id="modal-title"
+            class="font-['Against',sans-serif] tracking-[4px] uppercase text-[#fff]"
+          ></h2>
 
-          <p id="modal-description"></p>
+          <p
+            id="modal-description"
+            class="font-['RoyaleMilano',sans-serif] text-[#fff] lg:text-[20px] text-[16px] tracking-[1.5px]"
+          ></p>
 
-          <div class="modal-divider"></div>
+          <div class="modal-divider" class="w-full h-[1px]"></div>
 
           <div>
-            <p id="modal-links-label">Links</p>
-            <div id="modal-links"></div>
+            <p
+              id="modal-links-label"
+              class="font-['Semiotic',sans-serif] text-[12px] tracking-[4px] uppercase text-[#fff] mb-[12px]"
+            >
+              Links
+            </p>
+            <div id="modal-links" class="flex flex-wrap gap-[12px]"></div>
           </div>
         </div>
       </div>
@@ -1313,7 +1270,6 @@
 
     <script>
       // DATASET
-
       const skills = [
         {
           type: "Frontend",
@@ -1367,77 +1323,97 @@
             {
               image:
                 "https://res.cloudinary.com/da54sljjk/image/upload/v1771452470/CuvetteProjects/Project-dma_lipprk.png",
-              title: "title",
-              description: "description",
+              title: "Dikshant Malhotra & Associates (Corporate Law Firm)",
+              description:
+                "A production CMS-driven corporate website with an admin interface for non-technical staff; responsive design and deployment on EC2 + Route53. Features structured content sections, media management and SEO-focused layouts.",
               link: [
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
+                { type: "Live", url: "https://dmassociates.in" },
+                { type: "Notes", url: "#" },
+                { type: "Source", url: "#" },
               ],
             },
             {
               image:
                 "https://res.cloudinary.com/da54sljjk/image/upload/v1771452471/CuvetteProjects/Project-shubukan_v7n07r.png",
-              title: "title",
-              description: "description",
+              title: "Shubukan India",
+              description:
+                "Full-stack membership and examination platform with role-based access, secure exam generation & auto-evaluation, blog and gallery features. Built for stability and administrative clarity.",
               link: [
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
+                { type: "Live", url: "https://shubukanindia.org" },
+                {
+                  type: "GitHub",
+                  url: "https://github.com/tathagatamishra/shubukanindia",
+                },
+                { type: "Case Study", url: "#" },
               ],
             },
           ],
         },
+
         {
           type: "Worlds",
           content: [
             {
               image:
                 "https://res.cloudinary.com/da54sljjk/image/upload/v1771452471/CuvetteProjects/Project-3D_jz0bk9.png",
-              title: "title",
-              description: "description",
+              title: "3D Renders & Modeling",
+              description:
+                "Blender-based modeling and PBR rendering: scene composition, material studies and still renders prepared for web presentation and portfolio display.",
               link: [
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
+                {
+                  type: "Sketchfab",
+                  url: "https://sketchfab.com/tathagatamishra",
+                },
+                { type: "Gallery", url: "#" },
+                { type: "Download", url: "#" },
               ],
             },
             {
               image:
                 "https://res.cloudinary.com/da54sljjk/image/upload/v1771452469/CuvetteProjects/Project-3DAnim_ttnljq.png",
-              title: "title",
-              description: "description",
+              title: "3D Animation & Motion",
+              description:
+                "Short animated sequences and motion studies: camera choreography, lighting passes, and composed render stacks. Work includes scene animation, compositing and motion-ready export pipelines.",
               link: [
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
+                {
+                  type: "Interactive Demo",
+                  url: "https://planet3d.vercel.app",
+                },
+                { type: "Reel", url: "#" },
+                { type: "Source Assets", url: "#" },
               ],
             },
           ],
         },
+
         {
           type: "Visions",
           content: [
             {
               image:
                 "https://res.cloudinary.com/da54sljjk/image/upload/v1771452472/CuvetteProjects/Project-Card_r71gis.png",
-              title: "title",
-              description: "description",
+              title: "Card & Identity Design",
+              description:
+                "Print and digital collateral design for events and branding — composed layouts, typographic choices and export-ready artwork for both web and print.",
               link: [
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
+                {
+                  type: "Instagram",
+                  url: "https://instagram.com/chaoticrealm3d",
+                },
+                { type: "Portfolio", url: "#" },
+                { type: "Download", url: "#" },
               ],
             },
             {
               image:
                 "https://res.cloudinary.com/da54sljjk/image/upload/v1771452469/CuvetteProjects/Project-editing_xqp2ie.png",
-              title: "title",
-              description: "description",
+              title: "Video Editing & Motion Reel",
+              description:
+                "Edited reels and motion-graphics pieces demonstrating montage, VFX passes and color work. Includes short-form promos and longer demonstration edits.",
               link: [
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
-                { type: "type", url: "url" },
+                { type: "Reel", url: "#" },
+                { type: "YouTube", url: "#" },
+                { type: "Vimeo", url: "#" },
               ],
             },
           ],
@@ -1479,12 +1455,17 @@
               "Open_btn absolute z-[2] font-['WsParadose',sans-serif] w-fit aspect-[1/1] flex items-center justify-center px-5 py-4 text-center uppercase text-[16px] select-none";
             openBtn.textContent = "Open";
 
+            const overlay = document.createElement("div");
+            overlay.classList =
+              "Overlay absolute z-[1] w-full h-full rounded-md";
+
             const img = document.createElement("img");
             img.className = "w-full h-full object-cover z-[0]";
             img.src = project.image || "";
             img.alt = project.title || group.type;
 
             thumb.appendChild(openBtn);
+            thumb.appendChild(overlay);
             thumb.appendChild(img);
 
             // Open modal on click anywhere on the thumbnail
@@ -1495,7 +1476,7 @@
             btn.appendChild(thumb);
           });
 
-          // Shadow overlay
+          // This is the skin colored Shadow overlay used as bg
           const shadow = document.createElement("div");
           shadow.className =
             "Shadow_mask z-[0] absolute w-full h-full top-0 left-0 rounded-t-[20px]";
@@ -1595,6 +1576,76 @@
 
       // INIT
       renderProjects();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script>
+      (function () {
+        emailjs.init({ publicKey: "LgyiYoEpySAGMq6R9" });
+
+        const form = document.querySelector("#contact form");
+        if (!form) return;
+
+        form.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const nameEl = form.querySelector('input[name="name"]');
+          const emailEl = form.querySelector('input[name="email"]');
+          const msgEl = form.querySelector('textarea[name="message"]');
+          const submitBtn = form.querySelector('button[type="submit"]');
+
+          const name = ((nameEl && nameEl.value) || "").trim();
+          const email = ((emailEl && emailEl.value) || "").trim();
+          const message = ((msgEl && msgEl.value) || "").trim();
+
+          // Basic validation
+          if (!name || !email || !message) {
+            const old = submitBtn.innerText;
+            submitBtn.innerText = "Please fill fields";
+            setTimeout(() => (submitBtn.innerText = old), 1500);
+            return;
+          }
+
+          const originalText = submitBtn.innerText;
+          submitBtn.disabled = true;
+          submitBtn.innerText = "Sending...";
+
+          const templateParams = {
+            from_name: name,
+            from_email: email,
+            message: message,
+            subject: `Website message from ${name}`,
+            site: window.location.hostname,
+          };
+
+          try {
+            await emailjs.send(
+              "service_063ag16",
+              "template_k0pcael",
+              templateParams,
+              { publicKey: "LgyiYoEpySAGMq6R9" },
+            );
+
+            submitBtn.innerText = "Sent ✓";
+            form.reset();
+
+            // reset button
+            setTimeout(() => {
+              submitBtn.disabled = false;
+              submitBtn.innerText = originalText;
+            }, 2000);
+          } catch (err) {
+            console.error("EmailJS error", err);
+            submitBtn.innerText = "Failed — Try again";
+            // reset
+            setTimeout(() => {
+              submitBtn.disabled = false;
+              submitBtn.innerText = originalText;
+            }, 2000);
+          }
+        });
+      })();
     </script>
   </body>
 </html>
