@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Code</title>
+    <title>Tathagata</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
       @font-face {
         font-family: "Against";
@@ -59,6 +60,8 @@
         color: #e0c5ba;
         color: #ffffff;
       }
+    </style>
+    <style>
       * {
         scrollbar-width: none;
         /* Debug outline */
@@ -426,19 +429,48 @@
       }
     </style>
     <style>
+      /* about */
+      #heroCanvas {
+        mix-blend-mode: screen;
+      }
       .Showcase {
-        background: linear-gradient(
-          90deg,
-          #ff6f61 0%,
-          #ffb3a0 40%,
-          #e0c5ba 90%,
-          #ffe5d4 100%
-        );
-        box-shadow:
+        background: linear-gradient(90deg, #ff6f61 50%, #ffe5d4 50%);
+        /* box-shadow:
           inset 1px 2px 10px #ffe5d4b1,
           inset 15px -8px 20px #880000,
           -10px 10px 60px #88000080,
-          2px -2px 5px #ffe5d430;
+          2px -2px 5px #ffe5d430; */
+      }
+      .skill {
+        padding: 14px 20px;
+        display: flex;
+        align-items: center;
+        border-radius: 15px;
+        font-size: 16px;
+        color: #fff;
+        font-family: "RoyaleMilano", sans-serif;
+        letter-spacing: 2px;
+        background: #000;
+        border-top: 1px solid #ff6e6198;
+        border-left: 1px solid #ff6e6198;
+        box-shadow: inset 0px 10px 10px -10px #e0c5ba;
+        box-shadow:
+          inset 1px 2px 10px #ffb3a07f,
+          inset 15px -8px 20px #ff6e6105,
+          -10px 10px 100px #ff6e6133,
+          2px -2px 10px #ffb3a050;
+        transition:
+          border-radius 0.2s ease,
+          background-position 1s ease,
+          color 0.2s ease,
+          letter-spacing 0.2s ease,
+          word-spacing 0.2s ease,
+          text-shadow 0.2s ease,
+          box-shadow 0.2s ease,
+          width 0.2s ease,
+          padding 0.2s ease;
+      }
+      .skill:hover {
       }
     </style>
     <style>
@@ -950,7 +982,7 @@
       ></div>
 
       <div
-        class="max-w-[1440px] w-full mx-auto flex lg:flex-row flex-col gap-12 items-start relative"
+        class="max-w-[1440px] w-full mx-auto flex lg:flex-row flex-col gap-12 items-start relative z-[1]"
       >
         <!-- Left: Showcase -->
         <div
@@ -977,8 +1009,8 @@
           >
             Core Skills
           </h3>
-          <div class="flex flex-wrap gap-2">
-            <!-- skills -->
+          <div id="skills-container" class="flex flex-wrap gap-4">
+            <!-- skills rendered by renderSkills() -->
           </div>
         </div>
       </div>
@@ -1131,7 +1163,7 @@
       </footer>
     </section>
 
-    <!-- PROJECT MODAL -->
+    <!-- Project Modal -->
     <div
       id="project-modal"
       class="fixed z-[999] inset-0 flex items-center justify-center p-[20px]"
@@ -1271,49 +1303,27 @@
     <script>
       // DATASET
       const skills = [
-        {
-          type: "Frontend",
-          content: [
-            "JavaScript",
-            "React.js",
-            "Next.js",
-            "HTML5",
-            "CSS3",
-            "SCSS",
-            "Tailwind",
-            "Three.js",
-            "React Three Fiber",
-          ],
-        },
-        {
-          type: "Backend",
-          content: [
-            "Node.js",
-            "Express",
-            "MongoDB",
-            "SQL",
-            "JWT",
-            "WebSockets",
-            "REST APIs",
-          ],
-        },
-        {
-          type: "Cloud & DevOps",
-          content: ["AWS", "Git", "Vercel", "Cloudinary"],
-        },
-        {
-          type: "Other",
-          content: [
-            "WordPress",
-            "React Native",
-            "Python",
-            "Figma",
-            "Blender",
-            "Unreal Engine 5",
-            "C++",
-            "UE Blueprint",
-          ],
-        },
+        "Java",
+        "Spring Boot",
+        "JavaScript",
+        "Node.js",
+        "React.js",
+        "Next.js",
+        "Express",
+        "Python",
+        "NumPy",
+        "Pandas",
+        "Matplotlib",
+        "C++",
+        "Unreal Engine",
+        "MongoDB",
+        "SQL",
+        "AWS",
+        "Git",
+        "Figma",
+        "Blender",
+        "Three.js",
+        "React Three Fiber",
       ];
 
       const projects = [
@@ -1578,8 +1588,26 @@
       renderProjects();
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+      // Map skills
+      function renderSkills() {
+        const container = document.getElementById("skills-container");
+        if (!container) return;
+        container.innerHTML = "";
 
+        skills.forEach((skill) => {
+          const tag = document.createElement("div");
+          tag.textContent = skill;
+          tag.className = "skill";
+          container.appendChild(tag);
+        });
+      }
+
+      renderSkills();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- Using emailjs for mail sending -->
     <script>
       (function () {
         emailjs.init({ publicKey: "LgyiYoEpySAGMq6R9" });
