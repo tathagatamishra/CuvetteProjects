@@ -424,25 +424,54 @@
 
     .Showcase {
       overflow: hidden;
-      background: #000;
+      background: #00000000;
     }
 
-    /* Fingerprint wave effect - fills the Showcase panel */
+    /* wave effect */
     #showcaseWaveCanvas {
       display: block;
       width: 100%;
       height: 100%;
       position: absolute;
       inset: 0;
-      /* Edge fade so the lines dissolve into the panel's rounded edges instead
-         of cutting off hard. Increase --wave-fade for a bigger/softer fade. */
-      --wave-fade: 22%;
-      -webkit-mask-image: radial-gradient(circle at center,
-          rgba(0, 0, 0, 1) calc(100% - var(--wave-fade)),
-          rgba(0, 0, 0, 0) 100%);
-      mask-image: radial-gradient(circle at center,
-          rgba(0, 0, 0, 1) calc(100% - var(--wave-fade)),
-          rgba(0, 0, 0, 0) 100%);
+      /* Edge fade rounded RECTANGLE
+         Two straight linear-gradient fades are intersected,
+         .Showcase already has rounded-[40px] + overflow: hidden
+         --wave-fade-x / --wave-fade-y control how far the fade reaches in
+         from the left/right and top/bottom edges - tune independently since
+         the panel's width and height differ a lot. Bigger % = bigger/softer fade. */
+      --wave-fade-x: 28%;
+      --wave-fade-y: 28%;
+      mask-image:
+        linear-gradient(to right,
+          transparent, black var(--wave-fade-x),
+          black calc(100% - var(--wave-fade-x)), transparent),
+        linear-gradient(to bottom,
+          transparent, black var(--wave-fade-y),
+          black calc(100% - var(--wave-fade-y)), transparent);
+      mask-composite: intersect;
+      -webkit-mask-image:
+        linear-gradient(to right,
+          transparent, black var(--wave-fade-x),
+          black calc(100% - var(--wave-fade-x)), transparent),
+        linear-gradient(to bottom,
+          transparent, black var(--wave-fade-y),
+          black calc(100% - var(--wave-fade-y)), transparent);
+      -webkit-mask-composite: source-in, source-in;
+
+      /* Glow effect on the wave lines.
+         drop-shadow only lights up non-transparent pixels
+         tight bright core + soft wider halo
+         --glow-color: r,g,b values for the glow tint
+         --glow-size:  base blur radius of the glow. Bigger = glow reaches further.
+         --glow-inner-opacity / --glow-outer-opacity: strength of each layer. */
+      --glow-color: 255, 187, 162;
+      --glow-size: 5px;
+      --glow-inner-opacity: 1;
+      --glow-outer-opacity: 1;
+      filter:
+        drop-shadow(0 0 var(--glow-size) rgba(var(--glow-color), var(--glow-inner-opacity)))
+        drop-shadow(0 0 calc(var(--glow-size) * 3) rgba(var(--glow-color), var(--glow-outer-opacity)));
     }
 
     .skill {
@@ -1002,10 +1031,10 @@
       class="mix-blend-screen absolute z-[1] top-[-100px] left-[-10%] blur-[250px] bg-[#ffbba2] rounded-[100%] w-[400px] h-full">
     </div>
 
-    <div class="max-w-[1440px] w-full mx-auto flex lg:flex-row flex-col gap-12 items-start relative z-[2]">
+    <div class="max-w-[1440px] w-full mx-auto flex lg:flex-row flex-col gap-12 lg:items-stretch items-start relative z-[2]">
       <!-- Left: Showcase -->
       <div
-        class="Showcase rounded-[40px] relative lg:w-[40%] w-full min-h-full 2xl:min-h-[calc(100vh-(200px*2))] lg:min-h-[calc(100vh-(180px*2))] sm:min-h-[calc(100vh-(160px*2))] min-h-[calc(100vh-(120px*2))] flex flex-col items-center gap-6">
+        class="Showcase rounded-[0px] relative lg:w-[40%] w-full min-h-[60vh] lg:min-h-0 flex flex-col items-center gap-6">
         <canvas id="showcaseWaveCanvas"></canvas>
       </div>
 
@@ -1099,14 +1128,14 @@
       <div class="relative flex flex-col justify-end items-center">
         <p
           class="FooterP1 font-['Semiotic',sans-serif] uppercase text-[#ffffff] 2xl:text-[32px] xl:text-[26px] lg:text-[24px] text-[20px] z-[2] text-center tracking-wide absolute">
-          © 2026 Tathagata Mishra.
+          Tathagata Mishra
         </p>
         <p
           class="FooterP2 font-['Semiotic',sans-serif] uppercase text-[#ffffff] 2xl:text-[32px] xl:text-[26px] lg:text-[24px] text-[20px] z-[1] text-center tracking-wide select-none relative">
-          © 2026 Tathagata Mishra.
+          Tathagata Mishra
         </p>
       </div>
-      <div class="relative flex flex-col justify-end items-center max-w-[1200px]">
+      <!-- <div class="relative flex flex-col justify-end items-center max-w-[1200px]">
         <p
           class="FooterP1 font-['Semiotic',sans-serif] uppercase text-[#ffffff] 2xl:text-[32px] xl:text-[26px] lg:text-[24px] text-[20px] z-[2] text-center tracking-wide absolute">
           Work and imagery presented here remain the intellectual property of
@@ -1117,7 +1146,7 @@
           Work and imagery presented here remain the intellectual property of
           their creator unless otherwise stated.
         </p>
-      </div>
+      </div> -->
       <div
         class="mix-blend-screen absolute z-[0] bottom-0 blur-[100px] bg-[#ff8f7a] rounded-t-[100%] rounded-b-none w-[50%] h-full">
       </div>
@@ -1614,7 +1643,7 @@
     })();
   </script>
 
-  <!-- Fingerprint wave effect - About section, Left Showcase -->
+  <!-- wave effect Left Showcase -->
   <script>
     (function () {
       "use strict";
@@ -1624,54 +1653,51 @@
       const container = canvas.parentElement; // .Showcase
       const ctx = canvas.getContext('2d');
 
-      /* =====================================================================
-         CONFIG - everything you'd want to tweak lives here.
-         ===================================================================== */
+      // Controls
       const CONFIG = {
         CELL_SIZE: 10,           // grid resolution for the contour field (px).
-                                 // Smaller = more detail but slower. Larger = coarser/faster.
+        // Smaller = more detail but slower. Larger = coarser/faster.
 
-        // ---- Line look ----
+        // Line look
         LINE_WIDTH: 3.2,         // stroke thickness of each contour line
         LINE_OPACITY: 0.9,       // 0-1 opacity of the lines
-        LINE_COLOR: '255,255,255', // r,g,b string used in rgba() for the lines
+        LINE_COLOR: '255,187,162', // r,g,b string used in rgba() for the lines
         THRESHOLD_STEP: 0.22,    // spacing between contour levels.
-                                 // Bigger step = fewer, bolder lines. Smaller = denser lines.
+        // Bigger step = fewer, bolder lines. Smaller = denser lines.
         THRESHOLD_RANGE: 1.5,    // contours drawn between -THRESHOLD_RANGE..+THRESHOLD_RANGE
 
-        // ---- Wave smoothness / shape ----
+        // Wave smoothness
         NOISE_SCALE_1: 0.0016,   // frequency of the main (large, slow) noise layer.
-                                 // LOWER = bigger, smoother, more slowly-changing blobs.
+        // LOWER = bigger, smoother, more slowly-changing blobs.
         NOISE_SCALE_2: 0.004,    // frequency of the secondary (fine detail) noise layer.
         NOISE_2_WEIGHT: 0.28,    // contribution of the fine detail layer. Lower = calmer waves.
-        TIME_SPEED: 0.008,       // how fast the ambient field drifts on its own.
-        BLUR_ITERATIONS: 2,      // smoothing passes applied to the field each frame.
-                                 // Higher = smoother/rounder lines. 0 = off.
+        TIME_SPEED: 0.03,       // how fast the ambient field drifts on its own.
+        BLUR_ITERATIONS: 5,      // smoothing passes applied to the field each frame.
+        // Higher = smoother/rounder lines. 0 = off.
 
-        // ---- Mouse interaction (kept subtle, smoothed to avoid jitter) ----
-        MOUSE_SMOOTHING: 0.12,      // 0-1, how quickly the tracked pointer catches up to the
-                                    // real cursor each frame. Lower = smoother/laggier trail.
-        MOUSE_PULL_STRENGTH: 0.12,  // constant gentle bend toward the pointer. 0 = off.
-        MOUSE_PULL_RADIUS: 0.004,   // spatial falloff of the pull (bigger = reaches further).
-        RIPPLE_MIN_MOVE: 1.2,       // min smoothed-pointer movement (px/frame) before a ripple spawns.
-        RIPPLE_BASE_STRENGTH: 0.10, // base strength of ripples spawned by pointer movement.
+        // Mouse interaction
+        MOUSE_SMOOTHING: 0.06,      // 0-1, how quickly the tracked pointer catches up to the
+        // real cursor each frame. Lower = smoother/laggier trail.
+        MOUSE_PULL_STRENGTH: 1.0,  // constant gentle bend toward the pointer. 0 = off.
+        MOUSE_PULL_RADIUS: 0.04,   // spatial falloff of the pull (bigger = reaches further).
+        RIPPLE_MIN_MOVE: 4,       // min smoothed-pointer movement (px/frame) before a ripple spawns.
+        RIPPLE_BASE_STRENGTH: 0.1, // base strength of ripples spawned by pointer movement.
         RIPPLE_SPEED_BONUS: 0.02,   // extra ripple strength added based on smoothed pointer speed.
-        RIPPLE_MAX_STRENGTH: 0.45,  // hard cap so fast mouse flicks can't overpower the field.
-        RIPPLE_SPATIAL_DECAY: 0.01,// how quickly a ripple fades with distance.
-        RIPPLE_TIME_DECAY: 1.4,     // how quickly a ripple fades with time.
+        RIPPLE_MAX_STRENGTH: 0.8,  // hard cap so fast mouse flicks can't overpower the field.
+        RIPPLE_SPATIAL_DECAY: 0.01, // how quickly a ripple fades with distance.
+        RIPPLE_TIME_DECAY: 0.05,     // how quickly a ripple fades with time.
         RIPPLE_MAX_AGE: 2.0,        // seconds before a ripple is discarded entirely.
         RIPPLE_THROTTLE_MS: 55,     // minimum time between spawning new ripples.
 
         DPR_CAP: 2               // cap on device pixel ratio for crisp-but-fast rendering
       };
-      /* ===================================================================== */
 
       let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, CONFIG.DPR_CAP);
       let cellSize = CONFIG.CELL_SIZE;
       let cols = 0, rows = 0;
       let values, smoothed;
 
-      // ---- Tiny seeded Perlin noise ----
+      // Tiny seeded Perlin noise
       function Perlin(seed) {
         const p = new Uint8Array(256);
         for (let i = 0; i < 256; i++) p[i] = i;
@@ -1707,7 +1733,7 @@
       const noiseA = new Perlin(7);
       const noiseB = new Perlin(42);
 
-      // ---- Pointer state (relative to the canvas) ----
+      // Pointer state (relative to the canvas)
       let rawTargetX = -9999, rawTargetY = -9999;
       let mouseX = -9999, mouseY = -9999;
       let hasMoved = false;
@@ -1764,13 +1790,13 @@
         }
       }
 
-      // ---- Field value at a point ----
+      // Field value at a point
       function fieldValue(x, y, t) {
         let n = 0;
         n += noiseA.noise(x * CONFIG.NOISE_SCALE_1 + t * CONFIG.TIME_SPEED,
-                           y * CONFIG.NOISE_SCALE_1 - t * (CONFIG.TIME_SPEED * 0.7)) * 1.15;
+          y * CONFIG.NOISE_SCALE_1 - t * (CONFIG.TIME_SPEED * 0.7)) * 1.15;
         n += noiseB.noise(x * CONFIG.NOISE_SCALE_2 - t * (CONFIG.TIME_SPEED * 1.3),
-                           y * CONFIG.NOISE_SCALE_2 + t * (CONFIG.TIME_SPEED * 0.8)) * CONFIG.NOISE_2_WEIGHT;
+          y * CONFIG.NOISE_SCALE_2 + t * (CONFIG.TIME_SPEED * 0.8)) * CONFIG.NOISE_2_WEIGHT;
 
         if (CONFIG.MOUSE_PULL_STRENGTH > 0 && mouseX > -1000) {
           const dxm = x - mouseX, dym = y - mouseY;
@@ -1785,14 +1811,14 @@
           const age = t - r.bornT;
           if (age < 0 || age > CONFIG.RIPPLE_MAX_AGE) continue;
           const wave = Math.sin(d * 0.045 - age * 5.2) *
-                       Math.exp(-d * CONFIG.RIPPLE_SPATIAL_DECAY) *
-                       Math.exp(-age * CONFIG.RIPPLE_TIME_DECAY);
+            Math.exp(-d * CONFIG.RIPPLE_SPATIAL_DECAY) *
+            Math.exp(-age * CONFIG.RIPPLE_TIME_DECAY);
           n += wave * r.strength;
         }
         return n;
       }
 
-      // ---- Box-blur smoothing pass (rounds off the lines) ----
+      // Box-blur smoothing pass (rounds off the lines)
       function smoothField(src, dst) {
         for (let j = 0; j < rows; j++) {
           const jm = j > 0 ? j - 1 : j;
@@ -1802,14 +1828,14 @@
             const ip = i < cols - 1 ? i + 1 : i;
             let sum = 0;
             sum += src[jm * cols + im] + src[jm * cols + i] + src[jm * cols + ip];
-            sum += src[j * cols + im]  + src[j * cols + i]  * 4 + src[j * cols + ip];
+            sum += src[j * cols + im] + src[j * cols + i] * 4 + src[j * cols + ip];
             sum += src[jp * cols + im] + src[jp * cols + i] + src[jp * cols + ip];
             dst[j * cols + i] = sum / 12;
           }
         }
       }
 
-      // ---- Marching squares contour drawing ----
+      // Marching squares contour drawing
       function lerpEdge(a, b, va, vb, threshold) {
         if (Math.abs(vb - va) < 1e-6) return a;
         return a + (b - a) * (threshold - va) / (vb - va);
@@ -1875,7 +1901,7 @@
         thresholds.push(v);
       }
 
-      // ---- Size canvas to fill the Showcase container, react to resize ----
+      // Size canvas to fill the Showcase container, react to resize
       function resize() {
         const rect = container.getBoundingClientRect();
         W = Math.max(1, Math.round(rect.width));
