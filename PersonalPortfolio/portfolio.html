@@ -422,7 +422,28 @@
       mix-blend-mode: screen;
     }
 
-    .Showcase {}
+    .Showcase {
+      overflow: hidden;
+      background: #000;
+    }
+
+    /* Fingerprint wave effect - fills the Showcase panel */
+    #showcaseWaveCanvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      /* Edge fade so the lines dissolve into the panel's rounded edges instead
+         of cutting off hard. Increase --wave-fade for a bigger/softer fade. */
+      --wave-fade: 22%;
+      -webkit-mask-image: radial-gradient(circle at center,
+          rgba(0, 0, 0, 1) calc(100% - var(--wave-fade)),
+          rgba(0, 0, 0, 0) 100%);
+      mask-image: radial-gradient(circle at center,
+          rgba(0, 0, 0, 1) calc(100% - var(--wave-fade)),
+          rgba(0, 0, 0, 0) 100%);
+    }
 
     .skill {
       padding: 14px 20px;
@@ -975,16 +996,17 @@
   <section id="about"
     class="About-sect z-[2] min-h-screen relative 2xl:pt-[200px] lg:pt-[180px] sm:pt-[160px] pt-[120px] 2xl:px-[140px] lg:px-[80px] sm:px-[40px] px-[20px] mb-[200px] flex flex-col items-center">
     <div
-      class="mix-blend-screen absolute z-[2] bottom-0 left-0 blur-[250px] bg-[#ff6f61] rounded-[100%] min-w-[200px] w-[50vw] h-[200px]">
+      class="mix-blend-screen absolute z-[3] bottom-0 left-0 blur-[250px] bg-[#ff6f61] rounded-[100%] min-w-[200px] w-[50vw] h-[200px]">
     </div>
     <div
-      class="mix-blend-screen absolute z-[2] top-[-100px] left-[-10%] blur-[250px] bg-[#ffbba2] rounded-[100%] w-[400px] h-full">
+      class="mix-blend-screen absolute z-[1] top-[-100px] left-[-10%] blur-[250px] bg-[#ffbba2] rounded-[100%] w-[400px] h-full">
     </div>
 
-    <div class="max-w-[1440px] w-full mx-auto flex lg:flex-row flex-col gap-12 items-start relative z-[1]">
+    <div class="max-w-[1440px] w-full mx-auto flex lg:flex-row flex-col gap-12 items-start relative z-[2]">
       <!-- Left: Showcase -->
       <div
         class="Showcase rounded-[40px] relative lg:w-[40%] w-full min-h-full 2xl:min-h-[calc(100vh-(200px*2))] lg:min-h-[calc(100vh-(180px*2))] sm:min-h-[calc(100vh-(160px*2))] min-h-[calc(100vh-(120px*2))] flex flex-col items-center gap-6">
+        <canvas id="showcaseWaveCanvas"></canvas>
       </div>
 
       <!-- Right: bio -->
@@ -1226,6 +1248,7 @@
       "Next.js",
       "Express",
       "Python",
+      "FastAPI",
       "NumPy",
       "Pandas",
       "Matplotlib",
@@ -1588,6 +1611,341 @@
           }, 2000);
         }
       });
+    })();
+  </script>
+
+  <!-- Fingerprint wave effect - About section, Left Showcase -->
+  <script>
+    (function () {
+      "use strict";
+
+      const canvas = document.getElementById('showcaseWaveCanvas');
+      if (!canvas) return;
+      const container = canvas.parentElement; // .Showcase
+      const ctx = canvas.getContext('2d');
+
+      /* =====================================================================
+         CONFIG - everything you'd want to tweak lives here.
+         ===================================================================== */
+      const CONFIG = {
+        CELL_SIZE: 10,           // grid resolution for the contour field (px).
+                                 // Smaller = more detail but slower. Larger = coarser/faster.
+
+        // ---- Line look ----
+        LINE_WIDTH: 3.2,         // stroke thickness of each contour line
+        LINE_OPACITY: 0.9,       // 0-1 opacity of the lines
+        LINE_COLOR: '255,255,255', // r,g,b string used in rgba() for the lines
+        THRESHOLD_STEP: 0.22,    // spacing between contour levels.
+                                 // Bigger step = fewer, bolder lines. Smaller = denser lines.
+        THRESHOLD_RANGE: 1.5,    // contours drawn between -THRESHOLD_RANGE..+THRESHOLD_RANGE
+
+        // ---- Wave smoothness / shape ----
+        NOISE_SCALE_1: 0.0016,   // frequency of the main (large, slow) noise layer.
+                                 // LOWER = bigger, smoother, more slowly-changing blobs.
+        NOISE_SCALE_2: 0.004,    // frequency of the secondary (fine detail) noise layer.
+        NOISE_2_WEIGHT: 0.28,    // contribution of the fine detail layer. Lower = calmer waves.
+        TIME_SPEED: 0.008,       // how fast the ambient field drifts on its own.
+        BLUR_ITERATIONS: 2,      // smoothing passes applied to the field each frame.
+                                 // Higher = smoother/rounder lines. 0 = off.
+
+        // ---- Mouse interaction (kept subtle, smoothed to avoid jitter) ----
+        MOUSE_SMOOTHING: 0.12,      // 0-1, how quickly the tracked pointer catches up to the
+                                    // real cursor each frame. Lower = smoother/laggier trail.
+        MOUSE_PULL_STRENGTH: 0.12,  // constant gentle bend toward the pointer. 0 = off.
+        MOUSE_PULL_RADIUS: 0.004,   // spatial falloff of the pull (bigger = reaches further).
+        RIPPLE_MIN_MOVE: 1.2,       // min smoothed-pointer movement (px/frame) before a ripple spawns.
+        RIPPLE_BASE_STRENGTH: 0.10, // base strength of ripples spawned by pointer movement.
+        RIPPLE_SPEED_BONUS: 0.02,   // extra ripple strength added based on smoothed pointer speed.
+        RIPPLE_MAX_STRENGTH: 0.45,  // hard cap so fast mouse flicks can't overpower the field.
+        RIPPLE_SPATIAL_DECAY: 0.01,// how quickly a ripple fades with distance.
+        RIPPLE_TIME_DECAY: 1.4,     // how quickly a ripple fades with time.
+        RIPPLE_MAX_AGE: 2.0,        // seconds before a ripple is discarded entirely.
+        RIPPLE_THROTTLE_MS: 55,     // minimum time between spawning new ripples.
+
+        DPR_CAP: 2               // cap on device pixel ratio for crisp-but-fast rendering
+      };
+      /* ===================================================================== */
+
+      let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, CONFIG.DPR_CAP);
+      let cellSize = CONFIG.CELL_SIZE;
+      let cols = 0, rows = 0;
+      let values, smoothed;
+
+      // ---- Tiny seeded Perlin noise ----
+      function Perlin(seed) {
+        const p = new Uint8Array(256);
+        for (let i = 0; i < 256; i++) p[i] = i;
+        let s = seed || 1;
+        function rand() { s = (s * 9301 + 49297) % 233280; return s / 233280; }
+        for (let i = 255; i > 0; i--) {
+          const j = Math.floor(rand() * (i + 1));
+          const tmp = p[i]; p[i] = p[j]; p[j] = tmp;
+        }
+        this.perm = new Uint8Array(512);
+        for (let i = 0; i < 512; i++) this.perm[i] = p[i & 255];
+      }
+      Perlin.prototype.fade = function (t) { return t * t * t * (t * (t * 6 - 15) + 10); };
+      Perlin.prototype.lerp = function (a, b, t) { return a + t * (b - a); };
+      Perlin.prototype.grad = function (hash, x, y) {
+        const h = hash & 3;
+        const u = h < 2 ? x : y;
+        const v = h < 2 ? y : x;
+        return ((h & 1) ? -u : u) + ((h & 2) ? -2 * v : 2 * v);
+      };
+      Perlin.prototype.noise = function (x, y) {
+        const X = Math.floor(x) & 255, Y = Math.floor(y) & 255;
+        x -= Math.floor(x); y -= Math.floor(y);
+        const u = this.fade(x), v = this.fade(y);
+        const perm = this.perm;
+        const aa = perm[perm[X] + Y], ab = perm[perm[X] + Y + 1];
+        const ba = perm[perm[X + 1] + Y], bb = perm[perm[X + 1] + Y + 1];
+        const x1 = this.lerp(this.grad(aa, x, y), this.grad(ba, x - 1, y), u);
+        const x2 = this.lerp(this.grad(ab, x, y - 1), this.grad(bb, x - 1, y - 1), u);
+        return this.lerp(x1, x2, v) * 0.55;
+      };
+
+      const noiseA = new Perlin(7);
+      const noiseB = new Perlin(42);
+
+      // ---- Pointer state (relative to the canvas) ----
+      let rawTargetX = -9999, rawTargetY = -9999;
+      let mouseX = -9999, mouseY = -9999;
+      let hasMoved = false;
+      const ripples = []; // {x, y, bornT, born, strength}
+      let lastRippleTime = 0;
+
+      function addRipple(x, y, strength) {
+        ripples.push({ x, y, bornT: undefined, born: performance.now(), strength });
+        if (ripples.length > 40) ripples.shift();
+      }
+
+      function onPointerMove(clientX, clientY) {
+        const rect = canvas.getBoundingClientRect();
+        rawTargetX = clientX - rect.left;
+        rawTargetY = clientY - rect.top;
+        if (!hasMoved) {
+          hasMoved = true;
+          mouseX = rawTargetX;
+          mouseY = rawTargetY;
+        }
+      }
+
+      function onPointerLeave() {
+        rawTargetX = -9999;
+        rawTargetY = -9999;
+      }
+
+      container.addEventListener('mousemove', (e) => onPointerMove(e.clientX, e.clientY));
+      container.addEventListener('mouseleave', onPointerLeave);
+      container.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      container.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 0) onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+
+      // advance smoothed pointer + spawn ripples at a steady per-frame rate
+      function updatePointer(now) {
+        if (rawTargetX < -1000) return;
+        const prevX = mouseX, prevY = mouseY;
+        mouseX += (rawTargetX - mouseX) * CONFIG.MOUSE_SMOOTHING;
+        mouseY += (rawTargetY - mouseY) * CONFIG.MOUSE_SMOOTHING;
+
+        const dx = mouseX - prevX, dy = mouseY - prevY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist > CONFIG.RIPPLE_MIN_MOVE && now - lastRippleTime > CONFIG.RIPPLE_THROTTLE_MS) {
+          const strength = Math.min(
+            CONFIG.RIPPLE_MAX_STRENGTH,
+            CONFIG.RIPPLE_BASE_STRENGTH + dist * CONFIG.RIPPLE_SPEED_BONUS
+          );
+          addRipple(mouseX, mouseY, strength);
+          lastRippleTime = now;
+        }
+      }
+
+      // ---- Field value at a point ----
+      function fieldValue(x, y, t) {
+        let n = 0;
+        n += noiseA.noise(x * CONFIG.NOISE_SCALE_1 + t * CONFIG.TIME_SPEED,
+                           y * CONFIG.NOISE_SCALE_1 - t * (CONFIG.TIME_SPEED * 0.7)) * 1.15;
+        n += noiseB.noise(x * CONFIG.NOISE_SCALE_2 - t * (CONFIG.TIME_SPEED * 1.3),
+                           y * CONFIG.NOISE_SCALE_2 + t * (CONFIG.TIME_SPEED * 0.8)) * CONFIG.NOISE_2_WEIGHT;
+
+        if (CONFIG.MOUSE_PULL_STRENGTH > 0 && mouseX > -1000) {
+          const dxm = x - mouseX, dym = y - mouseY;
+          const dm = Math.sqrt(dxm * dxm + dym * dym);
+          n += Math.exp(-dm * CONFIG.MOUSE_PULL_RADIUS) * CONFIG.MOUSE_PULL_STRENGTH;
+        }
+
+        for (let i = 0; i < ripples.length; i++) {
+          const r = ripples[i];
+          const dx = x - r.x, dy = y - r.y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          const age = t - r.bornT;
+          if (age < 0 || age > CONFIG.RIPPLE_MAX_AGE) continue;
+          const wave = Math.sin(d * 0.045 - age * 5.2) *
+                       Math.exp(-d * CONFIG.RIPPLE_SPATIAL_DECAY) *
+                       Math.exp(-age * CONFIG.RIPPLE_TIME_DECAY);
+          n += wave * r.strength;
+        }
+        return n;
+      }
+
+      // ---- Box-blur smoothing pass (rounds off the lines) ----
+      function smoothField(src, dst) {
+        for (let j = 0; j < rows; j++) {
+          const jm = j > 0 ? j - 1 : j;
+          const jp = j < rows - 1 ? j + 1 : j;
+          for (let i = 0; i < cols; i++) {
+            const im = i > 0 ? i - 1 : i;
+            const ip = i < cols - 1 ? i + 1 : i;
+            let sum = 0;
+            sum += src[jm * cols + im] + src[jm * cols + i] + src[jm * cols + ip];
+            sum += src[j * cols + im]  + src[j * cols + i]  * 4 + src[j * cols + ip];
+            sum += src[jp * cols + im] + src[jp * cols + i] + src[jp * cols + ip];
+            dst[j * cols + i] = sum / 12;
+          }
+        }
+      }
+
+      // ---- Marching squares contour drawing ----
+      function lerpEdge(a, b, va, vb, threshold) {
+        if (Math.abs(vb - va) < 1e-6) return a;
+        return a + (b - a) * (threshold - va) / (vb - va);
+      }
+
+      function drawContour(field, threshold) {
+        ctx.beginPath();
+        for (let j = 0; j < rows - 1; j++) {
+          const rowOff = j * cols;
+          const rowOffNext = (j + 1) * cols;
+          const y0 = j * cellSize;
+          const y1 = y0 + cellSize;
+          for (let i = 0; i < cols - 1; i++) {
+            const tl = field[rowOff + i];
+            const tr = field[rowOff + i + 1];
+            const br = field[rowOffNext + i + 1];
+            const bl = field[rowOffNext + i];
+
+            let idx = 0;
+            if (tl > threshold) idx |= 8;
+            if (tr > threshold) idx |= 4;
+            if (br > threshold) idx |= 2;
+            if (bl > threshold) idx |= 1;
+            if (idx === 0 || idx === 15) continue;
+
+            const x0 = i * cellSize;
+            const x1 = x0 + cellSize;
+
+            const topX = lerpEdge(x0, x1, tl, tr, threshold);
+            const rightY = lerpEdge(y0, y1, tr, br, threshold);
+            const bottomX = lerpEdge(x0, x1, bl, br, threshold);
+            const leftY = lerpEdge(y0, y1, tl, bl, threshold);
+
+            switch (idx) {
+              case 1: ctx.moveTo(x0, leftY); ctx.lineTo(bottomX, y1); break;
+              case 2: ctx.moveTo(bottomX, y1); ctx.lineTo(x1, rightY); break;
+              case 3: ctx.moveTo(x0, leftY); ctx.lineTo(x1, rightY); break;
+              case 4: ctx.moveTo(topX, y0); ctx.lineTo(x1, rightY); break;
+              case 5:
+                ctx.moveTo(topX, y0); ctx.lineTo(x0, leftY);
+                ctx.moveTo(bottomX, y1); ctx.lineTo(x1, rightY);
+                break;
+              case 6: ctx.moveTo(topX, y0); ctx.lineTo(bottomX, y1); break;
+              case 7: ctx.moveTo(topX, y0); ctx.lineTo(x0, leftY); break;
+              case 8: ctx.moveTo(topX, y0); ctx.lineTo(x0, leftY); break;
+              case 9: ctx.moveTo(topX, y0); ctx.lineTo(bottomX, y1); break;
+              case 10:
+                ctx.moveTo(topX, y0); ctx.lineTo(x1, rightY);
+                ctx.moveTo(x0, leftY); ctx.lineTo(bottomX, y1);
+                break;
+              case 11: ctx.moveTo(topX, y0); ctx.lineTo(x1, rightY); break;
+              case 12: ctx.moveTo(x0, leftY); ctx.lineTo(x1, rightY); break;
+              case 13: ctx.moveTo(bottomX, y1); ctx.lineTo(x1, rightY); break;
+              case 14: ctx.moveTo(x0, leftY); ctx.lineTo(bottomX, y1); break;
+            }
+          }
+        }
+        ctx.stroke();
+      }
+
+      const thresholds = [];
+      for (let v = -CONFIG.THRESHOLD_RANGE; v <= CONFIG.THRESHOLD_RANGE; v += CONFIG.THRESHOLD_STEP) {
+        thresholds.push(v);
+      }
+
+      // ---- Size canvas to fill the Showcase container, react to resize ----
+      function resize() {
+        const rect = container.getBoundingClientRect();
+        W = Math.max(1, Math.round(rect.width));
+        H = Math.max(1, Math.round(rect.height));
+        canvas.width = W * DPR;
+        canvas.height = H * DPR;
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+        cellSize = W < 480 ? 8 : CONFIG.CELL_SIZE;
+        cols = Math.ceil(W / cellSize) + 2;
+        rows = Math.ceil(H / cellSize) + 2;
+        values = new Float32Array(cols * rows);
+        smoothed = new Float32Array(cols * rows);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      // Pause the animation while the panel is off-screen to save CPU/battery
+      let isVisible = true;
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver((entries) => {
+          isVisible = entries[0].isIntersecting;
+        }, { threshold: 0 }).observe(container);
+      }
+
+      let startTime = performance.now();
+
+      function frame() {
+        requestAnimationFrame(frame);
+        if (!isVisible || !values) return;
+
+        const now = performance.now();
+        const t = (now - startTime) / 1000;
+
+        updatePointer(now);
+
+        for (let i = 0; i < ripples.length; i++) {
+          if (ripples[i].bornT === undefined) {
+            ripples[i].bornT = (ripples[i].born - startTime) / 1000;
+          }
+        }
+        while (ripples.length && (t - ripples[0].bornT) > CONFIG.RIPPLE_MAX_AGE) ripples.shift();
+
+        for (let j = 0; j < rows; j++) {
+          const y = j * cellSize;
+          const rowOff = j * cols;
+          for (let i = 0; i < cols; i++) {
+            const x = i * cellSize;
+            values[rowOff + i] = fieldValue(x, y, t);
+          }
+        }
+
+        let src = values, dst = smoothed;
+        for (let k = 0; k < CONFIG.BLUR_ITERATIONS; k++) {
+          smoothField(src, dst);
+          const tmp = src; src = dst; dst = tmp;
+        }
+
+        ctx.clearRect(0, 0, W, H);
+        ctx.lineWidth = CONFIG.LINE_WIDTH;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.strokeStyle = `rgba(${CONFIG.LINE_COLOR},${CONFIG.LINE_OPACITY})`;
+
+        for (let k = 0; k < thresholds.length; k++) {
+          drawContour(src, thresholds[k]);
+        }
+      }
+
+      requestAnimationFrame(frame);
     })();
   </script>
 </body>
